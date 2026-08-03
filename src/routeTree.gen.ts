@@ -10,33 +10,156 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AppRouteImport } from './routes/app'
+import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppCartoesRouteImport } from './routes/app.cartoes'
+import { Route as AppChatRouteImport } from './routes/app.chat'
+import { Route as AppCreditoRouteImport } from './routes/app.credito'
+import { Route as AppExtratoRouteImport } from './routes/app.extrato'
+import { Route as AppPerfilRouteImport } from './routes/app.perfil'
+import { Route as AppServicosRouteImport } from './routes/app.servicos'
+import { Route as AppContaSlugRouteImport } from './routes/app.conta.$slug'
+import { Route as AppServicoSlugRouteImport } from './routes/app.servico.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AppRoute = AppRouteImport.update({
+  id: '/app',
+  path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AppIndexRoute = AppIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCartoesRoute = AppCartoesRouteImport.update({
+  id: '/cartoes',
+  path: '/cartoes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppChatRoute = AppChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppCreditoRoute = AppCreditoRouteImport.update({
+  id: '/credito',
+  path: '/credito',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppExtratoRoute = AppExtratoRouteImport.update({
+  id: '/extrato',
+  path: '/extrato',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppPerfilRoute = AppPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppServicosRoute = AppServicosRouteImport.update({
+  id: '/servicos',
+  path: '/servicos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppContaSlugRoute = AppContaSlugRouteImport.update({
+  id: '/conta/$slug',
+  path: '/conta/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppServicoSlugRoute = AppServicoSlugRouteImport.update({
+  id: '/servico/$slug',
+  path: '/servico/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/cartoes': typeof AppCartoesRoute
+  '/app/chat': typeof AppChatRoute
+  '/app/credito': typeof AppCreditoRoute
+  '/app/extrato': typeof AppExtratoRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/app/servicos': typeof AppServicosRoute
+  '/app/': typeof AppIndexRoute
+  '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/servico/$slug': typeof AppServicoSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/cartoes': typeof AppCartoesRoute
+  '/app/chat': typeof AppChatRoute
+  '/app/credito': typeof AppCreditoRoute
+  '/app/extrato': typeof AppExtratoRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/app/servicos': typeof AppServicosRoute
+  '/app': typeof AppIndexRoute
+  '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/servico/$slug': typeof AppServicoSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/app': typeof AppRouteWithChildren
+  '/app/cartoes': typeof AppCartoesRoute
+  '/app/chat': typeof AppChatRoute
+  '/app/credito': typeof AppCreditoRoute
+  '/app/extrato': typeof AppExtratoRoute
+  '/app/perfil': typeof AppPerfilRoute
+  '/app/servicos': typeof AppServicosRoute
+  '/app/': typeof AppIndexRoute
+  '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/servico/$slug': typeof AppServicoSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/app'
+    | '/app/cartoes'
+    | '/app/chat'
+    | '/app/credito'
+    | '/app/extrato'
+    | '/app/perfil'
+    | '/app/servicos'
+    | '/app/'
+    | '/app/conta/$slug'
+    | '/app/servico/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/app/cartoes'
+    | '/app/chat'
+    | '/app/credito'
+    | '/app/extrato'
+    | '/app/perfil'
+    | '/app/servicos'
+    | '/app'
+    | '/app/conta/$slug'
+    | '/app/servico/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/cartoes'
+    | '/app/chat'
+    | '/app/credito'
+    | '/app/extrato'
+    | '/app/perfil'
+    | '/app/servicos'
+    | '/app/'
+    | '/app/conta/$slug'
+    | '/app/servico/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AppRoute: typeof AppRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +171,109 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/app': {
+      id: '/app'
+      path: '/app'
+      fullPath: '/app'
+      preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/app/': {
+      id: '/app/'
+      path: '/'
+      fullPath: '/app/'
+      preLoaderRoute: typeof AppIndexRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/cartoes': {
+      id: '/app/cartoes'
+      path: '/cartoes'
+      fullPath: '/app/cartoes'
+      preLoaderRoute: typeof AppCartoesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/chat': {
+      id: '/app/chat'
+      path: '/chat'
+      fullPath: '/app/chat'
+      preLoaderRoute: typeof AppChatRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/credito': {
+      id: '/app/credito'
+      path: '/credito'
+      fullPath: '/app/credito'
+      preLoaderRoute: typeof AppCreditoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/extrato': {
+      id: '/app/extrato'
+      path: '/extrato'
+      fullPath: '/app/extrato'
+      preLoaderRoute: typeof AppExtratoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/perfil': {
+      id: '/app/perfil'
+      path: '/perfil'
+      fullPath: '/app/perfil'
+      preLoaderRoute: typeof AppPerfilRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/servicos': {
+      id: '/app/servicos'
+      path: '/servicos'
+      fullPath: '/app/servicos'
+      preLoaderRoute: typeof AppServicosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/conta/$slug': {
+      id: '/app/conta/$slug'
+      path: '/conta/$slug'
+      fullPath: '/app/conta/$slug'
+      preLoaderRoute: typeof AppContaSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/servico/$slug': {
+      id: '/app/servico/$slug'
+      path: '/servico/$slug'
+      fullPath: '/app/servico/$slug'
+      preLoaderRoute: typeof AppServicoSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
+interface AppRouteChildren {
+  AppCartoesRoute: typeof AppCartoesRoute
+  AppChatRoute: typeof AppChatRoute
+  AppCreditoRoute: typeof AppCreditoRoute
+  AppExtratoRoute: typeof AppExtratoRoute
+  AppPerfilRoute: typeof AppPerfilRoute
+  AppServicosRoute: typeof AppServicosRoute
+  AppIndexRoute: typeof AppIndexRoute
+  AppContaSlugRoute: typeof AppContaSlugRoute
+  AppServicoSlugRoute: typeof AppServicoSlugRoute
+}
+
+const AppRouteChildren: AppRouteChildren = {
+  AppCartoesRoute: AppCartoesRoute,
+  AppChatRoute: AppChatRoute,
+  AppCreditoRoute: AppCreditoRoute,
+  AppExtratoRoute: AppExtratoRoute,
+  AppPerfilRoute: AppPerfilRoute,
+  AppServicosRoute: AppServicosRoute,
+  AppIndexRoute: AppIndexRoute,
+  AppContaSlugRoute: AppContaSlugRoute,
+  AppServicoSlugRoute: AppServicoSlugRoute,
+}
+
+const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AppRoute: AppRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
