@@ -19,6 +19,7 @@ import { Route as AppExtratoRouteImport } from './routes/app.extrato'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
 import { Route as AppContaSlugRouteImport } from './routes/app.conta.$slug'
+import { Route as AppServicoSlugRouteImport } from './routes/app.servico.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -70,6 +71,11 @@ const AppContaSlugRoute = AppContaSlugRouteImport.update({
   path: '/conta/$slug',
   getParentRoute: () => AppRoute,
 } as any)
+const AppServicoSlugRoute = AppServicoSlugRouteImport.update({
+  id: '/servico/$slug',
+  path: '/servico/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/servico/$slug': typeof AppServicoSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/app/servicos': typeof AppServicosRoute
   '/app': typeof AppIndexRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/servico/$slug': typeof AppServicoSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/servico/$slug': typeof AppServicoSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/app/servicos'
     | '/app/'
     | '/app/conta/$slug'
+    | '/app/servico/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -131,6 +141,7 @@ export interface FileRouteTypes {
     | '/app/servicos'
     | '/app'
     | '/app/conta/$slug'
+    | '/app/servico/$slug'
   id:
     | '__root__'
     | '/'
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/app/servicos'
     | '/app/'
     | '/app/conta/$slug'
+    | '/app/servico/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -222,6 +234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppContaSlugRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/servico/$slug': {
+      id: '/app/servico/$slug'
+      path: '/servico/$slug'
+      fullPath: '/app/servico/$slug'
+      preLoaderRoute: typeof AppServicoSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -234,6 +253,7 @@ interface AppRouteChildren {
   AppServicosRoute: typeof AppServicosRoute
   AppIndexRoute: typeof AppIndexRoute
   AppContaSlugRoute: typeof AppContaSlugRoute
+  AppServicoSlugRoute: typeof AppServicoSlugRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -245,6 +265,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppServicosRoute: AppServicosRoute,
   AppIndexRoute: AppIndexRoute,
   AppContaSlugRoute: AppContaSlugRoute,
+  AppServicoSlugRoute: AppServicoSlugRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
