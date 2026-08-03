@@ -28,7 +28,9 @@ export const Route = createFileRoute("/app/conta/$slug")({
 });
 
 function ContaDetailScreen() {
-  const { page } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const page = findAccountPage(slug);
+  if (!page) return null;
 
   return (
     <>
