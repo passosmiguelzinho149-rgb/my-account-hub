@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
 
@@ -30,6 +31,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppChatRoute = AppChatRouteImport.update({
+  id: '/chat',
+  path: '/chat',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppExtratoRoute = AppExtratoRouteImport.update({
   id: '/extrato',
   path: '/extrato',
@@ -44,12 +50,14 @@ const AppServicosRoute = AppServicosRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/chat': typeof AppChatRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/app/chat': typeof AppChatRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/servicos': typeof AppServicosRoute
   '/app': typeof AppIndexRoute
@@ -58,16 +66,25 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/app/chat': typeof AppChatRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/app' | '/app/extrato' | '/app/servicos' | '/app/'
+  fullPaths:
+    '/' | '/app' | '/app/chat' | '/app/extrato' | '/app/servicos' | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/extrato' | '/app/servicos' | '/app'
-  id: '__root__' | '/' | '/app' | '/app/extrato' | '/app/servicos' | '/app/'
+  to: '/' | '/app/chat' | '/app/extrato' | '/app/servicos' | '/app'
+  id:
+    | '__root__'
+    | '/'
+    | '/app'
+    | '/app/chat'
+    | '/app/extrato'
+    | '/app/servicos'
+    | '/app/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -98,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/chat': {
+      id: '/app/chat'
+      path: '/chat'
+      fullPath: '/app/chat'
+      preLoaderRoute: typeof AppChatRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/extrato': {
       id: '/app/extrato'
       path: '/extrato'
@@ -116,12 +140,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AppRouteChildren {
+  AppChatRoute: typeof AppChatRoute
   AppExtratoRoute: typeof AppExtratoRoute
   AppServicosRoute: typeof AppServicosRoute
   AppIndexRoute: typeof AppIndexRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppChatRoute: AppChatRoute,
   AppExtratoRoute: AppExtratoRoute,
   AppServicosRoute: AppServicosRoute,
   AppIndexRoute: AppIndexRoute,
