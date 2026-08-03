@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
+import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const AppExtratoRoute = AppExtratoRouteImport.update({
   path: '/extrato',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPerfilRoute = AppPerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppServicosRoute = AppServicosRouteImport.update({
   id: '/servicos',
   path: '/servicos',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/app/chat': typeof AppChatRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
 }
@@ -59,6 +66,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/chat': typeof AppChatRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
   '/app': typeof AppIndexRoute
 }
@@ -68,21 +76,35 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/chat': typeof AppChatRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/app' | '/app/chat' | '/app/extrato' | '/app/servicos' | '/app/'
+    | '/'
+    | '/app'
+    | '/app/chat'
+    | '/app/extrato'
+    | '/app/perfil'
+    | '/app/servicos'
+    | '/app/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/app/chat' | '/app/extrato' | '/app/servicos' | '/app'
+  to:
+    | '/'
+    | '/app/chat'
+    | '/app/extrato'
+    | '/app/perfil'
+    | '/app/servicos'
+    | '/app'
   id:
     | '__root__'
     | '/'
     | '/app'
     | '/app/chat'
     | '/app/extrato'
+    | '/app/perfil'
     | '/app/servicos'
     | '/app/'
   fileRoutesById: FileRoutesById
@@ -129,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppExtratoRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/perfil': {
+      id: '/app/perfil'
+      path: '/perfil'
+      fullPath: '/app/perfil'
+      preLoaderRoute: typeof AppPerfilRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/servicos': {
       id: '/app/servicos'
       path: '/servicos'
@@ -142,6 +171,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppChatRoute: typeof AppChatRoute
   AppExtratoRoute: typeof AppExtratoRoute
+  AppPerfilRoute: typeof AppPerfilRoute
   AppServicosRoute: typeof AppServicosRoute
   AppIndexRoute: typeof AppIndexRoute
 }
@@ -149,6 +179,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppChatRoute: AppChatRoute,
   AppExtratoRoute: AppExtratoRoute,
+  AppPerfilRoute: AppPerfilRoute,
   AppServicosRoute: AppServicosRoute,
   AppIndexRoute: AppIndexRoute,
 }
