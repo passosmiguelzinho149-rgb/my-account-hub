@@ -16,6 +16,7 @@ import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
+import { Route as AppContaSlugRouteImport } from './routes/app.conta.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +53,11 @@ const AppServicosRoute = AppServicosRouteImport.update({
   path: '/servicos',
   getParentRoute: () => AppRoute,
 } as any)
+const AppContaSlugRoute = AppContaSlugRouteImport.update({
+  id: '/conta/$slug',
+  path: '/conta/$slug',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
+  '/app/conta/$slug': typeof AppContaSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,6 +76,7 @@ export interface FileRoutesByTo {
   '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
   '/app': typeof AppIndexRoute
+  '/app/conta/$slug': typeof AppContaSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -79,6 +87,7 @@ export interface FileRoutesById {
   '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
+  '/app/conta/$slug': typeof AppContaSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -90,6 +99,7 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/servicos'
     | '/app/'
+    | '/app/conta/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/servicos'
     | '/app'
+    | '/app/conta/$slug'
   id:
     | '__root__'
     | '/'
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/servicos'
     | '/app/'
+    | '/app/conta/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -165,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppServicosRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/conta/$slug': {
+      id: '/app/conta/$slug'
+      path: '/conta/$slug'
+      fullPath: '/app/conta/$slug'
+      preLoaderRoute: typeof AppContaSlugRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
@@ -174,6 +193,7 @@ interface AppRouteChildren {
   AppPerfilRoute: typeof AppPerfilRoute
   AppServicosRoute: typeof AppServicosRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppContaSlugRoute: typeof AppContaSlugRoute
 }
 
 const AppRouteChildren: AppRouteChildren = {
@@ -182,6 +202,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppPerfilRoute: AppPerfilRoute,
   AppServicosRoute: AppServicosRoute,
   AppIndexRoute: AppIndexRoute,
+  AppContaSlugRoute: AppContaSlugRoute,
 }
 
 const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)

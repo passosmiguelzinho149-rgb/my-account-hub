@@ -1,9 +1,9 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { SubHeader } from "@/components/app/SubHeader";
-import { findAccountPage } from "@/lib/mock-data";
+import { findAccountPage, type AccountPage } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/app/conta/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): { page: AccountPage } => {
     const page = findAccountPage(params.slug);
     if (!page) throw notFound();
     return { page };
