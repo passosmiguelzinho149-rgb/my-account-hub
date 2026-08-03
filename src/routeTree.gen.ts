@@ -14,6 +14,7 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppCartoesRouteImport } from './routes/app.cartoes'
 import { Route as AppChatRouteImport } from './routes/app.chat'
+import { Route as AppCreditoRouteImport } from './routes/app.credito'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
@@ -44,6 +45,11 @@ const AppChatRoute = AppChatRouteImport.update({
   path: '/chat',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCreditoRoute = AppCreditoRouteImport.update({
+  id: '/credito',
+  path: '/credito',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppExtratoRoute = AppExtratoRouteImport.update({
   id: '/extrato',
   path: '/extrato',
@@ -70,6 +76,7 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
+  '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
@@ -80,6 +87,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
+  '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
@@ -92,6 +100,7 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
+  '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/servicos': typeof AppServicosRoute
@@ -105,6 +114,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/cartoes'
     | '/app/chat'
+    | '/app/credito'
     | '/app/extrato'
     | '/app/perfil'
     | '/app/servicos'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
     | '/'
     | '/app/cartoes'
     | '/app/chat'
+    | '/app/credito'
     | '/app/extrato'
     | '/app/perfil'
     | '/app/servicos'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/cartoes'
     | '/app/chat'
+    | '/app/credito'
     | '/app/extrato'
     | '/app/perfil'
     | '/app/servicos'
@@ -175,6 +187,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChatRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/credito': {
+      id: '/app/credito'
+      path: '/credito'
+      fullPath: '/app/credito'
+      preLoaderRoute: typeof AppCreditoRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/extrato': {
       id: '/app/extrato'
       path: '/extrato'
@@ -209,6 +228,7 @@ declare module '@tanstack/react-router' {
 interface AppRouteChildren {
   AppCartoesRoute: typeof AppCartoesRoute
   AppChatRoute: typeof AppChatRoute
+  AppCreditoRoute: typeof AppCreditoRoute
   AppExtratoRoute: typeof AppExtratoRoute
   AppPerfilRoute: typeof AppPerfilRoute
   AppServicosRoute: typeof AppServicosRoute
@@ -219,6 +239,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppCartoesRoute: AppCartoesRoute,
   AppChatRoute: AppChatRoute,
+  AppCreditoRoute: AppCreditoRoute,
   AppExtratoRoute: AppExtratoRoute,
   AppPerfilRoute: AppPerfilRoute,
   AppServicosRoute: AppServicosRoute,
