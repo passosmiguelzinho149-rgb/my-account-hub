@@ -25,8 +25,8 @@ export const Route = createFileRoute("/app/")({
 const quickAccess = [
   { to: "/app/credito", label: "Linhas de Crédito", Icon: HandCoins },
   { to: "/app/cartoes", label: "Cartões", Icon: CreditCard },
-  { to: "/app/servico/open-finance", label: "Open Finance", Icon: PieChart },
-  { to: "/app/servico/whatsapp", label: "WhatsApp", Icon: MessageCircle },
+  { to: "/app/servico/$slug", slug: "open-finance", label: "Open Finance", Icon: PieChart },
+  { to: "/app/servico/$slug", slug: "whatsapp", label: "WhatsApp", Icon: MessageCircle },
 ] as const;
 
 function HomeScreen() {
