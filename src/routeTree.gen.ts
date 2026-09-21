@@ -17,6 +17,7 @@ import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppCreditoRouteImport } from './routes/app.credito'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
+import { Route as AppPrivacidadeRouteImport } from './routes/app.privacidade'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
 import { Route as AppContaSlugRouteImport } from './routes/app.conta.$slug'
 import { Route as AppServicoSlugRouteImport } from './routes/app.servico.$slug'
@@ -61,6 +62,11 @@ const AppPerfilRoute = AppPerfilRouteImport.update({
   path: '/perfil',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPrivacidadeRoute = AppPrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppServicosRoute = AppServicosRouteImport.update({
   id: '/servicos',
   path: '/servicos',
@@ -85,6 +91,7 @@ export interface FileRoutesByFullPath {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
@@ -97,6 +104,7 @@ export interface FileRoutesByTo {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/servicos': typeof AppServicosRoute
   '/app': typeof AppIndexRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
@@ -111,6 +119,7 @@ export interface FileRoutesById {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
@@ -126,6 +135,7 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/perfil'
+    | '/app/privacidade'
     | '/app/servicos'
     | '/app/'
     | '/app/conta/$slug'
@@ -138,6 +148,7 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/perfil'
+    | '/app/privacidade'
     | '/app/servicos'
     | '/app'
     | '/app/conta/$slug'
@@ -151,6 +162,7 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/perfil'
+    | '/app/privacidade'
     | '/app/servicos'
     | '/app/'
     | '/app/conta/$slug'
@@ -220,6 +232,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPerfilRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/privacidade': {
+      id: '/app/privacidade'
+      path: '/privacidade'
+      fullPath: '/app/privacidade'
+      preLoaderRoute: typeof AppPrivacidadeRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/servicos': {
       id: '/app/servicos'
       path: '/servicos'
@@ -250,6 +269,7 @@ interface AppRouteChildren {
   AppCreditoRoute: typeof AppCreditoRoute
   AppExtratoRoute: typeof AppExtratoRoute
   AppPerfilRoute: typeof AppPerfilRoute
+  AppPrivacidadeRoute: typeof AppPrivacidadeRoute
   AppServicosRoute: typeof AppServicosRoute
   AppIndexRoute: typeof AppIndexRoute
   AppContaSlugRoute: typeof AppContaSlugRoute
@@ -262,6 +282,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppCreditoRoute: AppCreditoRoute,
   AppExtratoRoute: AppExtratoRoute,
   AppPerfilRoute: AppPerfilRoute,
+  AppPrivacidadeRoute: AppPrivacidadeRoute,
   AppServicosRoute: AppServicosRoute,
   AppIndexRoute: AppIndexRoute,
   AppContaSlugRoute: AppContaSlugRoute,

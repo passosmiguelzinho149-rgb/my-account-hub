@@ -85,14 +85,24 @@ function PerfilScreen() {
           <ul className="divide-y divide-border">
             {menuItems.map((item) => (
               <li key={item.slug}>
-                <Link
-                  to="/app/conta/$slug"
-                  params={{ slug: item.slug }}
-                  className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4"
-                >
-                  <span className="min-w-0 break-words">{item.label}</span>
-                  <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
-                </Link>
+                {"dedicated" in item ? (
+                  <Link
+                    to="/app/privacidade"
+                    className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4"
+                  >
+                    <span className="min-w-0 break-words">{item.label}</span>
+                    <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
+                  </Link>
+                ) : (
+                  <Link
+                    to="/app/conta/$slug"
+                    params={{ slug: item.slug }}
+                    className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4"
+                  >
+                    <span className="min-w-0 break-words">{item.label}</span>
+                    <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
+                  </Link>
+                )}
               </li>
             ))}
             <li>
