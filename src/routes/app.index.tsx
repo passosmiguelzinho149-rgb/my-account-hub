@@ -100,7 +100,7 @@ function HomeScreen() {
             <li key={label}>
               <Link
                 to={to}
-                params={"slug" in rest ? { slug: rest.slug } : undefined}
+                params={"slug" in rest ? { slug: rest.slug } : {}}
                 className="flex h-full flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card px-2 py-4 text-center shadow-card"
               >
                 <Icon className="size-6 text-primary" aria-hidden />
