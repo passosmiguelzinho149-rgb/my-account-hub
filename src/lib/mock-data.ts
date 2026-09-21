@@ -177,16 +177,6 @@ export const accountPages: AccountPage[] = [
     ],
   },
   {
-    slug: "gerenciar-dados-e-privacidade",
-    title: "Gerenciar dados e privacidade",
-    intro: "Preferências de uso de dados desta demonstração.",
-    rows: [
-      { label: "Compartilhamento Open Finance", value: "Nenhum consentimento ativo" },
-      { label: "Comunicações por e-mail", value: "Ativado" },
-      { label: "Exportar meus dados", value: "Indisponível na demo" },
-    ],
-  },
-  {
     slug: "propostas-da-empresa",
     title: "Propostas da empresa",
     intro: "Você não possui propostas em andamento nesta demonstração.",

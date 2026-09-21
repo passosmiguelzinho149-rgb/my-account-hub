@@ -25,8 +25,8 @@ export const Route = createFileRoute("/app/")({
 const quickAccess = [
   { to: "/app/credito", label: "Linhas de Crédito", Icon: HandCoins },
   { to: "/app/cartoes", label: "Cartões", Icon: CreditCard },
-  { to: "/app/servico/open-finance", label: "Open Finance", Icon: PieChart },
-  { to: "/app/servico/whatsapp", label: "WhatsApp", Icon: MessageCircle },
+  { to: "/app/servico/$slug", slug: "open-finance", label: "Open Finance", Icon: PieChart },
+  { to: "/app/servico/$slug", slug: "whatsapp", label: "WhatsApp", Icon: MessageCircle },
 ] as const;
 
 function HomeScreen() {
@@ -96,10 +96,11 @@ function HomeScreen() {
 
         <h2 className="mt-6 text-lg font-semibold">Acesso rápido</h2>
         <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {quickAccess.map(({ to, label, Icon }) => (
-            <li key={to}>
+          {quickAccess.map(({ to, label, Icon, ...rest }) => (
+            <li key={label}>
               <Link
                 to={to}
+                params={"slug" in rest ? { slug: rest.slug } : {}}
                 className="flex h-full flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card px-2 py-4 text-center shadow-card"
               >
                 <Icon className="size-6 text-primary" aria-hidden />
