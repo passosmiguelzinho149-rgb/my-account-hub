@@ -31,7 +31,7 @@ const dataCards = [
 const menuItems = [
   { slug: "falar-com-o-gerente", label: "Falar com o Gerente" },
   { slug: "sobre-o-app", label: "Sobre o App" },
-  { slug: "gerenciar-dados-e-privacidade", label: "Gerenciar dados e privacidade" },
+  { slug: "privacidade", label: "Gerenciar dados e privacidade", dedicated: true },
   { slug: "propostas-da-empresa", label: "Propostas da empresa" },
 ] as const;
 
