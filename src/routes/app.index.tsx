@@ -96,10 +96,11 @@ function HomeScreen() {
 
         <h2 className="mt-6 text-lg font-semibold">Acesso rápido</h2>
         <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {quickAccess.map(({ to, label, Icon }) => (
-            <li key={to}>
+          {quickAccess.map(({ to, label, Icon, ...rest }) => (
+            <li key={label}>
               <Link
                 to={to}
+                params={"slug" in rest ? { slug: rest.slug } : undefined}
                 className="flex h-full flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card px-2 py-4 text-center shadow-card"
               >
                 <Icon className="size-6 text-primary" aria-hidden />
