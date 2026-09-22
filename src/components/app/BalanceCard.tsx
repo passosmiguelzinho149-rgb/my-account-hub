@@ -1,6 +1,7 @@
 import { Eye, EyeOff } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { account, formatBRL } from "@/lib/mock-data";
+import { useBalance } from "@/lib/bank";
 import { useSession } from "@/lib/session";
 import { cn } from "@/lib/utils";
 
@@ -14,8 +15,8 @@ interface BalanceCardProps {
 
 /**
  * Card de saldo com o "olho" de ocultar/mostrar.
- * O estado vive no contexto de sessão, então alternar aqui reflete
- * imediatamente em todas as telas que exibem o saldo.
+ * O saldo vem do banco de dados da demonstração, então muda conforme
+ * as operações simuladas (Pix, pagamentos, transferências...).
  */
 export function BalanceCard({
   showAccount = false,
@@ -23,6 +24,7 @@ export function BalanceCard({
   className,
 }: BalanceCardProps) {
   const { balanceHidden, toggleBalance } = useSession();
+  const balance = useBalance();
 
   return (
     <div className={cn("rounded-xl bg-primary-foreground/12 p-4", className)}>
@@ -40,7 +42,7 @@ export function BalanceCard({
       <div className="mt-1 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
         <div className="flex min-w-0 items-center gap-3">
           <p className="truncate text-2xl font-bold tabular-nums">
-            {balanceHidden ? "R$ ••••••••" : formatBRL(account.balance)}
+            {balanceHidden ? "R$ ••••••••" : formatBRL(balance)}
           </p>
           <button
             type="button"
@@ -58,7 +60,7 @@ export function BalanceCard({
         </div>
         {!hideDetailsLink && (
           <Link to="/app/extrato" className="shrink-0 text-sm underline underline-offset-4">
-            Ver detalhes
+            Ver extrato
           </Link>
         )}
       </div>
