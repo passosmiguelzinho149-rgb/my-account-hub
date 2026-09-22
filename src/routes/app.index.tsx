@@ -1,8 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowDown, ArrowUp, ChevronRight, HandCoins, CreditCard, PieChart, MessageCircle } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  ArrowLeftRight,
+  Barcode,
+  Bell,
+  ChevronRight,
+  CreditCard,
+  HandCoins,
+  MessageCircle,
+  PieChart,
+  Settings2,
+  Sparkles,
+  TrendingUp,
+  Zap,
+} from "lucide-react";
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { BalanceCard } from "@/components/app/BalanceCard";
 import { account, formatBRL } from "@/lib/mock-data";
+import { useBank, useUnreadCount } from "@/lib/bank";
 
 export const Route = createFileRoute("/app/")({
   head: () => ({
@@ -10,42 +26,101 @@ export const Route = createFileRoute("/app/")({
       { title: "Início — Conta Empresas (demo)" },
       {
         name: "description",
-        content: "Resumo diário, saldo disponível e acesso rápido aos serviços da conta empresarial.",
+        content:
+          "Saldo, resumo diário, favoritos, notificações e acesso rápido aos serviços da conta empresarial.",
       },
       { property: "og:title", content: "Início — Conta Empresas (demo)" },
       {
         property: "og:description",
-        content: "Resumo diário, saldo disponível e acesso rápido da conta empresarial.",
+        content: "Saldo, favoritos, notificações e serviços da conta empresarial de demonstração.",
       },
     ],
   }),
   component: HomeScreen,
 });
 
-const quickAccess = [
-  { to: "/app/credito", label: "Linhas de Crédito", Icon: HandCoins },
-  { to: "/app/cartoes", label: "Cartões", Icon: CreditCard },
-  { to: "/app/servico/$slug", slug: "open-finance", label: "Open Finance", Icon: PieChart },
-  { to: "/app/servico/$slug", slug: "whatsapp", label: "WhatsApp", Icon: MessageCircle },
+const favorites = [
+  { label: "Pix", Icon: Zap, to: "/app/pix" },
+  { label: "Transferências", Icon: ArrowLeftRight, to: "/app/servico/$slug", slug: "transferencias" },
+  { label: "Pagamentos", Icon: Barcode, to: "/app/servico/$slug", slug: "pagamentos" },
+  { label: "Cartões", Icon: CreditCard, to: "/app/cartoes" },
+  { label: "Empréstimos", Icon: HandCoins, to: "/app/credito" },
+  { label: "Investimentos", Icon: TrendingUp, to: "/app/servico/$slug", slug: "investimentos" },
+  { label: "Open Finance", Icon: PieChart, to: "/app/servico/$slug", slug: "open-finance" },
+  { label: "Personalizar", Icon: Settings2, to: "/app/servicos" },
 ] as const;
 
+const tips = [
+  {
+    title: "Pix sem susto",
+    body: "Confira sempre o nome e o CPF/CNPJ de quem recebe antes de confirmar.",
+  },
+  {
+    title: "Cartão virtual",
+    body: "Use o cartão virtual para compras on-line e troque o número quando quiser.",
+  },
+];
+
 function HomeScreen() {
+  const { transactions } = useBank();
+  const unread = useUnreadCount();
+
+  const today = new Date().toDateString();
+  const dayTx = transactions.filter(
+    (t) => t.status === "Concluído" && new Date(t.createdAt).toDateString() === today,
+  );
+  const inflow = dayTx.filter((t) => t.kind === "in").reduce((s, t) => s + t.amount, 0);
+  const outflow = dayTx.filter((t) => t.kind === "out").reduce((s, t) => s + t.amount, 0);
+
   return (
     <>
       <BrandHeader>
         <div className="px-4 pb-6">
-          <h1 className="text-lg font-bold break-words">Olá, {account.holder}</h1>
-          <p className="mt-1 text-sm opacity-90">{account.company}</p>
-          <p className="text-sm opacity-90">CNPJ: {account.cnpj}</p>
+          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+            <div className="min-w-0">
+              <h1 className="text-lg font-bold break-words">Olá, {account.holder}</h1>
+              <p className="mt-1 text-sm opacity-90">CNPJ: {account.cnpj}</p>
+            </div>
+            <Link
+              to="/app/notificacoes"
+              aria-label="Notificações"
+              className="relative shrink-0 rounded-full p-1.5 transition-colors hover:bg-primary-foreground/15"
+            >
+              <Bell className="size-6" aria-hidden />
+              {unread > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 grid size-4 place-items-center rounded-full bg-brand-red text-[10px] font-bold">
+                  {unread}
+                </span>
+              )}
+            </Link>
+          </div>
           <BalanceCard showAccount className="mt-4" />
         </div>
       </BrandHeader>
 
       <main className="px-4 py-5">
-        <section className="rounded-xl border border-border bg-card p-4 shadow-card">
+        <h2 className="text-lg font-semibold">Favoritos</h2>
+        <ul className="mt-3 grid grid-cols-4 gap-3">
+          {favorites.map(({ label, Icon, to, ...rest }) => (
+            <li key={label}>
+              <Link
+                to={to}
+                params={"slug" in rest ? { slug: rest.slug } : undefined}
+                className="flex h-full flex-col items-center gap-2 rounded-xl border border-border bg-card px-1.5 py-3 text-center shadow-card transition-transform active:scale-95"
+              >
+                <Icon className="size-6 text-primary" aria-hidden />
+                <span className="text-[11px] leading-tight font-medium">{label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+
+        <section className="mt-6 rounded-xl border border-border bg-card p-4 shadow-card">
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
             <h2 className="truncate text-lg font-semibold">Resumo diário</h2>
-            <span className="shrink-0 text-sm text-muted-foreground">{account.summaryDate}</span>
+            <span className="shrink-0 text-sm text-muted-foreground">
+              {new Date().toLocaleDateString("pt-BR")}
+            </span>
           </div>
           <dl className="mt-4 grid grid-cols-2 gap-4">
             <div className="min-w-0">
@@ -53,69 +128,68 @@ function HomeScreen() {
                 <ArrowUp className="size-4 text-income" aria-hidden />
                 Entradas
               </dt>
-              <dd className="mt-1 truncate font-semibold tabular-nums">
-                {formatBRL(account.inflow)}
-              </dd>
+              <dd className="mt-1 truncate font-semibold tabular-nums">{formatBRL(inflow)}</dd>
             </div>
             <div className="min-w-0">
               <dt className="flex items-center gap-1.5 text-sm text-muted-foreground">
                 <ArrowDown className="size-4 text-brand-red" aria-hidden />
                 Saídas
               </dt>
-              <dd className="mt-1 truncate font-semibold tabular-nums">
-                {formatBRL(account.outflow)}
-              </dd>
+              <dd className="mt-1 truncate font-semibold tabular-nums">{formatBRL(outflow)}</dd>
             </div>
           </dl>
+          <Link
+            to="/app/extrato"
+            className="mt-4 inline-flex items-center gap-1 font-medium text-primary underline underline-offset-4"
+          >
+            Ver extrato
+            <ChevronRight className="size-4" aria-hidden />
+          </Link>
         </section>
 
         <Link
-          to="/app/extrato"
-          className="mt-4 inline-flex items-center gap-1 font-medium text-primary underline underline-offset-4"
+          to="/app/chat"
+          className="mt-4 flex items-center gap-3 rounded-xl border border-border bg-card p-4 shadow-card"
         >
-          Consultar extrato
-          <ChevronRight className="size-4" aria-hidden />
-        </Link>
-
-        <h2 className="mt-6 text-lg font-semibold">Soluções para sua empresa</h2>
-        <Link
-          to="/app/servico/$slug"
-          params={{ slug: "pix" }}
-          className="mt-3 flex items-center gap-4 rounded-xl border border-border bg-card p-4 shadow-card"
-        >
-          <span className="grid size-12 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-            Pix
+          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
+            <MessageCircle className="size-5" aria-hidden />
           </span>
           <span className="min-w-0">
-            <span className="block font-semibold">Pix</span>
+            <span className="block font-semibold">Assistente virtual</span>
             <span className="block text-sm text-muted-foreground">
-              Pague, receba e transfira a qualquer hora do dia.
+              Tire dúvidas e abra funções por conversa.
+            </span>
+          </span>
+          <ChevronRight className="ml-auto size-5 shrink-0 text-brand-red" aria-hidden />
+        </Link>
+
+        <h2 className="mt-6 text-lg font-semibold">Ofertas e benefícios</h2>
+        <Link
+          to="/app/credito"
+          className="mt-3 flex items-center gap-3 rounded-xl border border-border bg-card p-4 shadow-card"
+        >
+          <Sparkles className="size-6 shrink-0 text-brand-red" aria-hidden />
+          <span className="min-w-0">
+            <span className="block font-semibold">Capital de giro pré-aprovado</span>
+            <span className="block text-sm text-muted-foreground">
+              Simule prazos e parcelas nesta demonstração.
             </span>
           </span>
         </Link>
 
-        <h2 className="mt-6 text-lg font-semibold">Acesso rápido</h2>
-        <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {quickAccess.map(({ to, label, Icon, ...rest }) => (
-            <li key={label}>
-              <Link
-                to={to}
-                params={"slug" in rest ? { slug: rest.slug } : {}}
-                className="flex h-full flex-col items-center justify-center gap-2 rounded-xl border border-border bg-card px-2 py-4 text-center shadow-card"
-              >
-                <Icon className="size-6 text-primary" aria-hidden />
-                <span className="text-xs font-medium">{label}</span>
-              </Link>
+        <h2 className="mt-6 text-lg font-semibold">Dicas e novidades</h2>
+        <ul className="mt-3 space-y-3">
+          {tips.map((tip) => (
+            <li key={tip.title} className="rounded-xl border border-border bg-card p-4 shadow-card">
+              <p className="font-semibold">{tip.title}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{tip.body}</p>
             </li>
           ))}
         </ul>
 
-        <div className="bg-brand-gradient mt-6 rounded-xl p-4 text-primary-foreground">
-          <p className="font-bold">Vai pagar boleto? Atenção!</p>
-          <p className="mt-1 text-sm opacity-95">
-            Confira os dados e valide a origem antes de confirmar qualquer transação.
-          </p>
-        </div>
+        <p className="mt-6 text-xs text-muted-foreground">
+          Ambiente de demonstração: nenhuma operação movimenta dinheiro real.
+        </p>
       </main>
     </>
   );
