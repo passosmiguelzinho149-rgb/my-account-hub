@@ -14,13 +14,22 @@ import { Route as AppRouteImport } from './routes/app'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppCartoesRouteImport } from './routes/app.cartoes'
 import { Route as AppChatRouteImport } from './routes/app.chat'
+import { Route as AppComprovantesRouteImport } from './routes/app.comprovantes'
 import { Route as AppCreditoRouteImport } from './routes/app.credito'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
 import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
+import { Route as AppPixRouteImport } from './routes/app.pix'
 import { Route as AppPrivacidadeRouteImport } from './routes/app.privacidade'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
+import { Route as AppComprovanteIdRouteImport } from './routes/app.comprovante.$id'
 import { Route as AppContaSlugRouteImport } from './routes/app.conta.$slug'
+import { Route as AppPixIndexRouteImport } from './routes/app.pix.index'
+import { Route as AppPixChavesRouteImport } from './routes/app.pix.chaves'
+import { Route as AppPixEnviarRouteImport } from './routes/app.pix.enviar'
+import { Route as AppPixHistoricoRouteImport } from './routes/app.pix.historico'
+import { Route as AppPixLimitesRouteImport } from './routes/app.pix.limites'
+import { Route as AppPixReceberRouteImport } from './routes/app.pix.receber'
 import { Route as AppServicoSlugRouteImport } from './routes/app.servico.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -48,6 +57,11 @@ const AppChatRoute = AppChatRouteImport.update({
   path: '/chat',
   getParentRoute: () => AppRoute,
 } as any)
+const AppComprovantesRoute = AppComprovantesRouteImport.update({
+  id: '/comprovantes',
+  path: '/comprovantes',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCreditoRoute = AppCreditoRouteImport.update({
   id: '/credito',
   path: '/credito',
@@ -68,6 +82,11 @@ const AppPerfilRoute = AppPerfilRouteImport.update({
   path: '/perfil',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPixRoute = AppPixRouteImport.update({
+  id: '/pix',
+  path: '/pix',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPrivacidadeRoute = AppPrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
@@ -78,10 +97,45 @@ const AppServicosRoute = AppServicosRouteImport.update({
   path: '/servicos',
   getParentRoute: () => AppRoute,
 } as any)
+const AppComprovanteIdRoute = AppComprovanteIdRouteImport.update({
+  id: '/comprovante/$id',
+  path: '/comprovante/$id',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppContaSlugRoute = AppContaSlugRouteImport.update({
   id: '/conta/$slug',
   path: '/conta/$slug',
   getParentRoute: () => AppRoute,
+} as any)
+const AppPixIndexRoute = AppPixIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AppPixRoute,
+} as any)
+const AppPixChavesRoute = AppPixChavesRouteImport.update({
+  id: '/chaves',
+  path: '/chaves',
+  getParentRoute: () => AppPixRoute,
+} as any)
+const AppPixEnviarRoute = AppPixEnviarRouteImport.update({
+  id: '/enviar',
+  path: '/enviar',
+  getParentRoute: () => AppPixRoute,
+} as any)
+const AppPixHistoricoRoute = AppPixHistoricoRouteImport.update({
+  id: '/historico',
+  path: '/historico',
+  getParentRoute: () => AppPixRoute,
+} as any)
+const AppPixLimitesRoute = AppPixLimitesRouteImport.update({
+  id: '/limites',
+  path: '/limites',
+  getParentRoute: () => AppPixRoute,
+} as any)
+const AppPixReceberRoute = AppPixReceberRouteImport.update({
+  id: '/receber',
+  path: '/receber',
+  getParentRoute: () => AppPixRoute,
 } as any)
 const AppServicoSlugRoute = AppServicoSlugRouteImport.update({
   id: '/servico/$slug',
@@ -94,20 +148,30 @@ export interface FileRoutesByFullPath {
   '/app': typeof AppRouteWithChildren
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
+  '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/pix': typeof AppPixRouteWithChildren
   '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
+  '/app/comprovante/$id': typeof AppComprovanteIdRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/pix/chaves': typeof AppPixChavesRoute
+  '/app/pix/enviar': typeof AppPixEnviarRoute
+  '/app/pix/historico': typeof AppPixHistoricoRoute
+  '/app/pix/limites': typeof AppPixLimitesRoute
+  '/app/pix/receber': typeof AppPixReceberRoute
   '/app/servico/$slug': typeof AppServicoSlugRoute
+  '/app/pix/': typeof AppPixIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
+  '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
@@ -115,8 +179,15 @@ export interface FileRoutesByTo {
   '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/servicos': typeof AppServicosRoute
   '/app': typeof AppIndexRoute
+  '/app/comprovante/$id': typeof AppComprovanteIdRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/pix/chaves': typeof AppPixChavesRoute
+  '/app/pix/enviar': typeof AppPixEnviarRoute
+  '/app/pix/historico': typeof AppPixHistoricoRoute
+  '/app/pix/limites': typeof AppPixLimitesRoute
+  '/app/pix/receber': typeof AppPixReceberRoute
   '/app/servico/$slug': typeof AppServicoSlugRoute
+  '/app/pix': typeof AppPixIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -124,15 +195,24 @@ export interface FileRoutesById {
   '/app': typeof AppRouteWithChildren
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
+  '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/perfil': typeof AppPerfilRoute
+  '/app/pix': typeof AppPixRouteWithChildren
   '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
+  '/app/comprovante/$id': typeof AppComprovanteIdRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
+  '/app/pix/chaves': typeof AppPixChavesRoute
+  '/app/pix/enviar': typeof AppPixEnviarRoute
+  '/app/pix/historico': typeof AppPixHistoricoRoute
+  '/app/pix/limites': typeof AppPixLimitesRoute
+  '/app/pix/receber': typeof AppPixReceberRoute
   '/app/servico/$slug': typeof AppServicoSlugRoute
+  '/app/pix/': typeof AppPixIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -141,20 +221,30 @@ export interface FileRouteTypes {
     | '/app'
     | '/app/cartoes'
     | '/app/chat'
+    | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
     | '/app/notificacoes'
     | '/app/perfil'
+    | '/app/pix'
     | '/app/privacidade'
     | '/app/servicos'
     | '/app/'
+    | '/app/comprovante/$id'
     | '/app/conta/$slug'
+    | '/app/pix/chaves'
+    | '/app/pix/enviar'
+    | '/app/pix/historico'
+    | '/app/pix/limites'
+    | '/app/pix/receber'
     | '/app/servico/$slug'
+    | '/app/pix/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/app/cartoes'
     | '/app/chat'
+    | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
     | '/app/notificacoes'
@@ -162,23 +252,39 @@ export interface FileRouteTypes {
     | '/app/privacidade'
     | '/app/servicos'
     | '/app'
+    | '/app/comprovante/$id'
     | '/app/conta/$slug'
+    | '/app/pix/chaves'
+    | '/app/pix/enviar'
+    | '/app/pix/historico'
+    | '/app/pix/limites'
+    | '/app/pix/receber'
     | '/app/servico/$slug'
+    | '/app/pix'
   id:
     | '__root__'
     | '/'
     | '/app'
     | '/app/cartoes'
     | '/app/chat'
+    | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
     | '/app/notificacoes'
     | '/app/perfil'
+    | '/app/pix'
     | '/app/privacidade'
     | '/app/servicos'
     | '/app/'
+    | '/app/comprovante/$id'
     | '/app/conta/$slug'
+    | '/app/pix/chaves'
+    | '/app/pix/enviar'
+    | '/app/pix/historico'
+    | '/app/pix/limites'
+    | '/app/pix/receber'
     | '/app/servico/$slug'
+    | '/app/pix/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -223,6 +329,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppChatRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/comprovantes': {
+      id: '/app/comprovantes'
+      path: '/comprovantes'
+      fullPath: '/app/comprovantes'
+      preLoaderRoute: typeof AppComprovantesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/credito': {
       id: '/app/credito'
       path: '/credito'
@@ -251,6 +364,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPerfilRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/pix': {
+      id: '/app/pix'
+      path: '/pix'
+      fullPath: '/app/pix'
+      preLoaderRoute: typeof AppPixRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/privacidade': {
       id: '/app/privacidade'
       path: '/privacidade'
@@ -265,12 +385,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppServicosRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/comprovante/$id': {
+      id: '/app/comprovante/$id'
+      path: '/comprovante/$id'
+      fullPath: '/app/comprovante/$id'
+      preLoaderRoute: typeof AppComprovanteIdRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/conta/$slug': {
       id: '/app/conta/$slug'
       path: '/conta/$slug'
       fullPath: '/app/conta/$slug'
       preLoaderRoute: typeof AppContaSlugRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/app/pix/': {
+      id: '/app/pix/'
+      path: '/'
+      fullPath: '/app/pix/'
+      preLoaderRoute: typeof AppPixIndexRouteImport
+      parentRoute: typeof AppPixRoute
+    }
+    '/app/pix/chaves': {
+      id: '/app/pix/chaves'
+      path: '/chaves'
+      fullPath: '/app/pix/chaves'
+      preLoaderRoute: typeof AppPixChavesRouteImport
+      parentRoute: typeof AppPixRoute
+    }
+    '/app/pix/enviar': {
+      id: '/app/pix/enviar'
+      path: '/enviar'
+      fullPath: '/app/pix/enviar'
+      preLoaderRoute: typeof AppPixEnviarRouteImport
+      parentRoute: typeof AppPixRoute
+    }
+    '/app/pix/historico': {
+      id: '/app/pix/historico'
+      path: '/historico'
+      fullPath: '/app/pix/historico'
+      preLoaderRoute: typeof AppPixHistoricoRouteImport
+      parentRoute: typeof AppPixRoute
+    }
+    '/app/pix/limites': {
+      id: '/app/pix/limites'
+      path: '/limites'
+      fullPath: '/app/pix/limites'
+      preLoaderRoute: typeof AppPixLimitesRouteImport
+      parentRoute: typeof AppPixRoute
+    }
+    '/app/pix/receber': {
+      id: '/app/pix/receber'
+      path: '/receber'
+      fullPath: '/app/pix/receber'
+      preLoaderRoute: typeof AppPixReceberRouteImport
+      parentRoute: typeof AppPixRoute
     }
     '/app/servico/$slug': {
       id: '/app/servico/$slug'
@@ -282,16 +451,40 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AppPixRouteChildren {
+  AppPixChavesRoute: typeof AppPixChavesRoute
+  AppPixEnviarRoute: typeof AppPixEnviarRoute
+  AppPixHistoricoRoute: typeof AppPixHistoricoRoute
+  AppPixLimitesRoute: typeof AppPixLimitesRoute
+  AppPixReceberRoute: typeof AppPixReceberRoute
+  AppPixIndexRoute: typeof AppPixIndexRoute
+}
+
+const AppPixRouteChildren: AppPixRouteChildren = {
+  AppPixChavesRoute: AppPixChavesRoute,
+  AppPixEnviarRoute: AppPixEnviarRoute,
+  AppPixHistoricoRoute: AppPixHistoricoRoute,
+  AppPixLimitesRoute: AppPixLimitesRoute,
+  AppPixReceberRoute: AppPixReceberRoute,
+  AppPixIndexRoute: AppPixIndexRoute,
+}
+
+const AppPixRouteWithChildren =
+  AppPixRoute._addFileChildren(AppPixRouteChildren)
+
 interface AppRouteChildren {
   AppCartoesRoute: typeof AppCartoesRoute
   AppChatRoute: typeof AppChatRoute
+  AppComprovantesRoute: typeof AppComprovantesRoute
   AppCreditoRoute: typeof AppCreditoRoute
   AppExtratoRoute: typeof AppExtratoRoute
   AppNotificacoesRoute: typeof AppNotificacoesRoute
   AppPerfilRoute: typeof AppPerfilRoute
+  AppPixRoute: typeof AppPixRouteWithChildren
   AppPrivacidadeRoute: typeof AppPrivacidadeRoute
   AppServicosRoute: typeof AppServicosRoute
   AppIndexRoute: typeof AppIndexRoute
+  AppComprovanteIdRoute: typeof AppComprovanteIdRoute
   AppContaSlugRoute: typeof AppContaSlugRoute
   AppServicoSlugRoute: typeof AppServicoSlugRoute
 }
@@ -299,13 +492,16 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppCartoesRoute: AppCartoesRoute,
   AppChatRoute: AppChatRoute,
+  AppComprovantesRoute: AppComprovantesRoute,
   AppCreditoRoute: AppCreditoRoute,
   AppExtratoRoute: AppExtratoRoute,
   AppNotificacoesRoute: AppNotificacoesRoute,
   AppPerfilRoute: AppPerfilRoute,
+  AppPixRoute: AppPixRouteWithChildren,
   AppPrivacidadeRoute: AppPrivacidadeRoute,
   AppServicosRoute: AppServicosRoute,
   AppIndexRoute: AppIndexRoute,
+  AppComprovanteIdRoute: AppComprovanteIdRoute,
   AppContaSlugRoute: AppContaSlugRoute,
   AppServicoSlugRoute: AppServicoSlugRoute,
 }
