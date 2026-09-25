@@ -1,9 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { Search, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { BalanceCard } from "@/components/app/BalanceCard";
-import { account, formatBRL, transactions } from "@/lib/mock-data";
+import { formatBRL } from "@/lib/mock-data";
+import { formatDay, useBank, useBalance } from "@/lib/bank";
 import { useSession } from "@/lib/session";
 import { cn } from "@/lib/utils";
 
@@ -30,13 +31,20 @@ function ExtratoScreen() {
   const [period, setPeriod] = useState<string>("7 dias");
   const [tab, setTab] = useState<string>("Todos");
   const [query, setQuery] = useState("");
+  const { transactions } = useBank();
+  const balance = useBalance();
+  const days = Number.parseInt(period, 10);
+  const since = Date.now() - days * 86_400_000;
 
   const filtered = transactions.filter((t) => {
     if (tab === "Entradas" && t.kind !== "in") return false;
     if (tab === "Saídas" && t.kind !== "out") return false;
-    if (tab === "Futuros") return false;
+    if (tab === "Futuros") return t.status === "Agendado";
+    if (t.status === "Agendado") return false;
+    if (new Date(t.createdAt).getTime() < since) return false;
     if (!query.trim()) return true;
-    return t.title.toLowerCase().includes(query.trim().toLowerCase());
+    const q = query.trim().toLowerCase();
+    return t.title.toLowerCase().includes(q) || t.counterpart.toLowerCase().includes(q);
   });
 
   return (
@@ -106,10 +114,13 @@ function ExtratoScreen() {
 
         <ul className="divide-y divide-border">
           {filtered.map((t) => (
-            <li key={t.id} className="grid grid-cols-[3rem_minmax(0,1fr)_auto] gap-3 py-4">
+            <li key={t.id}>
+              <Link to="/app/comprovante/$id" params={{ id: t.id }} className="grid grid-cols-[3rem_minmax(0,1fr)_auto] gap-3 py-4">
               <div className="text-center">
-                <p className="text-2xl leading-none font-bold">{t.day}</p>
-                <p className="text-sm text-muted-foreground">{t.month}</p>
+                <p className="text-2xl leading-none font-bold">{formatDay(t.createdAt).slice(0, 2)}</p>
+                <p className="text-sm text-muted-foreground">
+                  {new Date(t.createdAt).toLocaleDateString("pt-BR", { month: "short" }).replace(".", "")}
+                </p>
               </div>
               <div className="min-w-0">
                 <p className="flex items-center gap-2 font-bold">
@@ -123,8 +134,7 @@ function ExtratoScreen() {
                   <span className="min-w-0 break-words">{t.title}</span>
                 </p>
                 <p className="mt-1 text-sm break-words text-muted-foreground">{t.counterpart}</p>
-                <p className="text-sm text-muted-foreground">{t.date}</p>
-                <p className="text-sm text-muted-foreground">Documento {t.document}</p>
+                <p className="text-sm text-muted-foreground">{formatDay(t.createdAt)} · {t.status}</p>
               </div>
               <p
                 className={cn(
@@ -134,6 +144,7 @@ function ExtratoScreen() {
               >
                 {balanceHidden ? "R$ ••••" : formatBRL(t.amount)}
               </p>
+              </Link>
             </li>
           ))}
           {filtered.length === 0 && (
@@ -146,7 +157,7 @@ function ExtratoScreen() {
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-t border-border pt-4">
           <p className="truncate font-semibold">Saldo do dia</p>
           <p className="shrink-0 font-semibold tabular-nums">
-            {balanceHidden ? "R$ ••••••••" : formatBRL(account.balance)}
+            {balanceHidden ? "R$ ••••••••" : formatBRL(balance)}
           </p>
         </div>
       </main>
