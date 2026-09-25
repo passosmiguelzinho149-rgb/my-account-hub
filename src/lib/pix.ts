@@ -371,7 +371,7 @@ export function usePixKeys(): PixKey[] {
 /** Saldo disponível considerando os Pix da demonstração já efetivados. */
 export function usePixBalance(): number {
   const records = usePixRecords();
-  return records.reduce((total, r) => {
+  return records.reduce<number>((total, r) => {
     if (r.status !== "Concluído") return total;
     return r.kind === "enviado" ? total - r.amount : total + r.amount;
   }, account.balance);
