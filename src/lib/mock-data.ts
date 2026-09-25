@@ -72,21 +72,28 @@ export interface ServiceItem {
   label: string;
   icon: string;
   /** Rota dedicada quando existe; caso contrário abre a tela genérica. */
-  route?: "/app/extrato" | "/app/cartoes" | "/app/credito";
+  route?:
+    | "/app/extrato"
+    | "/app/cartoes"
+    | "/app/credito"
+    | "/app/pix"
+    | "/app/comprovantes"
+    | "/app/pix/limites";
 }
 
 export const services: ServiceItem[] = [
-  { slug: "pix", label: "Pix", icon: "Zap" },
+  { slug: "pix", label: "Pix", icon: "Zap", route: "/app/pix" },
   { slug: "saldo", label: "Saldo", icon: "FileText" },
   { slug: "extrato", label: "Extrato", icon: "ReceiptText", route: "/app/extrato" },
   { slug: "linhas-de-credito", label: "Linhas de Crédito", icon: "HandCoins", route: "/app/credito" },
   { slug: "cartoes", label: "Cartões", icon: "CreditCard", route: "/app/cartoes" },
   { slug: "pagamentos", label: "Pagamentos", icon: "Barcode" },
+  { slug: "transferencias", label: "Transferências", icon: "ArrowLeftRight" },
   { slug: "open-finance", label: "Open Finance", icon: "PieChart" },
   { slug: "whatsapp", label: "WhatsApp", icon: "MessageCircle" },
   { slug: "agendamentos", label: "Agendamentos", icon: "Calendar" },
-  { slug: "limites", label: "Limites", icon: "SlidersHorizontal" },
-  { slug: "comprovantes", label: "Comprovantes", icon: "FileCheck" },
+  { slug: "limites", label: "Limites", icon: "SlidersHorizontal", route: "/app/pix/limites" },
+  { slug: "comprovantes", label: "Comprovantes", icon: "FileCheck", route: "/app/comprovantes" },
   { slug: "solucoes", label: "Soluções", icon: "Calculator" },
   { slug: "informe-rendimentos", label: "Informe Rendimentos", icon: "FileBarChart" },
   { slug: "debitos", label: "Débitos", icon: "Car" },
