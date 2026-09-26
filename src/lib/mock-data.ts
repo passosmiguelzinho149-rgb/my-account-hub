@@ -87,8 +87,8 @@ export const services: ServiceItem[] = [
   { slug: "extrato", label: "Extrato", icon: "ReceiptText", route: "/app/extrato" },
   { slug: "linhas-de-credito", label: "Linhas de Crédito", icon: "HandCoins", route: "/app/credito" },
   { slug: "cartoes", label: "Cartões", icon: "CreditCard", route: "/app/cartoes" },
-  { slug: "pagamentos", label: "Pagamentos", icon: "Barcode" },
-  { slug: "transferencias", label: "Transferências", icon: "ArrowLeftRight" },
+  { slug: "pagamentos", label: "Pagamentos", icon: "Barcode", route: "/app/pagamentos" },
+  { slug: "transferencias", label: "Transferências", icon: "ArrowLeftRight", route: "/app/transferencias" },
   { slug: "open-finance", label: "Open Finance", icon: "PieChart" },
   { slug: "whatsapp", label: "WhatsApp", icon: "MessageCircle" },
   { slug: "agendamentos", label: "Agendamentos", icon: "Calendar" },
@@ -101,6 +101,8 @@ export const services: ServiceItem[] = [
   { slug: "recebiveis", label: "Recebíveis", icon: "RefreshCw" },
   { slug: "investimentos", label: "Investimentos", icon: "TrendingUp" },
   { slug: "debito-automatico", label: "Débito Automático", icon: "FilePen" },
+  { slug: "recargas", label: "Recargas", icon: "Smartphone", route: "/app/recargas" },
+  { slug: "saques", label: "Saques", icon: "Banknote", route: "/app/saques" },
 ];
 
 export function findService(slug: string): ServiceItem | undefined {
