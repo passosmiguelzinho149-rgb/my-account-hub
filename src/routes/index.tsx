@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Bell, Fingerprint, HelpCircle, Lock, LockOpen, Menu, X } from "lucide-react";
+import { Fingerprint, HelpCircle, Lock, LockOpen, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSession } from "@/lib/session";
 import {
@@ -31,14 +31,6 @@ type Step =
   | { name: "pin" }
   | { name: "bio" }
   | { name: "code"; code: string; method: AccessEntry["method"]; purpose: "login" | "unlock" };
-
-function maskedBranch(value: string) {
-  return value.length > 2 ? `**${value.slice(-2)}` : value;
-}
-
-function maskedAccount(value: string) {
-  return value.length > 3 ? `***${value.slice(-3)}` : value;
-}
 
 function LoginScreen() {
   const { signedIn, hydrated, signIn } = useSession();
@@ -449,7 +441,7 @@ function LoginScreen() {
     "mt-2 w-full rounded-xl border border-border bg-card px-3 py-3 text-center text-2xl tracking-[0.5em] text-card-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-brand-gradient text-primary-foreground">
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-[#2638a8] via-[#4a2aa0] to-[#df202f] text-primary-foreground">
       <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -bottom-24 -left-20 h-72 w-[125%] rotate-[-12deg] rounded-[50%] bg-white/10" />
         <div className="absolute -bottom-16 -right-28 h-64 w-[120%] rotate-[-16deg] rounded-[50%] border-t border-white/10 bg-white/[0.04]" />
