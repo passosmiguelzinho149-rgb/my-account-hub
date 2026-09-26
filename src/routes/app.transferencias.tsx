@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { ConfirmPanel, ErrorNote, Field, PrimaryButton, SelectField } from "@/components/app/OpKit";
 import { formatBRL } from "@/lib/mock-data";
-import { addBeneficiary, formatDay, postTx, removeBeneficiary, useBalance, useBank } from "@/lib/bank";
+import { addBeneficiary, formatDay, postTx, removeBeneficiary, useBalance, useBank, type Tx } from "@/lib/bank";
 import { parseAmount } from "@/lib/pix";
 import { cn } from "@/lib/utils";
 
@@ -32,7 +32,7 @@ const banks = [
 function Transferencias() {
   const navigate = useNavigate();
   const balance = useBalance();
-  const { beneficiaries } = useBank();
+  const { beneficiaries, transactions } = useBank();
   const [name, setName] = useState("");
   const [doc, setDoc] = useState("");
   const [bank, setBank] = useState<string>(banks[0]);
@@ -45,6 +45,22 @@ function Transferencias() {
   const [review, setReview] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
   const schedule = useMemo(() => buildTransferSchedule(beneficiaries.length), [beneficiaries.length]);
+
+  const openScheduledReceipt = (beneficiary: (typeof beneficiaries)[number], scheduled: Date) => {
+    const scheduledDate = `${scheduled.getFullYear()}-${String(scheduled.getMonth() + 1).padStart(2, "0")}-${String(scheduled.getDate()).padStart(2, "0")}`;
+    const counterpart = `PARA: ${beneficiary.name}`;
+    let tx = transactions.find((item) => item.category === "transferencia" && item.status === "Agendado" && item.counterpart === counterpart && item.amount === 3000000 && item.scheduledFor?.startsWith(scheduledDate));
+    if (!tx) {
+      tx = postTx({ category: "transferencia", kind: "out", title: "TRANSFERÊNCIA AGENDADA", counterpart, amount: 3000000, channel: "App Empresas", status: "Agendado", scheduledFor: new Date(`${scheduledDate}T12:00`).toISOString(), extraRows: [
+        { label: "Tipo", value: beneficiary.bank.startsWith("237") ? "Entre contas Bradesco" : "Transferência para outro banco" },
+        { label: "Favorecido", value: beneficiary.name },
+        { label: "CPF/CNPJ", value: beneficiary.doc },
+        { label: "Instituição", value: beneficiary.bank },
+        { label: "Agência / Conta", value: `${beneficiary.branch} / ${beneficiary.account}` },
+      ] });
+    }
+    void navigate({ to: "/app/comprovante/$id", params: { id: tx.id } });
+  };
 
   const value = parseAmount(amount);
   const internal = bank.startsWith("237");
@@ -154,15 +170,7 @@ function Transferencias() {
         <DecemberTransferSchedule
           beneficiaries={beneficiaries}
           schedule={schedule}
-          onSelect={(b, scheduledDate) => {
-            setName(b.name);
-            setDoc(b.doc);
-            setBank(banks.find((x) => x === b.bank) ?? banks[0]);
-            setBranch(b.branch);
-            setAcc(b.account);
-            setAmount("3000000");
-            setDate(scheduledDate);
-          }}
+          onSelect={(b, scheduled) => openScheduledReceipt(b, scheduled)}
         />
 
         <div id="scheduled-transfers"><ScheduledList category="transferencia" /></div>
@@ -226,7 +234,7 @@ function DecemberTransferSchedule({
   schedule: Date[];
   onSelect: (
     beneficiary: ReturnType<typeof useBank>["beneficiaries"][number],
-    scheduledDate: string,
+    scheduledDate: Date,
   ) => void;
 }) {
   return (
@@ -240,12 +248,11 @@ function DecemberTransferSchedule({
           const group = Math.floor(index / 2);
           const scheduled = schedule[group * 2];
           if (!scheduled) return null;
-          const scheduledDate = `${scheduled.getFullYear()}-${String(scheduled.getMonth() + 1).padStart(2, "0")}-${String(scheduled.getDate()).padStart(2, "0")}`;
           return (
             <li key={b.id}>
               <button
                 type="button"
-                onClick={() => onSelect(b, scheduledDate)}
+                onClick={() => onSelect(b, scheduled)}
                 className="flex w-full items-center justify-between gap-3 p-4 text-left"
               >
                 <span className="min-w-0">
@@ -254,8 +261,9 @@ function DecemberTransferSchedule({
                     {scheduled.toLocaleDateString("pt-BR")} · Agendamento
                   </span>
                 </span>
-                <span className="shrink-0 text-sm font-semibold tabular-nums">
+                <span className="shrink-0 text-right text-sm font-semibold tabular-nums">
                   R$ 3.000.000,00
+                  <span className="mt-1 block text-[11px] font-medium text-[#31588f]">Ver comprovante</span>
                 </span>
               </button>
             </li>
