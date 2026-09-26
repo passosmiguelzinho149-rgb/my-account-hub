@@ -9,7 +9,7 @@ import {
   MessageCircle,
   PieChart,
   ShoppingBag,
-  Zap,
+  QrCode,
 } from "lucide-react";
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { BalanceCard } from "@/components/app/BalanceCard";
@@ -60,7 +60,7 @@ function HomeScreen() {
 
       <main className="bg-background px-5 pb-8 pt-5">
         <section>
-          <div className="rounded-2xl bg-card p-5 shadow-[0_8px_25px_rgba(30,50,70,0.06)]">
+          <div className="rounded-xl border border-border/60 bg-card p-5 shadow-[0_8px_25px_rgba(30,50,70,0.06)]">
             <div className="flex items-center justify-between">
               <h2 className="text-[20px] font-bold">Resumo diário</h2>
               <span className="text-sm text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span>
@@ -119,25 +119,21 @@ function HomeScreen() {
 
         <section className="mt-7">
           <h2 className="text-[22px] font-bold">Acesso rápido</h2>
-          <div className="mt-3 grid grid-cols-5 gap-2">
-            <Link to="/app/pix" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <Zap className="size-8 text-primary" strokeWidth={1.6} />
-              <span className="mt-2 text-[11px] font-semibold leading-tight">Pix</span>
-            </Link>
-            <Link to="/app/credito" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <HandCoins className="size-8 text-primary" strokeWidth={1.6} />
+          <div className="mt-3 grid grid-cols-4 gap-3">
+            <Link to="/app/credito" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <HandCoins className="size-9 text-[#313878]" strokeWidth={1.7} />
               <span className="mt-2 text-[10px] font-semibold leading-tight">Linhas de<br />crédito</span>
             </Link>
-            <Link to="/app/cartoes" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <CreditCard className="size-8 text-primary" strokeWidth={1.6} />
+            <Link to="/app/cartoes" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <CreditCard className="size-9 text-[#313878]" strokeWidth={1.7} />
               <span className="mt-2 text-[11px] font-semibold leading-tight">Cartões</span>
             </Link>
-            <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <PieChart className="size-8 text-primary" strokeWidth={1.6} />
+            <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <PieChart className="size-9 text-[#313878]" strokeWidth={1.7} />
               <span className="mt-2 text-[10px] font-semibold leading-tight">Open<br />Finance</span>
             </Link>
-            <Link to="/app/chat" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <MessageCircle className="size-8 text-primary" strokeWidth={1.6} />
+            <Link to="/app/chat" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <MessageCircle className="size-9 text-[#313878]" strokeWidth={1.7} />
               <span className="mt-2 text-[10px] font-semibold leading-tight">WhatsApp</span>
             </Link>
           </div>
