@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useRef, useState } from "react";
 import { ChevronRight, Camera, LogOut } from "lucide-react";
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { account } from "@/lib/mock-data";
@@ -39,6 +40,25 @@ const menuItems = [
 function PerfilScreen() {
   const { signOut } = useSession();
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+
+  useEffect(() => {
+    setProfilePhoto(window.localStorage.getItem("profile-photo"));
+  }, []);
+
+  const handlePhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file || !file.type.startsWith("image/")) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const value = typeof reader.result === "string" ? reader.result : null;
+      if (!value) return;
+      setProfilePhoto(value);
+      try { window.localStorage.setItem("profile-photo", value); } catch {}
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSignOut = () => {
     signOut();
@@ -50,14 +70,17 @@ function PerfilScreen() {
       <BrandHeader>
         <div className="px-4 pb-14">
           <div className="flex items-center gap-3">
-            <span className="relative shrink-0">
-              <span className="grid size-14 place-items-center rounded-full bg-primary-foreground/20 text-lg font-bold">
-                CO
+            <button type="button" onClick={() => fileInputRef.current?.click()} className="relative shrink-0" aria-label="Alterar foto do perfil">
+              {profilePhoto ? (
+                <img src={profilePhoto} alt="Foto do perfil" className="size-16 rounded-full border-2 border-white/70 object-cover" />
+              ) : (
+                <span className="grid size-16 place-items-center rounded-full bg-primary-foreground/20 text-lg font-bold">CO</span>
+              )}
+              <span className="absolute -right-1 -bottom-1 grid size-7 place-items-center rounded-full bg-card text-brand-red shadow">
+                <Camera className="size-4" aria-hidden />
               </span>
-              <span className="absolute -right-1 -bottom-1 grid size-6 place-items-center rounded-full bg-card text-brand-red">
-                <Camera className="size-3.5" aria-hidden />
-              </span>
-            </span>
+              <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhoto} className="hidden" />
+            </button>
             <div className="min-w-0">
               <h1 className="text-base font-bold break-words">{account.holder}</h1>
               <p className="text-sm break-words opacity-90">{account.company}</p>
@@ -67,7 +90,7 @@ function PerfilScreen() {
         </div>
       </BrandHeader>
 
-      <main className="-mt-10 px-4 pb-6">
+      <main className="px-4 pb-6 pt-2">
         <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {dataCards.map((c) => (
             <li key={c.slug}>
