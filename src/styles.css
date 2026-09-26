@@ -81,7 +81,7 @@
   --primary-deep: oklch(0.49 0.22 347);
   --brand-red: oklch(0.57 0.24 350);
   --brand-red-foreground: oklch(0.99 0.002 250);
-  --brand-purple: oklch(0.53 0.22 328);
+  --brand-purple: oklch(0.54 0.23 340);
   --gradient-brand: linear-gradient(
     135deg,
     var(--primary-deep) 0%,
