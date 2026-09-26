@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Building2, ChevronRight, Search, Trash2, UserRound } from "lucide-react";
+import { Building2, CalendarDays, Eye, Landmark, ReceiptText, Repeat2 } from "lucide-react";
 import { useState } from "react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { ConfirmPanel, ErrorNote, Field, PrimaryButton, SelectField } from "@/components/app/OpKit";
@@ -43,8 +43,7 @@ function Transferencias() {
   const [save, setSave] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState(false);
-  const [search, setSearch] = useState("");
-  const filteredBeneficiaries = beneficiaries.filter((b) => b.name.toLowerCase().includes(search.toLowerCase()));
+  const [showBalance, setShowBalance] = useState(true);
 
   const value = parseAmount(amount);
   const internal = bank.startsWith("237");
@@ -100,57 +99,34 @@ function Transferencias() {
     <>
       <SubHeader title="Transferências" compactActions />
       <main className="px-4 py-5">
-        <section className="rounded-2xl bg-gradient-to-br from-[#202b83] to-[#492f9d] p-5 text-white shadow-lg">
-          <p className="text-xs font-medium text-white/75">Saldo disponível</p>
-          <p className="mt-1 text-2xl font-bold tabular-nums">{formatBRL(balance)}</p>
-          <div className="mt-4 flex items-center gap-2 border-t border-white/15 pt-3 text-xs text-white/80">
-            <Building2 className="size-4" />
-            Conta empresarial
+        <section className="rounded-2xl border border-border bg-card p-5 shadow-card">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Saldo disponível</p>
+              <p className="mt-2 text-2xl font-bold tabular-nums">{showBalance ? formatBRL(balance) : "R$ ••••••••"}</p>
+            </div>
+            <button type="button" onClick={() => setShowBalance((v) => !v)} aria-label="Mostrar ou ocultar saldo" className="grid size-10 place-items-center rounded-full bg-secondary text-primary">
+              <Eye className="size-5" />
+            </button>
           </div>
         </section>
 
-        {beneficiaries.length > 0 && (
-          <section className="mt-6">
-            <div className="flex items-end justify-between gap-3">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Favorecidos</p>
-                <h2 className="mt-1 text-lg font-bold">Pix salvos</h2>
-              </div>
-              <span className="rounded-full bg-secondary px-2.5 py-1 text-xs font-semibold">{beneficiaries.length}</span>
-            </div>
-            <label className="mt-3 flex items-center gap-2 rounded-xl border border-border bg-card px-3 shadow-sm">
-              <Search className="size-4 text-muted-foreground" />
-              <input value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar favorecido" className="min-w-0 flex-1 bg-transparent py-3 text-sm outline-none" />
-            </label>
-            <ul className="mt-3 space-y-2">
-              {filteredBeneficiaries.map((b) => (
-                <li key={b.id} className="flex items-center gap-2 rounded-2xl border border-border bg-card p-2 shadow-card">
-                  <button
-                    type="button"
-                    className="flex min-w-0 flex-1 items-center gap-3 rounded-xl p-2 text-left transition-colors hover:bg-secondary"
-                    onClick={() => {
-                      setName(b.name);
-                      setDoc(b.doc);
-                      setBank(banks.find((x) => x === b.bank) ?? banks[0]);
-                      setBranch(b.branch);
-                      setAcc(b.account);
-                    }}
-                  >
-                    <span className="grid size-10 shrink-0 place-items-center rounded-full bg-primary/10 text-primary"><UserRound className="size-5" /></span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-sm font-semibold">{b.name}</span>
-                      <span className="block text-xs text-muted-foreground">Toque para transferir</span>
-                    </span>
-                    <ChevronRight className="size-4 shrink-0 text-muted-foreground" />
-                  </button>
-                  <button type="button" onClick={() => removeBeneficiary(b.id)} aria-label={`Excluir ${b.name}`} className="grid size-10 shrink-0 place-items-center rounded-full text-brand-red transition-colors hover:bg-red-50">
-                    <Trash2 className="size-4" aria-hidden />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+        <section className="mt-6">
+          <h2 className="text-lg font-bold">O que você deseja fazer?</h2>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            {[
+              { label: "Entre contas Bradesco", icon: Repeat2, action: () => setBank(banks[0]) },
+              { label: "Outro banco", icon: Landmark, action: () => setBank(banks[1]) },
+              { label: "Agendar", icon: CalendarDays, action: () => document.getElementById("transfer-date")?.focus() },
+              { label: "Agendamentos", icon: ReceiptText, action: () => document.getElementById("scheduled-transfers")?.scrollIntoView({ behavior: "smooth" }) },
+            ].map((item) => (
+              <button key={item.label} type="button" onClick={item.action} className="flex min-h-28 flex-col items-start justify-between rounded-2xl border border-border bg-card p-4 text-left shadow-card transition-transform active:scale-[0.98]">
+                <span className="grid size-10 place-items-center rounded-full bg-primary/10 text-primary"><item.icon className="size-5" /></span>
+                <span className="text-sm font-semibold leading-tight">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </section>
 
         <div className="my-7 flex items-center gap-3">
           <span className="h-px flex-1 bg-border" />
@@ -166,7 +142,7 @@ function Transferencias() {
           <Field label="Conta com dígito" value={acc} onChange={(e) => setAcc(e.target.value)} />
         </div>
         <Field label="Valor (R$)" value={amount} onChange={(e) => setAmount(e.target.value)} inputMode="decimal" placeholder="0,00" />
-        <Field label="Agendar para (opcional)" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+        <div id="transfer-date"><Field label="Agendar para (opcional)" type="date" value={date} onChange={(e) => setDate(e.target.value)} /></div>
         <label className="mt-4 flex items-center gap-2 text-sm">
           <input type="checkbox" checked={save} onChange={(e) => setSave(e.target.checked)} className="size-4 accent-primary" />
           Salvar como favorecido
@@ -187,7 +163,7 @@ function Transferencias() {
           }}
         />
 
-        <ScheduledList category="transferencia" />
+        <div id="scheduled-transfers"><ScheduledList category="transferencia" /></div>
       </main>
     </>
   );
