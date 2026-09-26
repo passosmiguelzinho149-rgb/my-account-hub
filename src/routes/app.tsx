@@ -20,8 +20,8 @@ function AppLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-20">
-      <div className="mx-auto max-w-lg">
+    <div className="min-h-screen bg-background mobile-bottom-space">
+      <div className="mobile-shell">
         <Outlet />
       </div>
       <BottomNav />
