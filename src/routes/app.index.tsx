@@ -2,8 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowDown,
   ArrowUp,
-  Banknote,
-  Smartphone,
   ArrowLeftRight,
   Barcode,
   Bell,
@@ -45,8 +43,6 @@ const favorites = [
   { label: "Pix", Icon: Zap, to: "/app/pix" },
   { label: "Transferências", Icon: ArrowLeftRight, to: "/app/transferencias" },
   { label: "Pagamentos", Icon: Barcode, to: "/app/pagamentos" },
-  { label: "Recargas", Icon: Smartphone, to: "/app/recargas" },
-  { label: "Saque", Icon: Banknote, to: "/app/saques" },
   { label: "Cartões", Icon: CreditCard, to: "/app/cartoes" },
   { label: "Empréstimos", Icon: HandCoins, to: "/app/credito" },
   { label: "Investimentos", Icon: TrendingUp, to: "/app/servico/$slug", slug: "investimentos" },
@@ -110,16 +106,25 @@ function HomeScreen() {
               <Link
                 to={to}
                 params={"slug" in rest ? { slug: rest.slug } : {}}
-                className="flex h-full flex-col items-center gap-2 rounded-xl border border-border bg-card px-1.5 py-3 text-center shadow-card transition-transform active:scale-95"
+                className="group flex h-full flex-col items-center gap-2 rounded-2xl bg-card px-1 py-2.5 text-center transition-transform active:scale-95"
               >
-                <Icon className="size-6 text-primary" aria-hidden />
+                <span className="grid size-14 place-items-center rounded-2xl border border-border/70 bg-card shadow-card transition-colors group-hover:border-primary/30">
+                  <Icon className="size-6 text-primary" aria-hidden />
+                </span>
                 <span className="text-[11px] leading-tight font-medium">{label}</span>
               </Link>
             </li>
           ))}
         </ul>
+        <Link
+          to="/app/servicos"
+          className="mt-3 inline-flex w-full items-center justify-center gap-1 rounded-full py-2 text-sm font-semibold text-primary"
+        >
+          Ver mais serviços
+          <ChevronRight className="size-4" aria-hidden />
+        </Link>
 
-        <section className="mt-6 rounded-xl border border-border bg-card p-4 shadow-card">
+        <section className="mt-4 rounded-2xl border border-border/70 bg-card p-4 shadow-card">
           <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
             <h2 className="truncate text-lg font-semibold">Resumo diário</h2>
             <span className="shrink-0 text-sm text-muted-foreground">
@@ -153,7 +158,7 @@ function HomeScreen() {
 
         <Link
           to="/app/chat"
-          className="mt-4 flex items-center gap-3 rounded-xl border border-border bg-card p-4 shadow-card"
+          className="mt-4 flex items-center gap-3 rounded-2xl border border-border/70 bg-card p-4 shadow-card"
         >
           <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
             <MessageCircle className="size-5" aria-hidden />
@@ -170,7 +175,7 @@ function HomeScreen() {
         <h2 className="mt-6 text-lg font-semibold">Ofertas e benefícios</h2>
         <Link
           to="/app/credito"
-          className="mt-3 flex items-center gap-3 rounded-xl border border-border bg-card p-4 shadow-card"
+          className="mt-3 flex items-center gap-3 rounded-2xl border border-border/70 bg-card p-4 shadow-card"
         >
           <Sparkles className="size-6 shrink-0 text-brand-red" aria-hidden />
           <span className="min-w-0">
