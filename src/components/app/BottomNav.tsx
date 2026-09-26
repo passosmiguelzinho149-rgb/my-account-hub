@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { Barcode, House, Settings2, WalletCards } from "lucide-react";
+import { House, MessageCircle, Settings2, UserRound } from "lucide-react";
 
 const items = [
   { to: "/app", label: "Início", Icon: House, exact: true },
-  { to: "/app/extrato", label: "Contas", Icon: WalletCards, exact: false },
-  { to: "/app/pagamentos", label: "Pagamentos", Icon: Barcode, exact: false },
+  { to: "/app/chat", label: "Chat", Icon: MessageCircle, exact: false },
   { to: "/app/servicos", label: "Serviços", Icon: Settings2, exact: false },
+  { to: "/app/perfil", label: "Perfil", Icon: UserRound, exact: false },
 ] as const;
 
 export function BottomNav() {
