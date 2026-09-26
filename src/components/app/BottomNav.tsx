@@ -15,7 +15,7 @@ export function BottomNav() {
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/80 bg-card/95 backdrop-blur-md">
       <ul className="mx-auto flex max-w-lg">
         {items.map(({ to, label, Icon, exact }) => (
-          <li key={to} className="flex-1">
+          <li key={label} className="flex-1">
             <Link
               to={to}
               activeOptions={{ exact }}
