@@ -75,13 +75,13 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.21 0.04 265);
 
-  /* Bradesco empresas: azul profundo + vermelho carmim */
-  --primary: oklch(0.29 0.16 271);
+  /* Paleta inspirada na referência: magenta vivo, rosa e branco */
+  --primary: oklch(0.57 0.24 350);
   --primary-foreground: oklch(0.99 0.002 250);
-  --primary-deep: oklch(0.24 0.15 272);
-  --brand-red: oklch(0.51 0.22 22);
+  --primary-deep: oklch(0.49 0.22 347);
+  --brand-red: oklch(0.57 0.24 350);
   --brand-red-foreground: oklch(0.99 0.002 250);
-  --brand-purple: oklch(0.4 0.2 305);
+  --brand-purple: oklch(0.53 0.22 328);
   --gradient-brand: linear-gradient(
     135deg,
     var(--primary-deep) 0%,
@@ -92,17 +92,17 @@
   --shadow-card: 0 1px 2px oklch(0.24 0.15 272 / 0.06), 0 8px 24px -16px oklch(0.24 0.15 272 / 0.25);
   --income: oklch(0.48 0.13 155);
 
-  --secondary: oklch(0.955 0.012 262);
-  --secondary-foreground: oklch(0.29 0.16 271);
-  --muted: oklch(0.965 0.008 258);
-  --muted-foreground: oklch(0.52 0.03 260);
-  --accent: oklch(0.955 0.012 262);
-  --accent-foreground: oklch(0.29 0.16 271);
-  --destructive: oklch(0.51 0.22 22);
+  --secondary: oklch(0.96 0.035 350);
+  --secondary-foreground: oklch(0.49 0.22 347);
+  --muted: oklch(0.975 0.012 350);
+  --muted-foreground: oklch(0.48 0.025 285);
+  --accent: oklch(0.96 0.035 350);
+  --accent-foreground: oklch(0.49 0.22 347);
+  --destructive: oklch(0.55 0.23 350);
   --destructive-foreground: oklch(0.99 0.002 250);
-  --border: oklch(0.915 0.012 258);
-  --input: oklch(0.915 0.012 258);
-  --ring: oklch(0.29 0.16 271);
+  --border: oklch(0.91 0.025 350);
+  --input: oklch(0.91 0.025 350);
+  --ring: oklch(0.57 0.24 350);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -110,7 +110,7 @@
   --chart-5: oklch(0.769 0.188 70.08);
   --sidebar: oklch(0.984 0.003 247.858);
   --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
+  --sidebar-primary: oklch(0.57 0.24 350);
   --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
   --sidebar-accent: oklch(0.968 0.007 247.896);
   --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
