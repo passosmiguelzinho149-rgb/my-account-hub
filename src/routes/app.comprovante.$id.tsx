@@ -72,7 +72,7 @@ function ComprovanteScreen() {
           </section>
 
           <footer className="border-t border-slate-200 pt-4 text-[10px] text-slate-500">
-            <p>Comprovante gerado pelo projeto de demonstração. Nenhuma transação bancária real é confirmada por este documento.</p>
+            <p>Documento gerado pelo aplicativo. Não é comprovante bancário oficial e não confirma transação bancária real.</p>
           </footer>
         </article>
 
