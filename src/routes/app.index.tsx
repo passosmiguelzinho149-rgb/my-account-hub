@@ -4,7 +4,6 @@ import {
   ArrowUp,
   ArrowLeftRight,
   Barcode,
-  Bell,
   ChevronRight,
   CreditCard,
   HandCoins,
@@ -18,7 +17,7 @@ import {
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { BalanceCard } from "@/components/app/BalanceCard";
 import { account, formatBRL } from "@/lib/mock-data";
-import { useBank, useUnreadCount } from "@/lib/bank";
+import { useBank } from "@/lib/bank";
 
 export const Route = createFileRoute("/app/")({
   head: () => ({
@@ -63,8 +62,6 @@ const tips = [
 
 function HomeScreen() {
   const { transactions } = useBank();
-  const unread = useUnreadCount();
-
   const today = new Date().toDateString();
   const dayTx = transactions.filter(
     (t) => t.status === "Concluído" && new Date(t.createdAt).toDateString() === today,
@@ -81,18 +78,7 @@ function HomeScreen() {
               <h1 className="text-lg font-bold break-words">Olá, {account.holder}</h1>
               <p className="mt-1 text-sm opacity-90">CNPJ: {account.cnpj}</p>
             </div>
-            <Link
-              to="/app/notificacoes"
-              aria-label="Notificações"
-              className="relative shrink-0 rounded-full p-1.5 transition-colors hover:bg-primary-foreground/15"
-            >
-              <Bell className="size-6" aria-hidden />
-              {unread > 0 && (
-                <span className="absolute -top-0.5 -right-0.5 grid size-4 place-items-center rounded-full bg-brand-red text-[10px] font-bold">
-                  {unread}
-                </span>
-              )}
-            </Link>
+
           </div>
           <BalanceCard showAccount className="mt-4" />
         </div>
