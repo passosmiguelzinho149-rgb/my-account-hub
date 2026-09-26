@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import {
   ArrowDown,
   ArrowLeftRight,
@@ -41,7 +42,14 @@ const favorites = [
 
 function HomeScreen() {
   const { transactions } = useBank();
-  const today = new Date().toDateString();
+  const [now, setNow] = useState(() => new Date());
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 60_000);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const today = now.toDateString();
   const dayTx = transactions.filter(
     (t) => t.status === "Concluído" && new Date(t.createdAt).toDateString() === today,
   );
@@ -92,7 +100,7 @@ function HomeScreen() {
         <section className="mt-7">
           <div className="flex items-center justify-between">
             <h2 className="text-[22px] font-bold">Resumo diário</h2>
-            <span className="text-sm text-muted-foreground">{new Date().toLocaleDateString("pt-BR")}</span>
+            <span className="text-sm text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span>
           </div>
           <div className="mt-3 rounded-2xl bg-card p-5 shadow-[0_8px_25px_rgba(30,50,70,0.06)]">
             <dl className="grid grid-cols-2 gap-5">
