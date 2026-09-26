@@ -88,7 +88,7 @@ export interface BankState {
   pixKeys: PixKey[];
 }
 
-const STORAGE_KEY = "bradesco-demo-bank-v1";
+const STORAGE_KEY = "bradesco-demo-bank-v2";
 
 /* --------------------------------------------------------------- utilidades */
 
