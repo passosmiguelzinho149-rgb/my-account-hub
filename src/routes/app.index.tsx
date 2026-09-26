@@ -47,9 +47,9 @@ function HomeScreen() {
       <BrandHeader>
         <div className="px-4 pb-7">
           <div className="min-w-0">
-            <h1 className="text-[22px] font-bold leading-tight">Olá, {account.holder}</h1>
-            <p className="mt-1 text-sm font-medium opacity-90">{account.company}</p>
-            <p className="mt-1 text-sm font-medium opacity-90">CNPJ: {account.cnpj}</p>
+            <h1 className="text-[22px] font-bold leading-tight">Agendamento de transferência</h1>
+            <p className="mt-1 text-sm font-medium opacity-90">Dezembro</p>
+            <p className="mt-1 text-sm font-semibold opacity-95">R$ 3.000.000,00</p>
           </div>
           <BalanceCard
             showAccount
