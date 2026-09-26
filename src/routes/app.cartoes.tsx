@@ -99,7 +99,21 @@ function CartoesScreen() {
     <>
       <SubHeader title="Cartões" />
       <main className="px-4 py-5 pb-10">
-        <div className="flex items-start justify-between gap-3">
+        <section className="rounded-2xl border border-border bg-card p-4 shadow-card">
+          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Conta vinculada</p>
+          <p className="mt-2 font-bold">{account.holder}</p>
+          <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+            <div>
+              <p className="text-xs text-muted-foreground">Agência</p>
+              <p className="mt-1 font-semibold">{account.branch}</p>
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Conta corrente</p>
+              <p className="mt-1 font-semibold">{account.number}</p>
+            </div>
+          </div>
+        </section>
+        <div className="mt-6 flex items-start justify-between gap-3">
           <div>
             <h2 className="text-xl font-bold">Cartão empresarial</h2>
             <p className="mt-1 text-sm text-muted-foreground">
