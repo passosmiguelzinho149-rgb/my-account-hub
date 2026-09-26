@@ -185,7 +185,7 @@ function initialState(): BankState {
         category: "pix",
         kind: "in",
         title: "PIX QR CODE STATIC",
-        counterpart: "REM: JOSÉ CARLOS MENDES",
+        counterpart: "REM: MARCOS NUNES DE MIRANDA",
         amount: 26_750_000,
       }),
     ],
