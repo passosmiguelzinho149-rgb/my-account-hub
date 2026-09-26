@@ -125,9 +125,12 @@ function HomeScreen() {
               >
                 <div className="relative flex w-[29%] shrink-0 items-end justify-center overflow-hidden bg-gradient-to-br from-[#dce8e4] via-[#f1ddd5] to-[#d7d7d7]">
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                  <div className="relative mb-2 grid size-20 place-items-center rounded-full bg-white/45">
-                    <span className="text-4xl">👩🏻</span>
-                  </div>
+                  <img
+                    src="https://images.unsplash.com/photo-1753161022783-160d6579f86d?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=700"
+                    alt="Mulher usando celular"
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
                 <div className="flex min-w-0 flex-1 items-center justify-between gap-2 p-4">
                   <div className="min-w-0">
@@ -145,8 +148,13 @@ function HomeScreen() {
                 aria-hidden
                 className="flex w-[23%] shrink-0 items-end justify-center overflow-hidden rounded-[22px] bg-gradient-to-br from-[#d8e4e7] via-[#f0e6de] to-[#cfcfcf]"
               >
-                <div className="mb-3 grid size-20 place-items-center rounded-full bg-white/35">
-                  <span className="text-4xl">🧮</span>
+                <div className="h-full w-full">
+                  <img
+                    src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=700"
+                    alt=""
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
                 </div>
               </div>
             </div>
