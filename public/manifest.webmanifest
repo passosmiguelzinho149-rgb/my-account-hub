@@ -1,0 +1,19 @@
+{
+  "name": "Conta Empresas",
+  "short_name": "Conta Empresas",
+  "description": "Aplicativo mobile de demonstração para conta empresarial.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f7f8fc",
+  "theme_color": "#2f2b9f",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}
