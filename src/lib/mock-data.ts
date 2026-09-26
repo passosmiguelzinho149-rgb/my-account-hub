@@ -78,7 +78,8 @@ export interface ServiceItem {
     | "/app/credito"
     | "/app/pix"
     | "/app/comprovantes"
-    | "/app/pix/limites";
+    | "/app/pix/limites"
+    | "/app/notas-fiscais";
 }
 
 export const services: ServiceItem[] = [
@@ -94,6 +95,7 @@ export const services: ServiceItem[] = [
   { slug: "agendamentos", label: "Agendamentos", icon: "Calendar" },
   { slug: "limites", label: "Limites", icon: "SlidersHorizontal", route: "/app/pix/limites" },
   { slug: "comprovantes", label: "Comprovantes", icon: "FileCheck", route: "/app/comprovantes" },
+  { slug: "notas-fiscais", label: "Notas Fiscais", icon: "Receipt", route: "/app/notas-fiscais" },
   { slug: "solucoes", label: "Soluções", icon: "Calculator" },
   { slug: "informe-rendimentos", label: "Informe Rendimentos", icon: "FileBarChart" },
   { slug: "debitos", label: "Débitos", icon: "Car" },
