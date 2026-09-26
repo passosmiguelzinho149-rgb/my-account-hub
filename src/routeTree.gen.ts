@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
+import { Route as RecuperarAcessoRouteImport } from './routes/recuperar-acesso'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppCartoesRouteImport } from './routes/app.cartoes'
 import { Route as AppChatRouteImport } from './routes/app.chat'
@@ -21,6 +22,7 @@ import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppPixRouteImport } from './routes/app.pix'
 import { Route as AppPrivacidadeRouteImport } from './routes/app.privacidade'
+import { Route as AppSegurancaRouteImport } from './routes/app.seguranca'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
 import { Route as AppComprovanteIdRouteImport } from './routes/app.comprovante.$id'
 import { Route as AppContaSlugRouteImport } from './routes/app.conta.$slug'
@@ -40,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
 const AppRoute = AppRouteImport.update({
   id: '/app',
   path: '/app',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecuperarAcessoRoute = RecuperarAcessoRouteImport.update({
+  id: '/recuperar-acesso',
+  path: '/recuperar-acesso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AppIndexRoute = AppIndexRouteImport.update({
@@ -90,6 +97,11 @@ const AppPixRoute = AppPixRouteImport.update({
 const AppPrivacidadeRoute = AppPrivacidadeRouteImport.update({
   id: '/privacidade',
   path: '/privacidade',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSegurancaRoute = AppSegurancaRouteImport.update({
+  id: '/seguranca',
+  path: '/seguranca',
   getParentRoute: () => AppRoute,
 } as any)
 const AppServicosRoute = AppServicosRouteImport.update({
@@ -146,6 +158,7 @@ const AppServicoSlugRoute = AppServicoSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/recuperar-acesso': typeof RecuperarAcessoRoute
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
@@ -155,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/app/perfil': typeof AppPerfilRoute
   '/app/pix': typeof AppPixRouteWithChildren
   '/app/privacidade': typeof AppPrivacidadeRoute
+  '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
@@ -169,6 +183,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/recuperar-acesso': typeof RecuperarAcessoRoute
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
@@ -177,6 +192,7 @@ export interface FileRoutesByTo {
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/privacidade': typeof AppPrivacidadeRoute
+  '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
   '/app': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
@@ -193,6 +209,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
+  '/recuperar-acesso': typeof RecuperarAcessoRoute
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
@@ -202,6 +219,7 @@ export interface FileRoutesById {
   '/app/perfil': typeof AppPerfilRoute
   '/app/pix': typeof AppPixRouteWithChildren
   '/app/privacidade': typeof AppPrivacidadeRoute
+  '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
   '/app/': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
@@ -219,6 +237,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/app'
+    | '/recuperar-acesso'
     | '/app/cartoes'
     | '/app/chat'
     | '/app/comprovantes'
@@ -228,6 +247,7 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/pix'
     | '/app/privacidade'
+    | '/app/seguranca'
     | '/app/servicos'
     | '/app/'
     | '/app/comprovante/$id'
@@ -242,6 +262,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/recuperar-acesso'
     | '/app/cartoes'
     | '/app/chat'
     | '/app/comprovantes'
@@ -250,6 +271,7 @@ export interface FileRouteTypes {
     | '/app/notificacoes'
     | '/app/perfil'
     | '/app/privacidade'
+    | '/app/seguranca'
     | '/app/servicos'
     | '/app'
     | '/app/comprovante/$id'
@@ -265,6 +287,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/app'
+    | '/recuperar-acesso'
     | '/app/cartoes'
     | '/app/chat'
     | '/app/comprovantes'
@@ -274,6 +297,7 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/pix'
     | '/app/privacidade'
+    | '/app/seguranca'
     | '/app/servicos'
     | '/app/'
     | '/app/comprovante/$id'
@@ -290,6 +314,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AppRoute: typeof AppRouteWithChildren
+  RecuperarAcessoRoute: typeof RecuperarAcessoRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -306,6 +331,13 @@ declare module '@tanstack/react-router' {
       path: '/app'
       fullPath: '/app'
       preLoaderRoute: typeof AppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recuperar-acesso': {
+      id: '/recuperar-acesso'
+      path: '/recuperar-acesso'
+      fullPath: '/recuperar-acesso'
+      preLoaderRoute: typeof RecuperarAcessoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/app/': {
@@ -376,6 +408,13 @@ declare module '@tanstack/react-router' {
       path: '/privacidade'
       fullPath: '/app/privacidade'
       preLoaderRoute: typeof AppPrivacidadeRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/seguranca': {
+      id: '/app/seguranca'
+      path: '/seguranca'
+      fullPath: '/app/seguranca'
+      preLoaderRoute: typeof AppSegurancaRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/servicos': {
@@ -482,6 +521,7 @@ interface AppRouteChildren {
   AppPerfilRoute: typeof AppPerfilRoute
   AppPixRoute: typeof AppPixRouteWithChildren
   AppPrivacidadeRoute: typeof AppPrivacidadeRoute
+  AppSegurancaRoute: typeof AppSegurancaRoute
   AppServicosRoute: typeof AppServicosRoute
   AppIndexRoute: typeof AppIndexRoute
   AppComprovanteIdRoute: typeof AppComprovanteIdRoute
@@ -499,6 +539,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppPerfilRoute: AppPerfilRoute,
   AppPixRoute: AppPixRouteWithChildren,
   AppPrivacidadeRoute: AppPrivacidadeRoute,
+  AppSegurancaRoute: AppSegurancaRoute,
   AppServicosRoute: AppServicosRoute,
   AppIndexRoute: AppIndexRoute,
   AppComprovanteIdRoute: AppComprovanteIdRoute,
@@ -511,6 +552,7 @@ const AppRouteWithChildren = AppRoute._addFileChildren(AppRouteChildren)
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AppRoute: AppRouteWithChildren,
+  RecuperarAcessoRoute: RecuperarAcessoRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
