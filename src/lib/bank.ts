@@ -290,6 +290,8 @@ function initialState(): BankState {
       { id: "pix-demo-20", name: "YARA GABRIELLY OLIVEIRA CARDOSO", doc: "000.000.000-00", bank: "336 — Banco DEMO", branch: "0001", account: "DEMO-20" },
       { id: "pix-demo-21", name: "REGINALDO DE OLIVEIRA PEGO", doc: "000.000.000-00", bank: "341 — Banco DEMO", branch: "1360", account: "DEMO-21" },
       { id: "pix-demo-22", name: "GUILHERME DE OLIVEIRA PEGO", doc: "000.000.000-00", bank: "237 — Banco DEMO", branch: "1249", account: "DEMO-22" },
+      { id: "pix-demo-23", name: "MARIA AUXILIADORA DE OLIVEIRA", doc: "000.000.000-00", bank: "Banco DEMO", branch: "0000", account: "DEMO-23" },
+      { id: "pix-demo-24", name: "MARIA JOSE DE OLIVEIRA", doc: "000.000.000-00", bank: "Banco DEMO", branch: "0000", account: "DEMO-24" },
     ],
     pixKeys: [
       { id: "k1", type: "CNPJ", value: account.cnpj },
