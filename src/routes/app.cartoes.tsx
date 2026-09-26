@@ -226,11 +226,6 @@ function CartoesScreen() {
           </>
         )}
 
-        <div className="mt-5 rounded-2xl border border-dashed border-primary/30 bg-primary/5 p-4 text-sm leading-relaxed text-muted-foreground">
-          <strong className="text-foreground">Demonstração fictícia:</strong> este cartão não possui
-          validade financeira, não pode realizar compras e não está conectado a nenhuma instituição
-          financeira ou conta real.
-        </div>
       </main>
     </>
   );
