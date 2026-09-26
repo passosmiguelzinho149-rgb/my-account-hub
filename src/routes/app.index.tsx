@@ -118,7 +118,8 @@ function HomeScreen() {
         </section>
 
         <section className="mt-7">
-          <h2 className="text-[22px] font-bold">Ac          <div className="mt-3 grid grid-cols-5 gap-2">
+          <h2 className="text-[22px] font-bold">Acesso rápido</h2>
+          <div className="mt-3 grid grid-cols-5 gap-2">
             <Link to="/app/pix" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
               <Zap className="size-8 text-primary" strokeWidth={1.6} />
               <span className="mt-2 text-[11px] font-semibold leading-tight">Pix</span>
@@ -139,12 +140,6 @@ function HomeScreen() {
               <MessageCircle className="size-8 text-primary" strokeWidth={1.6} />
               <span className="mt-2 text-[10px] font-semibold leading-tight">WhatsApp</span>
             </Link>
-          </div>
-          <div className="rounded-2xl bg-gradient-to-br from-[#341044] via-[#5b124f] to-[#8b173f] px-5 py-5 text-white shadow-[0_10px_28px_rgba(30,20,50,0.18)]">
-            <h3 className="text-[20px] font-bold">Vai pagar boleto? Atenção!</h3>
-            <p className="mt-2 text-[16px] font-semibold leading-snug text-white/95">
-              Confira os dados e valide a origem antes de confirmar qualquer transação.
-            </p>
           </div>
         </section>
 
