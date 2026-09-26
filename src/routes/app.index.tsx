@@ -6,7 +6,7 @@ import {
   ChevronRight,
   CreditCard,
   HandCoins,
-  MessageCircle,
+  MessageCircleMore,
   PieChart,
   ShoppingBag,
   QrCode,
@@ -58,7 +58,7 @@ function HomeScreen() {
         </div>
       </BrandHeader>
 
-      <main className="bg-background px-5 pb-8 pt-5">
+      <main className="mx-auto w-full max-w-[430px] bg-background px-4 pb-8 pt-5">
         <section>
           <div className="rounded-xl border border-border/60 bg-card p-5 shadow-[0_8px_25px_rgba(30,50,70,0.06)]">
             <div className="flex items-center justify-between">
@@ -119,23 +119,12 @@ function HomeScreen() {
 
         <section className="mt-7">
           <h2 className="text-[22px] font-bold">Acesso rápido</h2>
-          <div className="mt-3 grid grid-cols-4 gap-3">\n            <Link to="/app/pix" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">\n              <QrCode className="size-9 text-[#313878]" strokeWidth={1.7} />\n              <span className="mt-2 text-[11px] font-semibold leading-tight">Pix</span>\n            </Link>
-            <Link to="/app/credito" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <HandCoins className="size-9 text-[#313878]" strokeWidth={1.7} />
-              <span className="mt-2 text-[10px] font-semibold leading-tight">Linhas de<br />crédito</span>
-            </Link>
-            <Link to="/app/cartoes" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <CreditCard className="size-9 text-[#313878]" strokeWidth={1.7} />
-              <span className="mt-2 text-[11px] font-semibold leading-tight">Cartões</span>
-            </Link>
-            <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <PieChart className="size-9 text-[#313878]" strokeWidth={1.7} />
-              <span className="mt-2 text-[10px] font-semibold leading-tight">Open<br />Finance</span>
-            </Link>
-            <Link to="/app/chat" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <MessageCircle className="size-9 text-[#313878]" strokeWidth={1.7} />
-              <span className="mt-2 text-[10px] font-semibold leading-tight">WhatsApp</span>
-            </Link>
+          <div className="mt-3 grid grid-cols-3 gap-3">
+            <Link to="/app/pix" className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><QrCode className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">Pix</span></Link>
+            <Link to="/app/credito" className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><HandCoins className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium leading-tight">Linhas de crédito</span></Link>
+            <Link to="/app/cartoes" className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><CreditCard className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">Cartões</span></Link>
+            <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><PieChart className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium leading-tight">Open Finance</span></Link>
+            <Link to="/app/chat" className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><MessageCircleMore className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">WhatsApp</span></Link>
           </div>
         </section>
 
