@@ -11,9 +11,9 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/app/transferencias")({
   head: () => ({
     meta: [
-      { title: "Transferências — Conta Empresas (demo)" },
+      { title: "Transferências — Conta Empresas" },
       { name: "description", content: "Transfira entre contas Bradesco ou para outros bancos, agende e salve favorecidos." },
-      { property: "og:title", content: "Transferências — Conta Empresas (demo)" },
+      { property: "og:title", content: "Transferências — Conta Empresas" },
       { property: "og:description", content: "Transferências imediatas ou agendadas com comprovante." },
     ],
   }),
