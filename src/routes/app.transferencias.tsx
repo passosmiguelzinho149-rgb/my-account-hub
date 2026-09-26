@@ -104,7 +104,7 @@ function Transferencias() {
 
         {beneficiaries.length > 0 && (
           <>
-            <h2 className="mt-4 text-sm font-semibold">Favorecidos</h2>
+            <h2 className="mt-4 text-sm font-semibold">Pix salvos</h2>
             <ul className="mt-2 space-y-2">
               {beneficiaries.map((b) => (
                 <li key={b.id} className="flex items-center gap-2 rounded-xl border border-border bg-card p-3 shadow-card">
