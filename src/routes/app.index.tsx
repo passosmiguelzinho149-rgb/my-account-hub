@@ -2,6 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowDown,
   ArrowUp,
+  Banknote,
+  Smartphone,
   ArrowLeftRight,
   Barcode,
   Bell,
@@ -41,8 +43,10 @@ export const Route = createFileRoute("/app/")({
 
 const favorites = [
   { label: "Pix", Icon: Zap, to: "/app/pix" },
-  { label: "Transferências", Icon: ArrowLeftRight, to: "/app/servico/$slug", slug: "transferencias" },
-  { label: "Pagamentos", Icon: Barcode, to: "/app/servico/$slug", slug: "pagamentos" },
+  { label: "Transferências", Icon: ArrowLeftRight, to: "/app/transferencias" },
+  { label: "Pagamentos", Icon: Barcode, to: "/app/pagamentos" },
+  { label: "Recargas", Icon: Smartphone, to: "/app/recargas" },
+  { label: "Saque", Icon: Banknote, to: "/app/saques" },
   { label: "Cartões", Icon: CreditCard, to: "/app/cartoes" },
   { label: "Empréstimos", Icon: HandCoins, to: "/app/credito" },
   { label: "Investimentos", Icon: TrendingUp, to: "/app/servico/$slug", slug: "investimentos" },
