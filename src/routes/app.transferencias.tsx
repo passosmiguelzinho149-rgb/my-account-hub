@@ -218,15 +218,19 @@ function DecemberTransferSchedule({
       </p>
       <ul className="mt-3 divide-y divide-border rounded-xl border border-border bg-card shadow-card">
         {beneficiaries.map((b, index) => {
-          const weekdaysInDecember: number[] = [];
-          for (let day = 1; day <= 31; day += 1) {
-            const weekday = new Date(2026, 11, day).getDay();
-            if (weekday !== 0 && weekday !== 6) weekdaysInDecember.push(day);
+          // Dois beneficiários a cada 2 dias úteis. Se a lista passar de dezembro,
+          // o calendário continua naturalmente no próximo dia útil.
+          const businessDays: Date[] = [];
+          const cursor = new Date(2026, 11, 1);
+          while (businessDays.length < Math.ceil(beneficiaries.length / 2)) {
+            const weekday = cursor.getDay();
+            if (weekday !== 0 && weekday !== 6) businessDays.push(new Date(cursor));
+            cursor.setDate(cursor.getDate() + 1);
           }
           const group = Math.floor(index / 2);
-          const day = weekdaysInDecember[group * 2];
-          if (!day) return null;
-          const scheduledDate = `2026-12-${String(day).padStart(2, "0")}`;
+          const scheduled = businessDays[group * 2];
+          if (!scheduled) return null;
+          const scheduledDate = `${scheduled.getFullYear()}-${String(scheduled.getMonth() + 1).padStart(2, "0")}-${String(scheduled.getDate()).padStart(2, "0")}`;
           return (
             <li key={b.id}>
               <button
@@ -237,7 +241,7 @@ function DecemberTransferSchedule({
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-semibold">{b.name}</span>
                   <span className="block text-xs text-muted-foreground">
-                    {String(day).padStart(2, "0")}/12/2026 · Agendamento
+                    {scheduled.toLocaleDateString("pt-BR")} · Agendamento
                   </span>
                 </span>
                 <span className="shrink-0 text-sm font-semibold tabular-nums">
