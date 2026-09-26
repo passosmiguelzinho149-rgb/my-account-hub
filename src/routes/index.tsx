@@ -72,7 +72,7 @@ function LoginScreen() {
   const submitPin = () => {
     const result = checkPin(pin);
     setPin("");
-    if (!result.ok) return setError(result.reason);
+    if (!result.ok) return setError("Senha incorreta");
     setError(null);
     finish("Senha");
   };
@@ -277,7 +277,18 @@ function LoginScreen() {
                 type="submit"
                 className="mt-4 w-full rounded-full bg-primary py-3.5 font-bold text-primary-foreground"
               >
-                Continuar
+                Acessar conta
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setPin("");
+                  setStep({ name: "home" });
+                  void biometric();
+                }}
+                className="mt-3 w-full rounded-full border border-primary py-3.5 font-bold text-primary"
+              >
+                Entrar com facial
               </button>
             </form>
           )}
