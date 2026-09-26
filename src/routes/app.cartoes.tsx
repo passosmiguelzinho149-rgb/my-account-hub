@@ -1,245 +1,92 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Copy, Eye, EyeOff, Lock, Plus, ShieldCheck, Sparkles, Unlock } from "lucide-react";
+import { CreditCard, Eye, Lock, Settings, Wifi } from "lucide-react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { account } from "@/lib/mock-data";
 
-type VirtualCard = {
-  number: string;
-  holder: string;
-  expires: string;
-  cvv: string;
-  active: boolean;
-  createdAt: string;
-};
-
-const STORAGE_KEY = "bradesco-demo-virtual-card-v1";
-
-function generateCard(): VirtualCard {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const year = String((now.getFullYear() + 5) % 100).padStart(2, "0");
-
-  // Números deliberadamente fictícios para a demonstração; não são cartões válidos.
-  const suffix = String(Math.floor(1000000000 + Math.random() * 8999999999));
-  const number = `9999 00${suffix.slice(0, 10)}`.slice(0, 19);
-
-  return {
-    number,
-    holder: account.holder.toUpperCase(),
-    expires: `${month}/${year}`,
-    cvv: String(Math.floor(100 + Math.random() * 900)),
-    active: true,
-    createdAt: now.toISOString(),
-  };
-}
-
-function loadCard(): VirtualCard | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as VirtualCard) : null;
-  } catch {
-    return null;
-  }
-}
-
-function saveCard(card: VirtualCard) {
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(card));
-}
-
 export const Route = createFileRoute("/app/cartoes")({
-  head: () => ({
-    meta: [
-      { title: "Cartões — Conta Empresas (demo)" },
-      {
-        name: "description",
-        content: "Cartão virtual empresarial fictício para demonstração.",
-      },
-    ],
-  }),
+  head: () => ({ meta: [{ title: "Cartões — Conta Empresas" }] }),
   component: CartoesScreen,
 });
 
+const cards = [
+  { name: "Mastercard", number: "5367 1234 5678 9012", theme: "from-[#080808] via-[#202020] to-[#090909]", brand: "mastercard" },
+  { name: "Visa Business", number: "4096 1234 5678 9010", theme: "from-[#8f001d] via-[#d00035] to-[#9d001f]", brand: "VISA" },
+] as const;
+
 function CartoesScreen() {
-  const [card, setCard] = useState<VirtualCard | null>(null);
-  const [revealed, setRevealed] = useState(false);
-  const [copied, setCopied] = useState<string | null>(null);
-
-  useEffect(() => {
-    setCard(loadCard());
-  }, []);
-
-  function createVirtualCard() {
-    const next = generateCard();
-    saveCard(next);
-    setCard(next);
-    setRevealed(false);
-    setCopied(null);
-  }
-
-  function toggleCard() {
-    if (!card) return;
-    const next = { ...card, active: !card.active };
-    saveCard(next);
-    setCard(next);
-  }
-
-  async function copyValue(value: string, label: string) {
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(label);
-      window.setTimeout(() => setCopied(null), 1800);
-    } catch {
-      setCopied("erro");
-    }
-  }
-
   return (
     <>
       <SubHeader title="Cartões" />
       <main className="px-4 py-5 pb-10">
-        <section className="rounded-2xl border border-border bg-card p-4 shadow-card">
-          <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Conta vinculada</p>
-          <p className="mt-2 font-bold">{account.holder}</p>
-          <div className="mt-3 grid grid-cols-2 gap-3 text-sm">
+        <h2 className="text-xl font-bold">Meus cartões</h2>
+        <p className="mt-1 text-sm text-muted-foreground">Cartões vinculados à sua conta empresarial.</p>
+
+        <div className="mt-5 grid gap-5 lg:grid-cols-2">
+          {cards.map((card) => (
+            <section key={card.name}>
+              <div className={`relative min-h-[220px] overflow-hidden rounded-[26px] bg-gradient-to-br ${card.theme} p-6 text-white shadow-xl`}>
+                <div className="absolute -right-12 -top-16 size-52 rotate-12 rounded-[40%] border-[30px] border-white/5" />
+                <div className="relative flex items-start justify-between">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <img src="/bradesco-symbol.svg" alt="" className="size-9 object-contain" />
+                      <span className="text-xl font-bold">bradesco</span>
+                    </div>
+                    <p className="ml-11 -mt-1 text-xs text-white/85">empresas e negócios</p>
+                  </div>
+                  <span className="text-sm font-semibold">Empresarial</span>
+                </div>
+
+                <div className="relative mt-7 flex items-center gap-3">
+                  <span className="h-10 w-14 rounded-md border border-white/40 bg-gradient-to-br from-[#f2e3b0] to-[#bda766]" />
+                  <Wifi className="size-7 rotate-90" />
+                </div>
+                <p className="relative mt-4 font-mono text-[19px] tracking-[0.12em]">{card.number}</p>
+
+                <div className="relative mt-3 flex items-end justify-between gap-3">
+                  <div>
+                    <p className="text-[9px] uppercase text-white/70">Validade</p>
+                    <p className="font-mono text-sm">12/28</p>
+                    <p className="mt-2 text-xs font-semibold">{account.holder}</p>
+                    <p className="text-[10px] text-white/80">CNPJ {account.cnpj}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className={card.brand === "VISA" ? "text-3xl font-black italic" : "text-lg font-bold"}>{card.brand}</p>
+                    {card.brand === "mastercard" && (
+                      <div className="mt-1 flex justify-end">
+                        <span className="size-8 rounded-full bg-red-500" />
+                        <span className="-ml-3 size-8 rounded-full bg-amber-400/90" />
+                      </div>
+                    )}
+                    {card.brand === "VISA" && <p className="text-xs">Business</p>}
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 grid grid-cols-3 gap-2">
+                <button type="button" className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
+                  <Eye className="size-5 text-primary" />Ver dados
+                </button>
+                <button type="button" className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
+                  <Settings className="size-5 text-primary" />Gerenciar
+                </button>
+                <button type="button" className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
+                  <Lock className="size-5 text-primary" />Bloquear
+                </button>
+              </div>
+            </section>
+          ))}
+        </div>
+
+        <section className="mt-6 rounded-2xl border border-border bg-card p-4 shadow-card">
+          <div className="flex items-center gap-3">
+            <CreditCard className="size-5 text-primary" />
             <div>
-              <p className="text-xs text-muted-foreground">Agência</p>
-              <p className="mt-1 font-semibold">{account.branch}</p>
-            </div>
-            <div>
-              <p className="text-xs text-muted-foreground">Conta corrente</p>
-              <p className="mt-1 font-semibold">{account.number}</p>
+              <p className="font-semibold">Conta vinculada</p>
+              <p className="text-sm text-muted-foreground">Agência {account.branch} · Conta {account.number}</p>
             </div>
           </div>
         </section>
-        <div className="mt-6 flex items-start justify-between gap-3">
-          <div>
-            <h2 className="text-xl font-bold">Cartão empresarial</h2>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Gerencie seu cartão virtual de demonstração.
-            </p>
-          </div>
-          <div className="grid size-11 shrink-0 place-items-center rounded-full bg-red-50 text-primary">
-            <Sparkles className="size-5" />
-          </div>
-        </div>
-
-        {!card ? (
-          <section className="mt-6 rounded-3xl border border-border bg-card p-6 text-center shadow-card">
-            <div className="mx-auto grid size-16 place-items-center rounded-2xl bg-primary/10 text-primary">
-              <Plus className="size-8" />
-            </div>
-            <h3 className="mt-4 text-lg font-bold">Crie seu cartão virtual</h3>
-            <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-muted-foreground">
-              Gere agora um cartão empresarial fictício para testar a interface e o fluxo de pagamentos.
-            </p>
-            <button
-              type="button"
-              onClick={createVirtualCard}
-              className="mt-5 w-full rounded-xl bg-primary px-5 py-3.5 font-bold text-primary-foreground shadow-lg"
-            >
-              Gerar cartão virtual
-            </button>
-          </section>
-        ) : (
-          <>
-            <section
-              className={`relative mt-6 min-h-[215px] overflow-hidden rounded-[26px] p-6 text-white shadow-xl transition-opacity ${card.active ? "bg-gradient-to-br from-[#b40000] via-[#d00000] to-[#8d0000]" : "bg-gradient-to-br from-gray-600 to-gray-800 opacity-80"}`}
-            >
-              <div className="absolute -right-16 -top-16 size-48 rounded-full border-[28px] border-white/10" />
-              <div className="absolute -bottom-24 -left-10 size-52 rounded-full border-[30px] border-white/10" />
-              <div className="relative flex items-start justify-between">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/75">
-                    Empresas e negócios
-                  </p>
-                  <p className="mt-2 text-lg font-bold">CARTÃO VIRTUAL</p>
-                </div>
-                <ShieldCheck className="size-8 text-white/85" />
-              </div>
-              <div className="relative mt-8">
-                <p className="font-mono text-xl tracking-[0.13em]">
-                  {revealed ? card.number : "9999 •••• •••• ••••"}
-                </p>
-              </div>
-              <div className="relative mt-5 flex items-end justify-between">
-                <div>
-                  <p className="text-[9px] uppercase text-white/65">Titular</p>
-                  <p className="mt-0.5 text-xs font-semibold">{card.holder}</p>
-                </div>
-                <div>
-                  <p className="text-[9px] uppercase text-white/65">Validade</p>
-                  <p className="mt-0.5 font-mono text-xs font-semibold">{card.expires}</p>
-                </div>
-              </div>
-              {!card.active && (
-                <div className="absolute inset-0 grid place-items-center bg-black/25">
-                  <span className="rounded-full bg-black/55 px-4 py-2 text-sm font-bold">CARTÃO BLOQUEADO</span>
-                </div>
-              )}
-            </section>
-
-            <section className="mt-4 rounded-2xl border border-border bg-card p-4 shadow-card">
-              <div className="flex items-center justify-between">
-                <span className="text-sm font-medium text-muted-foreground">Número do cartão</span>
-                <button
-                  type="button"
-                  onClick={() => setRevealed((v) => !v)}
-                  className="inline-flex items-center gap-1.5 text-sm font-bold text-primary"
-                >
-                  {revealed ? <EyeOff className="size-4" /> : <Eye className="size-4" />}
-                  {revealed ? "Ocultar" : "Mostrar"}
-                </button>
-              </div>
-              <p className="mt-2 font-mono text-base font-semibold">
-                {revealed ? card.number : "9999 •••• •••• ••••"}
-              </p>
-
-              {revealed && (
-                <div className="mt-4 grid grid-cols-2 gap-3 border-t border-border pt-4">
-                  <div>
-                    <p className="text-xs text-muted-foreground">CVV</p>
-                    <p className="mt-1 font-mono font-bold">{card.cvv}</p>
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Validade</p>
-                    <p className="mt-1 font-mono font-bold">{card.expires}</p>
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-4 grid grid-cols-2 gap-3">
-                <button
-                  type="button"
-                  onClick={() => copyValue(card.number, "número")}
-                  disabled={!revealed}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-border px-3 py-3 text-sm font-bold disabled:opacity-40"
-                >
-                  <Copy className="size-4" />
-                  {copied === "número" ? "Copiado!" : "Copiar número"}
-                </button>
-                <button
-                  type="button"
-                  onClick={toggleCard}
-                  className="inline-flex items-center justify-center gap-2 rounded-xl bg-secondary px-3 py-3 text-sm font-bold"
-                >
-                  {card.active ? <Lock className="size-4" /> : <Unlock className="size-4" />}
-                  {card.active ? "Bloquear" : "Desbloquear"}
-                </button>
-              </div>
-            </section>
-
-            <button
-              type="button"
-              onClick={createVirtualCard}
-              className="mt-4 w-full rounded-xl border border-primary px-5 py-3.5 font-bold text-primary"
-            >
-              Gerar novo cartão virtual
-            </button>
-          </>
-        )}
-
       </main>
     </>
   );
