@@ -150,17 +150,43 @@ function seedTx(
   };
 }
 
+function seedTxAt(
+  date: string,
+  partial: Omit<Tx, "id" | "createdAt" | "receipt" | "channel" | "status"> &
+    Partial<Pick<Tx, "status" | "channel">>,
+): Tx {
+  const d = new Date(date);
+  const iso = d.toISOString();
+  return {
+    id: rid("tx"),
+    createdAt: iso,
+    status: partial.status ?? "Concluído",
+    channel: partial.channel ?? "App Empresas",
+    ...partial,
+    receipt: {
+      authentication: buildAuthentication(),
+      ...(partial.category === "pix" ? { e2e: buildEndToEndId(d) } : {}),
+      rows: [
+        { label: "Data e hora", value: formatDateTime(iso) },
+        { label: "Valor", value: formatBRL(partial.amount) },
+        { label: "Descrição", value: partial.title },
+        { label: "Origem/Destino", value: partial.counterpart },
+      ],
+    },
+  };
+}
+
 function initialState(): BankState {
   return {
     transactions: [
-      seedTx(0, {
+      seedTxAt("2026-06-18T10:32:00-04:00", {
         category: "pix",
         kind: "in",
         title: "PIX QR CODE STATIC",
         counterpart: "REM: MARCOS NUNES DE MIRANDA",
         amount: 52_625_000,
       }),
-      seedTx(2, {
+      seedTxAt("2026-06-16T10:32:00-04:00", {
         category: "pix",
         kind: "in",
         title: "PIX QR CODE STATIC",
@@ -181,7 +207,7 @@ function initialState(): BankState {
         counterpart: "POSTO SANTA CRUZ",
         amount: 912.4,
       }),
-      seedTx(9, {
+      seedTxAt("2026-06-11T10:32:00-04:00", {
         category: "pix",
         kind: "in",
         title: "PIX QR CODE STATIC",
