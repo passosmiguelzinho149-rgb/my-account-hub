@@ -1,16 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowDown,
-  ArrowUp,
   ArrowLeftRight,
+  ArrowUp,
   Barcode,
   ChevronRight,
   CreditCard,
   HandCoins,
-  MessageCircle,
   PieChart,
   Settings2,
-  Sparkles,
+  ShoppingBag,
   TrendingUp,
   Zap,
 } from "lucide-react";
@@ -23,16 +22,7 @@ export const Route = createFileRoute("/app/")({
   head: () => ({
     meta: [
       { title: "Início — Conta Empresas (demo)" },
-      {
-        name: "description",
-        content:
-          "Saldo, resumo diário, favoritos, notificações e acesso rápido aos serviços da conta empresarial.",
-      },
-      { property: "og:title", content: "Início — Conta Empresas (demo)" },
-      {
-        property: "og:description",
-        content: "Saldo, favoritos, notificações e serviços da conta empresarial de demonstração.",
-      },
+      { name: "description", content: "Tela inicial da conta empresarial de demonstração." },
     ],
   }),
   component: HomeScreen,
@@ -49,17 +39,6 @@ const favorites = [
   { label: "Personalizar", Icon: Settings2, to: "/app/servicos" },
 ] as const;
 
-const tips = [
-  {
-    title: "Pix sem susto",
-    body: "Confira sempre o nome e o CPF/CNPJ de quem recebe antes de confirmar.",
-  },
-  {
-    title: "Cartão virtual",
-    body: "Use o cartão virtual para compras on-line e troque o número quando quiser.",
-  },
-];
-
 function HomeScreen() {
   const { transactions } = useBank();
   const today = new Date().toDateString();
@@ -72,119 +51,108 @@ function HomeScreen() {
   return (
     <>
       <BrandHeader>
-        <div className="px-4 pb-6">
-          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
-            <div className="min-w-0">
-              <h1 className="text-lg font-bold break-words">Olá, {account.holder}</h1>
-              <p className="mt-1 text-sm opacity-90">CNPJ: {account.cnpj}</p>
-            </div>
-
+        <div className="px-4 pb-7">
+          <div className="min-w-0">
+            <h1 className="text-[22px] font-bold leading-tight">Olá, {account.holder}</h1>
+            <p className="mt-1 text-sm font-medium opacity-90">CNPJ: {account.cnpj}</p>
           </div>
-          <BalanceCard showAccount className="mt-4" />
+          <BalanceCard showAccount className="mt-5 rounded-2xl border border-primary-foreground/10 bg-primary-deep/45 p-5 shadow-lg" />
         </div>
       </BrandHeader>
 
-      <main className="px-4 py-5">
-        <h2 className="text-lg font-semibold">Favoritos</h2>
-        <ul className="mt-3 grid grid-cols-4 gap-3">
-          {favorites.map(({ label, Icon, to, ...rest }) => (
-            <li key={label}>
-              <Link
-                to={to}
-                params={"slug" in rest ? { slug: rest.slug } : {}}
-                className="group flex h-full flex-col items-center gap-2 rounded-2xl bg-card px-1 py-2.5 text-center transition-transform active:scale-95"
-              >
-                <span className="grid size-14 place-items-center rounded-2xl border border-border/70 bg-card shadow-card transition-colors group-hover:border-primary/30">
-                  <Icon className="size-6 text-primary" aria-hidden />
-                </span>
-                <span className="text-[11px] leading-tight font-medium">{label}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <Link
-          to="/app/servicos"
-          className="mt-3 inline-flex w-full items-center justify-center gap-1 rounded-full py-2 text-sm font-semibold text-primary"
-        >
-          Ver mais serviços
-          <ChevronRight className="size-4" aria-hidden />
-        </Link>
-
-        <section className="mt-4 rounded-2xl border border-border/70 bg-card p-4 shadow-card">
-          <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-            <h2 className="truncate text-lg font-semibold">Resumo diário</h2>
-            <span className="shrink-0 text-sm text-muted-foreground">
-              {new Date().toLocaleDateString("pt-BR")}
-            </span>
-          </div>
-          <dl className="mt-4 grid grid-cols-2 gap-4">
-            <div className="min-w-0">
-              <dt className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <ArrowUp className="size-4 text-income" aria-hidden />
-                Entradas
-              </dt>
-              <dd className="mt-1 truncate font-semibold tabular-nums">{formatBRL(inflow)}</dd>
-            </div>
-            <div className="min-w-0">
-              <dt className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                <ArrowDown className="size-4 text-brand-red" aria-hidden />
-                Saídas
-              </dt>
-              <dd className="mt-1 truncate font-semibold tabular-nums">{formatBRL(outflow)}</dd>
-            </div>
-          </dl>
+      <main className="bg-background px-5 pb-8 pt-5">
+        <section>
+          <h2 className="text-[22px] font-bold text-foreground">Favoritos</h2>
+          <ul className="mt-4 grid grid-cols-4 gap-x-3 gap-y-6">
+            {favorites.map(({ label, Icon, to, ...rest }) => (
+              <li key={label}>
+                <Link
+                  to={to}
+                  params={"slug" in rest ? { slug: rest.slug } : {}}
+                  className="group flex flex-col items-center text-center"
+                >
+                  <span className="grid size-[74px] place-items-center rounded-[22px] bg-card shadow-[0_8px_25px_rgba(30,50,70,0.08)] transition-transform group-active:scale-95">
+                    <Icon className="size-9 text-primary" strokeWidth={1.8} aria-hidden />
+                  </span>
+                  <span className="mt-3 text-[13px] font-semibold leading-tight text-foreground">
+                    {label}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
           <Link
-            to="/app/extrato"
-            className="mt-4 inline-flex items-center gap-1 font-medium text-primary underline underline-offset-4"
+            to="/app/servicos"
+            className="mx-auto mt-5 flex w-fit items-center gap-2 text-base font-bold text-primary"
           >
-            Ver extrato
-            <ChevronRight className="size-4" aria-hidden />
+            Ver mais serviços <ChevronRight className="size-5" />
           </Link>
         </section>
 
-        <Link
-          to="/app/chat"
-          className="mt-4 flex items-center gap-3 rounded-2xl border border-border/70 bg-card p-4 shadow-card"
-        >
-          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-secondary-foreground">
-            <MessageCircle className="size-5" aria-hidden />
-          </span>
-          <span className="min-w-0">
-            <span className="block font-semibold">Assistente virtual</span>
-            <span className="block text-sm text-muted-foreground">
-              Tire dúvidas e abra funções por conversa.
-            </span>
-          </span>
-          <ChevronRight className="ml-auto size-5 shrink-0 text-brand-red" aria-hidden />
-        </Link>
+        <section className="mt-7">
+          <div className="flex items-center justify-between">
+            <h2 className="text-[22px] font-bold">Resumo diário</h2>
+            <span className="text-sm text-muted-foreground">{new Date().toLocaleDateString("pt-BR")}</span>
+          </div>
+          <div className="mt-3 rounded-2xl bg-card p-5 shadow-[0_8px_25px_rgba(30,50,70,0.06)]">
+            <dl className="grid grid-cols-2 gap-5">
+              <div>
+                <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <ArrowUp className="size-4 text-income" /> Entradas
+                </dt>
+                <dd className="mt-2 text-lg font-semibold tabular-nums">{formatBRL(inflow)}</dd>
+              </div>
+              <div>
+                <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <ArrowDown className="size-4 text-brand-red" /> Saídas
+                </dt>
+                <dd className="mt-2 text-lg font-semibold tabular-nums">{formatBRL(outflow)}</dd>
+              </div>
+            </dl>
+            <Link to="/app/extrato" className="mt-4 inline-flex items-center gap-1 font-semibold text-primary">
+              Ver extrato <ChevronRight className="size-4" />
+            </Link>
+          </div>
+        </section>
 
-        <h2 className="mt-6 text-lg font-semibold">Ofertas e benefícios</h2>
-        <Link
-          to="/app/credito"
-          className="mt-3 flex items-center gap-3 rounded-2xl border border-border/70 bg-card p-4 shadow-card"
-        >
-          <Sparkles className="size-6 shrink-0 text-brand-red" aria-hidden />
-          <span className="min-w-0">
-            <span className="block font-semibold">Capital de giro pré-aprovado</span>
-            <span className="block text-sm text-muted-foreground">
-              Simule prazos e parcelas nesta demonstração.
-            </span>
-          </span>
-        </Link>
+        <section className="mt-7">
+          <h2 className="text-[22px] font-bold">Ofertas</h2>
+          <div className="mt-3 overflow-hidden rounded-3xl bg-card shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+            <Link to="/app/credito" className="flex min-h-[150px] items-stretch">
+              <div className="w-[30%] bg-gradient-to-br from-red-100 via-red-50 to-white p-4">
+                <div className="flex h-full items-end justify-center">
+                  <span className="text-5xl">👩🏻‍💼</span>
+                </div>
+              </div>
+              <div className="flex flex-1 items-center justify-between p-5">
+                <div>
+                  <h3 className="text-lg font-bold">A melhor oferta do consignado</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">Simule e autorize a consulta dos seus dados.</p>
+                </div>
+                <ChevronRight className="size-7 shrink-0 text-primary" />
+              </div>
+            </Link>
+          </div>
+          <div className="mt-3 flex justify-center gap-2">
+            <span className="h-2.5 w-12 rounded-full bg-primary" />
+            <span className="size-2.5 rounded-full bg-muted" />
+            <span className="size-2.5 rounded-full bg-muted" />
+          </div>
+        </section>
 
-        <h2 className="mt-6 text-lg font-semibold">Dicas e novidades</h2>
-        <ul className="mt-3 space-y-3">
-          {tips.map((tip) => (
-            <li key={tip.title} className="rounded-xl border border-border bg-card p-4 shadow-card">
-              <p className="font-semibold">{tip.title}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{tip.body}</p>
-            </li>
-          ))}
-        </ul>
-
-        <p className="mt-6 text-xs text-muted-foreground">
-          Ambiente de demonstração: nenhuma operação movimenta dinheiro real.
-        </p>
+        <section className="mt-7">
+          <h2 className="text-[22px] font-bold">Benefícios e parcerias</h2>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            <Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-brand-red px-5 text-primary-foreground shadow-lg">
+              <ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} />
+              <span className="font-bold">Oferta com cashback</span>
+            </Link>
+            <Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-brand-red px-5 text-primary-foreground shadow-lg">
+              <ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} />
+              <span className="font-bold">Superoferta no shop</span>
+            </Link>
+          </div>
+        </section>
       </main>
     </>
   );
