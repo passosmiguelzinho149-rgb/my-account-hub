@@ -6,12 +6,12 @@ import { services } from "@/lib/mock-data";
 export const Route = createFileRoute("/app/servicos")({
   head: () => ({
     meta: [
-      { title: "Serviços — Conta Empresas (demo)" },
+      { title: "Serviços — Conta Empresas" },
       {
         name: "description",
         content: "Pix, extrato, cartões, limites, investimentos e demais serviços da conta empresarial.",
       },
-      { property: "og:title", content: "Serviços — Conta Empresas (demo)" },
+      { property: "og:title", content: "Serviços — Conta Empresas" },
       {
         property: "og:description",
         content: "Pix, extrato, cartões, limites e demais serviços da conta empresarial.",
