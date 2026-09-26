@@ -19,8 +19,8 @@ import { useBank } from "@/lib/bank";
 export const Route = createFileRoute("/app/")({
   head: () => ({
     meta: [
-      { title: "Início — Conta Empresas (demo)" },
-      { name: "description", content: "Tela inicial da conta empresarial de demonstração." },
+      { title: "Início — Conta Empresas" },
+      { name: "description", content: "Tela inicial da conta empresarial." },
     ],
   }),
   component: HomeScreen,
