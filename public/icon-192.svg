@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="192" height="192" viewBox="0 0 192 192">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#3034a6"/><stop offset=".55" stop-color="#6630a0"/><stop offset="1" stop-color="#c51652"/></linearGradient></defs>
+<rect width="192" height="192" rx="38" fill="url(#g)"/>
+<circle cx="96" cy="74.88" r="36.480000000000004" fill="none" stroke="#fff" stroke-width="5"/>
+<path d="M 55.67999999999999 82.56 Q 96 32.64 136.32 82.56" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/>
+<text x="50%" y="130.56" text-anchor="middle" fill="#fff" font-family="Arial,sans-serif" font-size="25" font-weight="700">CE</text>
+</svg>
