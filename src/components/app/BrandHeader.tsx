@@ -1,8 +1,10 @@
 import { Bell, FileQuestion } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
+import { useUnreadCount } from "@/lib/bank";
 
 export function BrandHeader({ children }: { children?: ReactNode }) {
+  const unreadCount = useUnreadCount();
   return (
     <header className="bg-brand-gradient text-primary-foreground">
       <div className="mobile-safe-top flex items-center justify-between gap-3 px-5 pb-5 pt-4">
@@ -19,7 +21,7 @@ export function BrandHeader({ children }: { children?: ReactNode }) {
           </button>
           <Link to="/app/notificacoes" aria-label="Notificações" className="relative grid size-10 place-items-center rounded-full transition-colors hover:bg-white/10">
             <Bell className="size-7" strokeWidth={1.8} />
-            <span className="absolute right-1.5 top-1.5 grid size-4 place-items-center rounded-full bg-[#df202f] text-[9px] font-bold text-white ring-2 ring-[#4a2aa0]">0</span>
+            {unreadCount > 0 && <span className="absolute right-1 top-1 grid min-h-4 min-w-4 place-items-center rounded-full bg-[#df202f] px-1 text-[9px] font-bold text-white ring-2 ring-[#4a2aa0]">{unreadCount > 99 ? "99+" : unreadCount}</span>}
           </Link>
         </div>
       </div>
