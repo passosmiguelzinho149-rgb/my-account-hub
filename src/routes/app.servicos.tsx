@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { icons } from "lucide-react";
+import { icons, MessageCircleMore, QrCode } from "lucide-react";
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { services } from "@/lib/mock-data";
 
@@ -22,15 +22,17 @@ export const Route = createFileRoute("/app/servicos")({
 });
 
 function ServiceIcon({ name }: { name: string }) {
+  if (name === "MessageCircle") return <MessageCircleMore className="size-9 text-[#152d78]" strokeWidth={1.7} aria-hidden />;
+  if (name === "Zap") return <QrCode className="size-9 text-[#152d78]" strokeWidth={1.7} aria-hidden />;
   const Icon = icons[name as keyof typeof icons] ?? icons.Circle;
-  return <Icon className="size-8 text-[#313878]" strokeWidth={1.55} aria-hidden />;
+  return <Icon className="size-9 text-[#152d78]" strokeWidth={1.7} aria-hidden />;
 }
 
 function ServicosScreen() {
   return (
     <>
       <BrandHeader />
-      <main className="mx-auto w-full max-w-[430px] px-5 py-5">
+      <main className="mx-auto w-full max-w-[430px] px-4 py-5">
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
           <h1 className="truncate text-[28px] font-medium">Serviços</h1>
           <button
@@ -41,25 +43,25 @@ function ServicosScreen() {
           </button>
         </div>
 
-        <ul className="mt-7 grid grid-cols-3 gap-x-4 gap-y-5">
+        <ul className="mt-6 grid grid-cols-3 gap-3">
           {services.map((s) => (
             <li key={s.slug}>
               {s.route ? (
                 <Link
                   to={s.route}
-                  className="flex aspect-[1/1] w-full flex-col items-center justify-center gap-2 rounded-[14px] border border-border/30 bg-card px-1.5 py-2 text-center shadow-[0_5px_14px_rgba(25,35,70,0.13)] transition-transform active:scale-[0.97]"
+                  className="flex min-h-[118px] w-full flex-col items-center justify-center gap-2 rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)] transition-transform active:scale-[0.97]"
                 >
                   <ServiceIcon name={s.icon} />
-                  <span className="max-w-[92px] text-[13px] font-normal leading-[1.08]">{s.label}</span>
+                  <span className="max-w-[100px] text-[13px] font-medium leading-[1.12]">{s.label}</span>
                 </Link>
               ) : (
                 <Link
                   to="/app/servico/$slug"
                   params={{ slug: s.slug }}
-                  className="flex aspect-[1/1] w-full flex-col items-center justify-center gap-2 rounded-[14px] border border-border/30 bg-card px-1.5 py-2 text-center shadow-[0_5px_14px_rgba(25,35,70,0.13)] transition-transform active:scale-[0.97]"
+                  className="flex min-h-[118px] w-full flex-col items-center justify-center gap-2 rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)] transition-transform active:scale-[0.97]"
                 >
                   <ServiceIcon name={s.icon} />
-                  <span className="max-w-[92px] text-[13px] font-normal leading-[1.08]">{s.label}</span>
+                  <span className="max-w-[100px] text-[13px] font-medium leading-[1.12]">{s.label}</span>
                 </Link>
               )}
             </li>
