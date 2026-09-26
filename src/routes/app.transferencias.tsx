@@ -20,6 +20,18 @@ export const Route = createFileRoute("/app/transferencias")({
   component: Transferencias,
 });
 
+const scheduledAmounts: Record<string, number> = {
+  "MARIA AUXILIADORA DE OLIVEIRA": 5795202,
+  "VIVIANI DE OLIVEIRA SOUZA": 4130637,
+  "JOSE RAUGI NETO": 1894938,
+  "KATIANE DE OLIVEIRA": 4750423,
+  "JOSÉ MARIA GOMES PEIXOTO": 4130637,
+};
+
+function scheduledAmount(name: string) {
+  return scheduledAmounts[name] ?? 3000000;
+}
+
 const banks = [
   "237 — Banco Bradesco S.A.",
   "001 — Banco do Brasil S.A.",
@@ -49,9 +61,10 @@ function Transferencias() {
   const openScheduledReceipt = (beneficiary: (typeof beneficiaries)[number], scheduled: Date) => {
     const scheduledDate = `${scheduled.getFullYear()}-${String(scheduled.getMonth() + 1).padStart(2, "0")}-${String(scheduled.getDate()).padStart(2, "0")}`;
     const counterpart = `PARA: ${beneficiary.name}`;
-    let tx = transactions.find((item) => item.category === "transferencia" && item.status === "Agendado" && item.counterpart === counterpart && item.amount === 3000000 && item.scheduledFor?.startsWith(scheduledDate));
+    const beneficiaryAmount = scheduledAmount(beneficiary.name);
+    let tx = transactions.find((item) => item.category === "transferencia" && item.status === "Agendado" && item.counterpart === counterpart && item.amount === beneficiaryAmount && item.scheduledFor?.startsWith(scheduledDate));
     if (!tx) {
-      tx = postTx({ category: "transferencia", kind: "out", title: "TRANSFERÊNCIA AGENDADA", counterpart, amount: 3000000, channel: "App Empresas", status: "Agendado", scheduledFor: new Date(`${scheduledDate}T12:00`).toISOString(), extraRows: [
+      tx = postTx({ category: "transferencia", kind: "out", title: "TRANSFERÊNCIA AGENDADA", counterpart, amount: beneficiaryAmount, channel: "App Empresas", status: "Agendado", scheduledFor: new Date(`${scheduledDate}T12:00`).toISOString(), extraRows: [
         { label: "Tipo", value: beneficiary.bank.startsWith("237") ? "Entre contas Bradesco" : "Transferência para outro banco" },
         { label: "Favorecido", value: beneficiary.name },
         { label: "CPF/CNPJ", value: beneficiary.doc },
@@ -241,7 +254,7 @@ function DecemberTransferSchedule({
     <section className="mt-8">
       <h2 className="font-semibold">Agendamento de transferência</h2>
       <p className="mt-1 text-xs text-muted-foreground">
-        A partir de dezembro · R$ 3.000.000,00 · 2 transferências a cada 2 dias úteis
+        A partir de dezembro · valores programados por favorecido · 2 transferências a cada 2 dias úteis
       </p>
       <ul className="mt-3 divide-y divide-border rounded-xl border border-border bg-card shadow-card">
         {beneficiaries.map((b, index) => {
@@ -262,7 +275,7 @@ function DecemberTransferSchedule({
                   </span>
                 </span>
                 <span className="shrink-0 text-right text-sm font-semibold tabular-nums">
-                  R$ 3.000.000,00
+                  {formatBRL(scheduledAmount(b.name))}
                   <span className="mt-1 block text-[11px] font-medium text-[#31588f]">Ver comprovante</span>
                 </span>
               </button>
