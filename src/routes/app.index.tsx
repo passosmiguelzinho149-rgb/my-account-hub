@@ -117,14 +117,16 @@ function HomeScreen() {
           </div>
         </section>
 
-        <section className="mt-7">
+        <section className="mt-7 overflow-hidden">
           <h2 className="text-[22px] font-bold">Acesso rápido</h2>
-          <div className="mt-3 grid grid-cols-3 gap-3">
-            <Link to="/app/pix" className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><QrCode className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">Pix</span></Link>
-            <Link to="/app/credito" className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><HandCoins className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium leading-tight">Linhas de crédito</span></Link>
-            <Link to="/app/cartoes" className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><CreditCard className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">Cartões</span></Link>
-            <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><PieChart className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium leading-tight">Open Finance</span></Link>
-            <Link to="/app/chat" className="flex min-h-[112px] flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><MessageCircleMore className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">WhatsApp</span></Link>
+          <div className="-mx-4 mt-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex w-max gap-3">
+              <Link to="/app/pix" className="flex h-[112px] w-[124px] shrink-0 flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><QrCode className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">Pix</span></Link>
+              <Link to="/app/credito" className="flex h-[112px] w-[124px] shrink-0 flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><HandCoins className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium leading-tight">Linhas de<br />crédito</span></Link>
+              <Link to="/app/cartoes" className="flex h-[112px] w-[124px] shrink-0 flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><CreditCard className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">Cartões</span></Link>
+              <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex h-[112px] w-[124px] shrink-0 flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><PieChart className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium leading-tight">Open<br />Finance</span></Link>
+              <Link to="/app/chat" className="flex h-[112px] w-[124px] shrink-0 flex-col items-center justify-center rounded-2xl border border-border/20 bg-white px-2 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)]"><MessageCircleMore className="size-9 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[13px] font-medium">WhatsApp</span></Link>
+            </div>
           </div>
         </section>
 
