@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Building2, CalendarDays, Eye, Landmark, ReceiptText, Repeat2 } from "lucide-react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { ConfirmPanel, ErrorNote, Field, PrimaryButton, SelectField } from "@/components/app/OpKit";
 import { formatBRL } from "@/lib/mock-data";
@@ -44,6 +44,7 @@ function Transferencias() {
   const [error, setError] = useState<string | null>(null);
   const [review, setReview] = useState(false);
   const [showBalance, setShowBalance] = useState(true);
+  const schedule = useMemo(() => buildTransferSchedule(beneficiaries.length), [beneficiaries.length]);
 
   const value = parseAmount(amount);
   const internal = bank.startsWith("237");
@@ -152,6 +153,7 @@ function Transferencias() {
 
         <DecemberTransferSchedule
           beneficiaries={beneficiaries}
+          schedule={schedule}
           onSelect={(b, scheduledDate) => {
             setName(b.name);
             setDoc(b.doc);
@@ -204,11 +206,24 @@ export function ScheduledList({ category }: { category: "transferencia" | "pagam
 }
 
 
+function buildTransferSchedule(count: number) {
+  const businessDays: Date[] = [];
+  const cursor = new Date(2026, 11, 1);
+  while (businessDays.length < Math.ceil(count / 2) * 2) {
+    const weekday = cursor.getDay();
+    if (weekday !== 0 && weekday !== 6) businessDays.push(new Date(cursor));
+    cursor.setDate(cursor.getDate() + 1);
+  }
+  return businessDays;
+}
+
 function DecemberTransferSchedule({
   beneficiaries,
+  schedule,
   onSelect,
 }: {
   beneficiaries: ReturnType<typeof useBank>["beneficiaries"];
+  schedule: Date[];
   onSelect: (
     beneficiary: ReturnType<typeof useBank>["beneficiaries"][number],
     scheduledDate: string,
@@ -222,17 +237,8 @@ function DecemberTransferSchedule({
       </p>
       <ul className="mt-3 divide-y divide-border rounded-xl border border-border bg-card shadow-card">
         {beneficiaries.map((b, index) => {
-          // Dois beneficiários a cada 2 dias úteis. O calendário continua em janeiro
-          // quando necessário, para que todos os favorecidos recebam seu agendamento.
-          const businessDays: Date[] = [];
-          const cursor = new Date(2026, 11, 1);
-          while (businessDays.length < Math.ceil(beneficiaries.length / 2) * 2) {
-            const weekday = cursor.getDay();
-            if (weekday !== 0 && weekday !== 6) businessDays.push(new Date(cursor));
-            cursor.setDate(cursor.getDate() + 1);
-          }
           const group = Math.floor(index / 2);
-          const scheduled = businessDays[group * 2];
+          const scheduled = schedule[group * 2];
           if (!scheduled) return null;
           const scheduledDate = `${scheduled.getFullYear()}-${String(scheduled.getMonth() + 1).padStart(2, "0")}-${String(scheduled.getDate()).padStart(2, "0")}`;
           return (
