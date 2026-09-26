@@ -23,12 +23,12 @@ export const Route = createFileRoute("/app/extrato")({
   component: ExtratoScreen,
 });
 
-const periods = ["7 dias", "15 dias", "30 dias", "90 dias"] as const;
+const periods = ["Todos", "7 dias", "15 dias", "30 dias", "90 dias"] as const;
 const tabs = ["Todos", "Entradas", "Saídas", "Futuros"] as const;
 
 function ExtratoScreen() {
   const { balanceHidden } = useSession();
-  const [period, setPeriod] = useState<string>("7 dias");
+  const [period, setPeriod] = useState<string>("Todos");
   const [tab, setTab] = useState<string>("Todos");
   const [query, setQuery] = useState("");
   const { transactions } = useBank();
@@ -41,7 +41,7 @@ function ExtratoScreen() {
     if (tab === "Saídas" && t.kind !== "out") return false;
     if (tab === "Futuros") return t.status === "Agendado";
     if (t.status === "Agendado") return false;
-    if (new Date(t.createdAt).getTime() < since) return false;
+    if (since !== null && new Date(t.createdAt).getTime() < since) return false;
     if (!query.trim()) return true;
     const q = query.trim().toLowerCase();
     return t.title.toLowerCase().includes(q) || t.counterpart.toLowerCase().includes(q);
