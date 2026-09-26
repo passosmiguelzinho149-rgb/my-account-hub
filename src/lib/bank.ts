@@ -331,6 +331,24 @@ export function getState(): BankState {
     }
     if (!raw_ok(cache)) cache = initialState();
 
+    // Migração dos favorecidos de demonstração: garante que os 26 nomes
+    // configurados no app apareçam mesmo quando o navegador já tinha dados antigos.
+    const seededBeneficiaries = initialState().beneficiaries;
+    const existing = new Map(cache!.beneficiaries.map((item) => [item.id, item]));
+    const seededIds = new Set(seededBeneficiaries.map((item) => item.id));
+    const customBeneficiaries = cache!.beneficiaries.filter((item) => !seededIds.has(item.id));
+    const mergedBeneficiaries = [
+      ...seededBeneficiaries,
+      ...customBeneficiaries,
+    ];
+    const beneficiariesChanged =
+      cache!.beneficiaries.length !== mergedBeneficiaries.length ||
+      cache!.beneficiaries.some((item, index) => item.id !== mergedBeneficiaries[index]?.id);
+    if (beneficiariesChanged) {
+      cache = { ...cache!, beneficiaries: mergedBeneficiaries };
+      persist();
+    }
+
     // Migração dos dados de demonstração: garante que os três recebimentos
     // fictícios estejam presentes mesmo quando o navegador já tinha dados antigos.
     const demoReceipts = [
