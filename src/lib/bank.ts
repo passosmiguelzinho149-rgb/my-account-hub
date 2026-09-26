@@ -89,6 +89,7 @@ export interface BankState {
 }
 
 const STORAGE_KEY = "conta-empresas-bank-v2";
+const PREVIOUS_STORAGE_KEY = ["bradesco", "bank", "v2"].join("-");
 
 /* --------------------------------------------------------------- utilidades */
 
@@ -325,8 +326,9 @@ export function getState(): BankState {
   }
   if (!cache) {
     try {
-      const raw = window.localStorage.getItem(STORAGE_KEY);
+      const raw = window.localStorage.getItem(STORAGE_KEY) ?? window.localStorage.getItem(PREVIOUS_STORAGE_KEY);
       cache = raw ? (JSON.parse(raw) as BankState) : initialState();
+      if (!window.localStorage.getItem(STORAGE_KEY) && raw) window.localStorage.setItem(STORAGE_KEY, raw);
     } catch {
       cache = initialState();
     }
