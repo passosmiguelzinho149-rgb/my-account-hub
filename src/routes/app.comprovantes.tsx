@@ -29,9 +29,9 @@ const filters: { label: string; category?: TxCategory }[] = [
   { label: "Compras", category: "compra" },
 ];
 
-function displayReceiptDate(t: { amount: number; kind: string; createdAt: string }): string {
+function displayReceiptDate(t: { amount: number; kind: string; createdAt: string }, firstMatch = false): string {
   if (t.kind === "in" && t.amount === 26_750_000) return "11/06/2026 às 10:32:00";
-  if (t.kind === "in" && t.amount === 52_625_000) return "18/06/2026 às 10:32:00";
+  if (firstMatch && t.kind === "in" && t.amount === 52_625_000) return "18/06/2026 às 10:32:00";
   return formatDateTime(t.createdAt);
 }
 
@@ -78,7 +78,7 @@ function ComprovantesScreen() {
                     {t.counterpart}
                   </span>
                   <span className="block text-sm text-muted-foreground">
-                    {displayReceiptDate(t)}
+                    {displayReceiptDate(t, list.findIndex((item) => item.kind === "in" && item.amount === 52_625_000) === list.indexOf(t))}
                   </span>
                 </span>
                 <span
