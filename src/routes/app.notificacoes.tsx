@@ -12,12 +12,12 @@ import {
 export const Route = createFileRoute("/app/notificacoes")({
   head: () => ({
     meta: [
-      { title: "Notificações — Conta Empresas (demo)" },
+      { title: "Notificações — Conta Empresas" },
       {
         name: "description",
         content: "Central de notificações: Pix recebido, pagamentos, faturas, segurança e ofertas.",
       },
-      { property: "og:title", content: "Notificações — Conta Empresas (demo)" },
+      { property: "og:title", content: "Notificações — Conta Empresas" },
       { property: "og:description", content: "Avisos de Pix, pagamentos, faturas e segurança." },
     ],
   }),
