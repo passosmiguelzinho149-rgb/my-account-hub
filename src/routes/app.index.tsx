@@ -6,6 +6,7 @@ import {
   ChevronRight,
   CreditCard,
   HandCoins,
+  MessageCircle,
   PieChart,
   ShoppingBag,
   Zap,
@@ -117,32 +118,28 @@ function HomeScreen() {
         </section>
 
         <section className="mt-7">
-          <h2 className="text-[22px] font-bold">Acesso rápido</h2>
-          <div className="mt-3 flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <Link to="/app/pix" className="flex min-w-[116px] flex-col items-center justify-center rounded-2xl bg-card px-3 py-4 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <Zap className="size-9 text-primary" strokeWidth={1.7} />
-              <span className="mt-2 text-[13px] font-semibold">Pix</span>
+          <h2 className="text-[22px] font-bold">Ac          <div className="mt-3 grid grid-cols-5 gap-2">
+            <Link to="/app/pix" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <Zap className="size-8 text-primary" strokeWidth={1.6} />
+              <span className="mt-2 text-[11px] font-semibold leading-tight">Pix</span>
             </Link>
-            <Link to="/app/credito" className="flex min-w-[116px] flex-col items-center justify-center rounded-2xl bg-card px-3 py-4 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <HandCoins className="size-9 text-primary" strokeWidth={1.7} />
-              <span className="mt-2 text-[13px] font-semibold leading-tight">Linhas de<br />crédito</span>
+            <Link to="/app/credito" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <HandCoins className="size-8 text-primary" strokeWidth={1.6} />
+              <span className="mt-2 text-[10px] font-semibold leading-tight">Linhas de<br />crédito</span>
             </Link>
-            <Link to="/app/cartoes" className="flex min-w-[116px] flex-col items-center justify-center rounded-2xl bg-card px-3 py-4 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <CreditCard className="size-9 text-primary" strokeWidth={1.7} />
-              <span className="mt-2 text-[13px] font-semibold">Cartões</span>
+            <Link to="/app/cartoes" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <CreditCard className="size-8 text-primary" strokeWidth={1.6} />
+              <span className="mt-2 text-[11px] font-semibold leading-tight">Cartões</span>
             </Link>
-            <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-w-[116px] flex-col items-center justify-center rounded-2xl bg-card px-3 py-4 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <PieChart className="size-9 text-primary" strokeWidth={1.7} />
-              <span className="mt-2 text-[13px] font-semibold leading-tight">Open<br />Finance</span>
+            <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <PieChart className="size-8 text-primary" strokeWidth={1.6} />
+              <span className="mt-2 text-[10px] font-semibold leading-tight">Open<br />Finance</span>
             </Link>
-            <Link to="/app/chat" className="flex min-w-[116px] flex-col items-center justify-center rounded-2xl bg-card px-3 py-4 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-              <span className="grid size-9 place-items-center rounded-full border-2 border-primary text-primary">⌁</span>
-              <span className="mt-2 text-[13px] font-semibold">WhatsApp</span>
+            <Link to="/app/chat" className="flex min-w-0 min-h-[104px] flex-col items-center justify-center rounded-2xl bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+              <MessageCircle className="size-8 text-primary" strokeWidth={1.6} />
+              <span className="mt-2 text-[10px] font-semibold leading-tight">WhatsApp</span>
             </Link>
           </div>
-        </section>
-
-        <section className="mt-6">
           <div className="rounded-2xl bg-gradient-to-br from-[#341044] via-[#5b124f] to-[#8b173f] px-5 py-5 text-white shadow-[0_10px_28px_rgba(30,20,50,0.18)]">
             <h3 className="text-[20px] font-bold">Vai pagar boleto? Atenção!</h3>
             <p className="mt-2 text-[16px] font-semibold leading-snug text-white/95">
