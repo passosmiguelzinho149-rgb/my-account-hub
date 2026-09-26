@@ -1,10 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Building2, CalendarDays, Eye, Landmark, ReceiptText, Repeat2 } from "lucide-react";
+import { CalendarDays, Eye, Landmark, ReceiptText, Repeat2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { ConfirmPanel, ErrorNote, Field, PrimaryButton, SelectField } from "@/components/app/OpKit";
 import { formatBRL } from "@/lib/mock-data";
-import { addBeneficiary, formatDay, postTx, removeBeneficiary, useBalance, useBank } from "@/lib/bank";
+import { addBeneficiary, formatDay, postTx, useBalance, useBank } from "@/lib/bank";
 import { parseAmount } from "@/lib/pix";
 import { cn } from "@/lib/utils";
 
