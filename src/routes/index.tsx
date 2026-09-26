@@ -1,5 +1,5 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { Bell, Fingerprint, Grid2X2, Lock, LockOpen, Menu, MessageCircle, ShieldCheck, X } from "lucide-react";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { Bell, Fingerprint, Grid2X2, Lock, LockOpen, Menu, MessageCircle, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSession } from "@/lib/session";
 import {
