@@ -110,6 +110,7 @@ function LoginScreen() {
               ],
               authenticatorSelection: {
                 authenticatorAttachment: "platform",
+                residentKey: "required",
                 userVerification: "required",
               },
               timeout: 60000,
