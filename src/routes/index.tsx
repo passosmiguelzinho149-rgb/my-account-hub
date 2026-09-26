@@ -456,84 +456,59 @@ function LoginScreen() {
         <div className="absolute bottom-[-120px] left-[-18%] h-72 w-[115%] rotate-[-18deg] rounded-[50%] bg-white/[0.06]" />
       </div>
 
-      <div className="relative mx-auto flex min-h-screen w-full max-w-lg flex-col px-6 pb-7 pt-4">
+      <div className="relative mx-auto flex min-h-screen w-full max-w-lg flex-col px-5 pb-5 pt-5">
         <header className="flex items-center justify-between">
-          <button
-            type="button"
-            aria-label="Abrir menu"
-            onClick={() => setError("Menu da demonstração.")}
-            className="grid size-10 place-items-center rounded-full text-white/95 transition-colors hover:bg-white/10"
-          >
-            <Menu className="size-7" strokeWidth={1.8} />
-          </button>
-
-          <div className="flex items-center gap-2">
-            <span className="grid size-9 place-items-center rounded-full bg-white text-sm font-black text-brand-red shadow-sm">
-              B
-            </span>
-            <span className="text-xl font-bold tracking-tight">bradesco</span>
+          <div className="flex items-center gap-2.5">
+            <span className="grid size-10 place-items-center rounded-full bg-white text-sm font-black text-[#2638a8] shadow-sm">B</span>
+            <div className="leading-tight">
+              <span className="block text-xl font-bold tracking-tight">bradesco</span>
+              <span className="block text-xs font-medium text-white/85">empresas e negócios</span>
+            </div>
           </div>
-
-          <button
-            type="button"
-            aria-label="Notificações"
-            onClick={() => setError("Não há novas notificações na demonstração.")}
-            className="relative grid size-10 place-items-center rounded-full transition-colors hover:bg-white/10"
-          >
-            <Bell className="size-6" strokeWidth={1.8} />
-            <span className="absolute right-1 top-1 size-2.5 rounded-full bg-[#58c85a] ring-2 ring-brand-red" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button type="button" aria-label="Ajuda" onClick={() => setError("Ajuda da demonstração.")} className="grid size-10 place-items-center rounded-full">
+              <HelpCircle className="size-7" strokeWidth={1.8} />
+            </button>
+            <button type="button" aria-label="Menu" onClick={() => setError("Menu da demonstração.")} className="grid size-10 place-items-center rounded-full">
+              <Menu className="size-7" strokeWidth={1.8} />
+            </button>
+          </div>
         </header>
-
-        <div className="mt-2 text-center text-[11px] font-medium tracking-wide text-white/80">
-          empresas e negócios
-        </div>
 
         <section className="mt-28">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
-              <h1 className="truncate text-[24px] font-bold leading-tight">{account.holder}</h1>
-              <div className="mt-4 flex items-center gap-7 text-[16px] font-semibold">
-                <span>Agência {maskedBranch(account.branch)}</span>
-                <span>Conta {maskedAccount(account.number)}</span>
-              </div>
+              <h1 className="text-[25px] font-bold leading-tight">Uma nova experiência<br />para o seu negócio</h1>
             </div>
-            <button
-              type="button"
-              aria-label="Selecionar conta"
-              onClick={() => setError("Esta é a única conta cadastrada na demonstração.")}
-              className="shrink-0 p-2 text-white/95"
-            >
-              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="m7 10 5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+            <button type="button" aria-label="Selecionar conta" onClick={() => setError("Esta é a única conta cadastrada na demonstração.")} className="shrink-0 p-2 text-white/95">
+              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2"><path d="m7 10 5 5 5-5" strokeLinecap="round" strokeLinejoin="round" /></svg>
             </button>
           </div>
 
           {step.name === "home" && (
-            <>
-              <button
-                type="button"
-                onClick={startPin}
-                className="mt-40 w-full rounded-full bg-white py-4 text-base font-bold text-brand-red shadow-[0_8px_25px_rgba(0,0,0,0.16)] transition-transform active:scale-[0.99]"
-              >
-                Entrar
+            <div className="mt-28 rounded-[22px] bg-white p-5 text-gray-800 shadow-2xl">
+              <div className="flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-[20px] font-medium">CNPJ •••/••••-98</p>
+                  <p className="mt-1 text-sm text-gray-500">{account.holder}</p>
+                </div>
+                <button type="button" aria-label="Remover conta" onClick={() => setError("Esta conta é a única cadastrada na demonstração.")} className="text-sm font-medium text-gray-600">Remover ↻</button>
+              </div>
+              <button type="button" onClick={startPin} className="mt-4 w-full rounded-xl bg-[#2f35ad] py-3.5 text-base font-bold text-white shadow-md">
+                Acessar conta
               </button>
-
-              <button
-                type="button"
-                onClick={() => setError("Nenhuma outra conta está cadastrada nesta demonstração.")}
-                className="mx-auto mt-7 block text-[16px] font-semibold text-white underline underline-offset-4"
-              >
-                Acessar outra conta
-              </button>
-            </>
+              {faceRegistered && (
+                <button type="button" onClick={() => void biometric()} className="mt-3 w-full rounded-xl border border-[#2f35ad] py-3 text-sm font-bold text-[#2f35ad]">
+                  Entrar com facial
+                </button>
+              )}
+            </div>
           )}
 
           {step.name === "pin" && (
             <form
               autoComplete="off"
-              className="mt-12 rounded-3xl bg-white p-5 text-card-foreground shadow-2xl"
+              className="mt-10 rounded-3xl bg-white p-5 text-card-foreground shadow-2xl"
               onSubmit={(event) => {
                 event.preventDefault();
                 submitPin();
@@ -614,46 +589,16 @@ function LoginScreen() {
 
         <div className="mt-auto">
           {step.name === "home" && (
-            <div className="mb-3 grid grid-cols-4 border-t border-white/30 pt-4">
-              <button
-                type="button"
-                onClick={securityAction}
-                className="flex min-h-[96px] flex-col items-center justify-center gap-2 border-r border-white/30 text-center"
-              >
-                {security.locked ? <LockOpen className="size-8" strokeWidth={1.8} /> : <Lock className="size-8" strokeWidth={1.8} />}
-                <span className="text-[15px] font-semibold leading-tight">
-                  Chave de<br />segurança
-                </span>
+            <div className="mb-2 border-t border-white/30 pt-4">
+              <button type="button" onClick={securityAction} className="mx-auto flex w-full max-w-md items-center justify-center gap-3 rounded-xl border border-white/70 bg-white/10 py-3.5 text-base font-semibold">
+                {security.locked ? <LockOpen className="size-6" strokeWidth={1.8} /> : <Lock className="size-6" strokeWidth={1.8} />}
+                Chave de segurança
               </button>
-
-              <button
-                type="button"
-                onClick={() => void biometric()}
-                className="flex min-h-[96px] flex-col items-center justify-center gap-2 border-r border-white/30 text-center"
-              >
-                <Fingerprint className="size-8" strokeWidth={1.8} />
-                <span className="text-[15px] font-semibold leading-tight">
-                  {faceRegistered ? <>Entrar com<br />facial</> : <>Cadastrar<br />facial</>}
-                </span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setError("BIA está disponível como demonstração visual.")}
-                className="flex min-h-[96px] flex-col items-center justify-center gap-2 border-r border-white/30 text-center"
-              >
-                <MessageCircle className="size-8" strokeWidth={1.8} />
-                <span className="text-[15px] font-semibold">BIA</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setError("Pix será acessado depois da entrada na conta.")}
-                className="flex min-h-[96px] flex-col items-center justify-center gap-2 text-center"
-              >
-                <Grid2X2 className="size-8" strokeWidth={1.8} />
-                <span className="text-[15px] font-semibold">PIX</span>
-              </button>
+              {!faceRegistered && (
+                <button type="button" onClick={() => void biometric()} className="mx-auto mt-2 block text-sm font-semibold text-white underline underline-offset-4">
+                  Cadastrar acesso facial
+                </button>
+              )}
             </div>
           )}
 
