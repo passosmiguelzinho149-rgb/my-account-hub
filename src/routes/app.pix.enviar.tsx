@@ -38,6 +38,7 @@ function EnviarPix() {
   const balance = useBalance();
 
   const [mode, setMode] = useState<Mode>("chave");
+  const [sourceConfirmed, setSourceConfirmed] = useState(false);
   const [key, setKey] = useState("");
   const [code, setCode] = useState("");
   const [amount, setAmount] = useState("");
@@ -100,6 +101,60 @@ function EnviarPix() {
     });
     void navigate({ to: "/app/comprovante/$id", params: { id: tx.id }, replace: true });
   };
+
+  if (!sourceConfirmed) {
+    return (
+      <>
+        <SubHeader title="Pix" fallbackTo="/app/pix" compactActions />
+        <main className="px-4 py-6">
+          <h1 className="text-2xl font-bold leading-tight">De onde o valor será debitado?</h1>
+          <p className="mt-4 text-right text-sm font-semibold text-primary">Ver saldo</p>
+
+          <div className="mt-4 rounded-2xl border-2 border-primary bg-card p-4 shadow-card">
+            <div className="flex items-start gap-3">
+              <span className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-primary">
+                <span className="size-3 rounded-full bg-primary" />
+              </span>
+              <div>
+                <p className="font-semibold">Bradesco</p>
+                <p className="mt-1 text-sm">Ag.: 2491 | C/C: 23062-6</p>
+                <p className="mt-2 text-sm">Saldo disponível: <strong>{formatBRL(balance)}</strong></p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-3 rounded-2xl border border-border bg-card p-4 opacity-70 shadow-card">
+            <div className="flex items-start gap-3">
+              <span className="mt-1 size-6 shrink-0 rounded-full border-2 border-muted-foreground" />
+              <div>
+                <p className="font-semibold">Bradesco</p>
+                <p className="mt-1 text-sm">Ag.: 2491 | C/Poup.: 23062-6</p>
+                <p className="mt-2 text-sm text-muted-foreground">Conta demonstrativa</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-3 rounded-2xl border border-border bg-card p-4 opacity-70 shadow-card">
+            <div className="flex items-start gap-3">
+              <span className="mt-1 size-6 shrink-0 rounded-full border-2 border-muted-foreground" />
+              <div>
+                <p className="font-semibold">Conta de outra instituição</p>
+                <p className="mt-1 text-sm text-muted-foreground">Opção ilustrativa nesta demonstração.</p>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setSourceConfirmed(true)}
+            className="mt-10 w-full rounded-full bg-primary py-3.5 text-base font-semibold text-primary-foreground transition-transform active:scale-95"
+          >
+            Continuar
+          </button>
+        </main>
+      </>
+    );
+  }
 
   if (pending) {
     return (
