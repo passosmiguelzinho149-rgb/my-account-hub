@@ -146,6 +146,19 @@ function Transferencias() {
         {error && <ErrorNote>{error}</ErrorNote>}
         <PrimaryButton onClick={check}>Continuar</PrimaryButton>
 
+        <DecemberTransferSchedule
+          beneficiaries={beneficiaries}
+          onSelect={(b) => {
+            setName(b.name);
+            setDoc(b.doc);
+            setBank(banks.find((x) => x === b.bank) ?? banks[0]);
+            setBranch(b.branch);
+            setAcc(b.account);
+            setAmount("3000000");
+            setDate("2026-12-01");
+          }}
+        />
+
         <ScheduledList category="transferencia" />
       </main>
     </>
@@ -177,6 +190,45 @@ export function ScheduledList({ category }: { category: "transferencia" | "pagam
               </span>
               <span className={cn("text-sm font-semibold tabular-nums", t.status === "Cancelado" && "line-through opacity-60")}>
                 {formatBRL(t.amount)}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+
+function DecemberTransferSchedule({
+  beneficiaries,
+  onSelect,
+}: {
+  beneficiaries: ReturnType<typeof useBank>["beneficiaries"];
+  onSelect: (beneficiary: ReturnType<typeof useBank>["beneficiaries"][number]) => void;
+}) {
+  return (
+    <section className="mt-8">
+      <h2 className="font-semibold">Agendamento de transferência</h2>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Dezembro · R$ 3.000.000,00 para cada favorecido
+      </p>
+      <ul className="mt-3 divide-y divide-border rounded-xl border border-border bg-card shadow-card">
+        {beneficiaries.map((b) => (
+          <li key={b.id}>
+            <button
+              type="button"
+              onClick={() => onSelect(b)}
+              className="flex w-full items-center justify-between gap-3 p-4 text-left"
+            >
+              <span className="min-w-0">
+                <span className="block truncate text-sm font-semibold">{b.name}</span>
+                <span className="block text-xs text-muted-foreground">
+                  01/12/2026 · Agendamento
+                </span>
+              </span>
+              <span className="shrink-0 text-sm font-semibold tabular-nums">
+                R$ 3.000.000,00
               </span>
             </button>
           </li>
