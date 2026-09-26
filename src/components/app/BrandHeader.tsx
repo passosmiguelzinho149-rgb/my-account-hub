@@ -4,12 +4,11 @@ import { Link } from "@tanstack/react-router";
 
 export function BrandHeader({ children }: { children?: ReactNode }) {
   return (
-    <header className="bg-brand-gradient text-primary-foreground">
-      <div className="mobile-safe-top flex items-center justify-between gap-3 px-4 pb-4">
+    <header className="bg-[#353d96] text-white">
+      <div className="mobile-safe-top flex items-center justify-between gap-3 px-5 pb-5 pt-4">
         <div className="flex min-w-0 items-center gap-2.5">
-          <span aria-hidden className="relative grid size-9 shrink-0 place-items-center">
-            <span className="absolute h-7 w-7 rounded-full border-2 border-white/90 border-r-transparent" />
-            <span className="absolute h-4 w-4 rounded-full border-2 border-white/90 border-l-transparent" />
+          <span aria-hidden className="grid size-9 shrink-0 place-items-center rounded-full bg-white text-xl font-black lowercase leading-none text-[#cc092f]">
+            b
           </span>
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-[19px] font-bold tracking-tight">bradesco</span>
@@ -22,7 +21,7 @@ export function BrandHeader({ children }: { children?: ReactNode }) {
           </button>
           <Link to="/app/notificacoes" aria-label="Notificações" className="relative grid size-10 place-items-center rounded-full transition-colors hover:bg-white/10">
             <Bell className="size-7" strokeWidth={1.8} />
-            <span className="absolute right-1.5 top-1.5 grid size-4 place-items-center rounded-full bg-[#df202f] text-[9px] font-bold text-white ring-2 ring-[#4a2aa0]">0</span>
+            <span className="absolute right-1.5 top-1.5 grid size-4 place-items-center rounded-full bg-[#df202f] text-[9px] font-bold text-white ring-2 ring-[#353d96]">0</span>
           </Link>
         </div>
       </div>
