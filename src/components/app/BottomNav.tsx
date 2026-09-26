@@ -12,7 +12,15 @@ const items = [
 /** Barra de navegação inferior fixa (padrão app mobile). */
 export function BottomNav() {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/80 bg-card/95 backdrop-blur-md">
+    <>
+      <div
+        aria-hidden
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-30 h-8 overflow-hidden"
+      >
+        <div className="absolute -bottom-6 left-[-8%] h-12 w-[116%] rounded-[50%] bg-brand-red" />
+        <div className="absolute -bottom-7 left-[28%] h-11 w-[55%] rounded-[50%] bg-primary-deep" />
+      </div>
+      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/80 bg-card/95 backdrop-blur-md">
       <ul className="mx-auto flex max-w-lg">
         {items.map(({ to, label, Icon, exact }) => (
           <li key={label} className="flex-1">
@@ -27,6 +35,7 @@ export function BottomNav() {
           </li>
         ))}
       </ul>
-    </nav>
+      </nav>
+    </>
   );
 }
