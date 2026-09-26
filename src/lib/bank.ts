@@ -275,6 +275,7 @@ function initialState(): BankState {
       { id: "pix-demo-3", name: "VIVIANI DE OLIVEIRA SOUZA", doc: "000.000.000-00", bank: "237 — Banco DEMO", branch: "1249", account: "DEMO-03" },
       { id: "pix-demo-12", name: "MOACIR GOMES DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-12" },
       { id: "pix-demo-8", name: "MARIA JOSE GOMES DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-08" },
+      { id: "pix-demo-27", name: "JOSE RAUGI NETO", doc: "000.000.000-00", bank: "Banco DEMO", branch: "0000", account: "DEMO-27" },
       { id: "pix-demo-14", name: "VILSON VILMAR DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-14" },
       { id: "pix-demo-1", name: "TATIANE DE OLIVEIRA", doc: "000.000.000-00", bank: "237 — Banco DEMO", branch: "1249", account: "DEMO-01" },
       { id: "pix-demo-2", name: "CLEBER OLIVEIRA PASSOS", doc: "000.000.000-00", bank: "237 — Banco DEMO", branch: "1249", account: "DEMO-02" },
