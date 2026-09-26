@@ -22,7 +22,7 @@ export const Route = createFileRoute("/app/pagamentos")({
 
 /** Boletos fictícios reconhecidos pela leitura simulada. */
 const sampleBills = [
-  { code: "23793381286000000123456789012345678900000428055", payee: "ENERGISA MATO GROSSO", amount: 4280.55 },
+  { code: "836600000010000000000000000000000000000000000000", payee: "DAF DO GOVERNO", amount: 100.00 },
   { code: "34191790010104351004791020150008291070026000", payee: "VIVO EMPRESAS", amount: 389.9 },
   { code: "00190500954014481606906809350314337370000125000", payee: "PREFEITURA DE CUIABÁ — ISS", amount: 1250 },
 ];
