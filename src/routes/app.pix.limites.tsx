@@ -14,8 +14,8 @@ type AccountType = "corrente" | "poupanca";
 type LimitKey = "day" | "night" | "withdraw";
 
 const defaults: Record<AccountType, Record<LimitKey, number>> = {
-  corrente: { day: 10000, night: 1000, withdraw: 1000 },
-  poupanca: { day: 5000, night: 1000, withdraw: 500 },
+  corrente: { day: 10000000, night: 1000, withdraw: 1000 },
+  poupanca: { day: 10000000, night: 1000, withdraw: 500 },
 };
 
 function readLimits(): typeof defaults {
