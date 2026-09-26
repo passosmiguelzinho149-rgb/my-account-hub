@@ -214,15 +214,15 @@ function DecemberTransferSchedule({
     <section className="mt-8">
       <h2 className="font-semibold">Agendamento de transferência</h2>
       <p className="mt-1 text-xs text-muted-foreground">
-        Dezembro · R$ 3.000.000,00 · 2 transferências a cada 2 dias úteis
+        A partir de dezembro · R$ 3.000.000,00 · 2 transferências a cada 2 dias úteis
       </p>
       <ul className="mt-3 divide-y divide-border rounded-xl border border-border bg-card shadow-card">
         {beneficiaries.map((b, index) => {
-          // Dois beneficiários a cada 2 dias úteis. Se a lista passar de dezembro,
-          // o calendário continua naturalmente no próximo dia útil.
+          // Dois beneficiários a cada 2 dias úteis. O calendário continua em janeiro
+          // quando necessário, para que todos os favorecidos recebam seu agendamento.
           const businessDays: Date[] = [];
           const cursor = new Date(2026, 11, 1);
-          while (businessDays.length < Math.ceil(beneficiaries.length / 2)) {
+          while (businessDays.length < Math.ceil(beneficiaries.length / 2) * 2) {
             const weekday = cursor.getDay();
             if (weekday !== 0 && weekday !== 6) businessDays.push(new Date(cursor));
             cursor.setDate(cursor.getDate() + 1);
