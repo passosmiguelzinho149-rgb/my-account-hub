@@ -144,6 +144,15 @@ interface DirectoryEntry extends Omit<PixParty, "key" | "keyType"> {
 
 const directory: DirectoryEntry[] = [
   {
+    name: "CLEBER OLIVEIRA PASSOS",
+    doc: "061.151.391-98",
+    bank: "237 — Banco Bradesco S.A.",
+    branch: "1249",
+    account: "041371-2",
+    accountType: "Conta corrente",
+    keys: ["06115139198", "061.151.391-98"],
+  },
+  {
     name: "MARIA EDUARDA SOUZA LIMA",
     doc: "045.871.220-31",
     bank: "260 — Nu Pagamentos S.A.",
