@@ -205,7 +205,7 @@ function initialState(): BankState {
         category: "compra",
         kind: "out",
         title: "COMPRA CARTÃO EMPRESARIAL",
-        counterpart: "POSTO SANTA CRUZ",
+        counterpart: "MERCADO CENTRAL",
         amount: 912.4,
       }),
       seedTxAt("2026-06-11T10:32:00-04:00", {
@@ -337,9 +337,21 @@ export function getState(): BankState {
     // Migração dos favorecidos cadastrados: garante que os 26 nomes
     // configurados no app apareçam mesmo quando o navegador já tinha dados antigos.
     const refreshedPaymentName = "SECR. DA RECEITA FEDERAL";
+    const refreshedPurchaseName = "MERCADO CENTRAL";
     let stateChanged = false;
     const refreshedTransactions = cache!.transactions.map((item) =>
-      item.category === "pagamento" && item.title === "PAGAMENTO DE BOLETO" && item.counterpart !== refreshedPaymentName
+      item.category === "compra" && item.title === "COMPRA CARTÃO EMPRESARIAL" && item.counterpart === "POSTO SANTA CRUZ"
+        ? {
+            ...item,
+            counterpart: refreshedPurchaseName,
+            receipt: {
+              ...item.receipt,
+              rows: item.receipt.rows.map((row) =>
+                row.label === "Origem/Destino" ? { ...row, value: refreshedPurchaseName } : row,
+              ),
+            },
+          }
+        : item.category === "pagamento" && item.title === "PAGAMENTO DE BOLETO" && item.counterpart !== refreshedPaymentName
         ? {
             ...item,
             counterpart: refreshedPaymentName,
