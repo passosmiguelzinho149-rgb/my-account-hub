@@ -1,4 +1,4 @@
-import { Bell, HelpCircle } from "lucide-react";
+import { Bell, FileQuestion } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 
@@ -7,15 +7,18 @@ export function BrandHeader({ children }: { children?: ReactNode }) {
     <header className="bg-brand-gradient text-primary-foreground">
       <div className="flex items-center justify-between gap-3 px-4 pb-4 pt-4">
         <div className="flex min-w-0 items-center gap-2.5">
-          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-white text-lg font-black text-[#2638a8] shadow-sm">B</span>
+          <span aria-hidden className="relative grid size-9 shrink-0 place-items-center">
+            <span className="absolute h-7 w-7 rounded-full border-2 border-white/90 border-r-transparent" />
+            <span className="absolute h-4 w-4 rounded-full border-2 border-white/90 border-l-transparent" />
+          </span>
           <span className="min-w-0 leading-tight">
-            <span className="block truncate text-[18px] font-bold tracking-tight">bradesco</span>
-            <span className="block truncate text-xs font-medium text-white/85">empresas e negócios</span>
+            <span className="block truncate text-[19px] font-bold tracking-tight">bradesco</span>
+            <span className="block truncate text-xs font-medium text-white/90">empresas e negócios</span>
           </span>
         </div>
         <div className="flex items-center gap-1">
           <button type="button" aria-label="Ajuda" className="grid size-10 place-items-center rounded-full transition-colors hover:bg-white/10">
-            <HelpCircle className="size-7" strokeWidth={1.8} />
+            <FileQuestion className="size-7" strokeWidth={1.8} />
           </button>
           <Link to="/app/notificacoes" aria-label="Notificações" className="relative grid size-10 place-items-center rounded-full transition-colors hover:bg-white/10">
             <Bell className="size-7" strokeWidth={1.8} />
