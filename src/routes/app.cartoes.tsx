@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { CreditCard, Eye, Lock, Settings, Wifi } from "lucide-react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { account } from "@/lib/mock-data";
@@ -14,6 +15,10 @@ const cards = [
 ] as const;
 
 function CartoesScreen() {
+  const [revealed, setRevealed] = useState<Record<string, boolean>>({});
+  const [blocked, setBlocked] = useState<Record<string, boolean>>({});
+  const [managed, setManaged] = useState<string | null>(null);
+
   return (
     <>
       <SubHeader title="Cartões" />
@@ -21,10 +26,10 @@ function CartoesScreen() {
         <h2 className="text-xl font-bold">Meus cartões</h2>
         <p className="mt-1 text-sm text-muted-foreground">Cartões vinculados à sua conta empresarial.</p>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-2">
+        <div className="mx-auto mt-5 grid max-w-md gap-5">
           {cards.map((card) => (
             <section key={card.name}>
-              <div className={`relative min-h-[220px] overflow-hidden rounded-[26px] bg-gradient-to-br ${card.theme} p-6 text-white shadow-xl`}>
+              <div className={`relative aspect-[1.586/1] w-full overflow-hidden rounded-[22px] bg-gradient-to-br ${card.theme} p-5 text-white shadow-xl ${blocked[card.name] ? "grayscale opacity-75" : ""}`}>
                 <div className="absolute -right-12 -top-16 size-52 rotate-12 rounded-[40%] border-[30px] border-white/5" />
                 <div className="relative flex items-start justify-between">
                   <div>
@@ -41,7 +46,7 @@ function CartoesScreen() {
                   <span className="h-10 w-14 rounded-md border border-white/40 bg-gradient-to-br from-[#f2e3b0] to-[#bda766]" />
                   <Wifi className="size-7 rotate-90" />
                 </div>
-                <p className="relative mt-4 font-mono text-[19px] tracking-[0.12em]">{card.number}</p>
+                <p className="relative mt-4 font-mono text-[19px] tracking-[0.12em]">{revealed[card.name] ? card.number : `•••• •••• •••• ${card.number.slice(-4)}`}</p>
 
                 <div className="relative mt-3 flex items-end justify-between gap-3">
                   <div>
@@ -64,16 +69,23 @@ function CartoesScreen() {
               </div>
 
               <div className="mt-3 grid grid-cols-3 gap-2">
-                <button type="button" className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
-                  <Eye className="size-5 text-primary" />Ver dados
+                <button type="button" onClick={() => setRevealed((v) => ({ ...v, [card.name]: !v[card.name] }))} className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
+                  <Eye className="size-5 text-primary" />{revealed[card.name] ? "Ocultar" : "Ver dados"}
                 </button>
-                <button type="button" className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
+                <button type="button" onClick={() => setManaged(managed === card.name ? null : card.name)} className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
                   <Settings className="size-5 text-primary" />Gerenciar
                 </button>
-                <button type="button" className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
-                  <Lock className="size-5 text-primary" />Bloquear
+                <button type="button" onClick={() => setBlocked((v) => ({ ...v, [card.name]: !v[card.name] }))} className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-card px-2 py-3 text-xs font-semibold shadow-card">
+                  <Lock className="size-5 text-primary" />{blocked[card.name] ? "Desbloquear" : "Bloquear"}
                 </button>
               </div>
+              {managed === card.name && (
+                <div className="mt-3 rounded-xl border border-border bg-card p-4 text-sm shadow-card">
+                  <p className="font-bold">Gerenciar {card.name}</p>
+                  <p className="mt-1 text-muted-foreground">Cartão {blocked[card.name] ? "bloqueado" : "ativo"} · final {card.number.slice(-4)}</p>
+                  <p className="mt-1 text-muted-foreground">Vencimento 12/28 · Conta {account.number}</p>
+                </div>
+              )}
             </section>
           ))}
         </div>
