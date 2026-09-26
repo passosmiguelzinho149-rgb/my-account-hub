@@ -31,7 +31,8 @@ const dataCards = [
 const menuItems = [
   { slug: "falar-com-o-gerente", label: "Falar com o Gerente" },
   { slug: "sobre-o-app", label: "Sobre o App" },
-  { slug: "privacidade", label: "Gerenciar dados e privacidade", dedicated: true },
+  { slug: "privacidade", label: "Gerenciar dados e privacidade", dedicated: "/app/privacidade" },
+  { slug: "seguranca", label: "Segurança, senha e dispositivos", dedicated: "/app/seguranca" },
   { slug: "propostas-da-empresa", label: "Propostas da empresa" },
 ] as const;
 
@@ -87,7 +88,7 @@ function PerfilScreen() {
               <li key={item.slug}>
                 {"dedicated" in item ? (
                   <Link
-                    to="/app/privacidade"
+                    to={item.dedicated}
                     className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4"
                   >
                     <span className="min-w-0 break-words">{item.label}</span>
