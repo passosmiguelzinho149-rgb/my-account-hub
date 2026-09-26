@@ -2,13 +2,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   ArrowDown,
-  ArrowLeftRight,
   ArrowUp,
-  Barcode,
   ChevronRight,
   CreditCard,
-  HandCoins,
   PieChart,
+  ReceiptText,
   Settings2,
   ShoppingBag,
   TrendingUp,
@@ -29,15 +27,13 @@ export const Route = createFileRoute("/app/")({
   component: HomeScreen,
 });
 
-const favorites = [
+const quickAccess = [
   { label: "Pix", Icon: Zap, to: "/app/pix" },
-  { label: "Transferências", Icon: ArrowLeftRight, to: "/app/transferencias" },
-  { label: "Pagamentos", Icon: Barcode, to: "/app/pagamentos" },
+  { label: "Pagamentos", Icon: ReceiptText, to: "/app/pagamentos" },
   { label: "Cartões", Icon: CreditCard, to: "/app/cartoes" },
-  { label: "Empréstimos", Icon: HandCoins, to: "/app/credito" },
-  { label: "Investimentos", Icon: TrendingUp, to: "/app/servico/$slug", slug: "investimentos" },
-  { label: "Open Finance", Icon: PieChart, to: "/app/servico/$slug", slug: "open-finance" },
-  { label: "Personalizar", Icon: Settings2, to: "/app/servicos" },
+  { label: "Extrato", Icon: PieChart, to: "/app/extrato" },
+  { label: "Transferências", Icon: TrendingUp, to: "/app/transferencias" },
+  { label: "Serviços", Icon: Settings2, to: "/app/servicos" },
 ] as const;
 
 function HomeScreen() {
@@ -59,133 +55,101 @@ function HomeScreen() {
   return (
     <>
       <BrandHeader>
-        <div className="px-4 pb-7">
-          <div className="min-w-0">
-            <h1 className="text-[22px] font-bold leading-tight">Olá, {account.holder}</h1>
-            <p className="mt-1 text-sm font-medium opacity-90">CNPJ: {account.cnpj}</p>
-          </div>
-          <BalanceCard showAccount className="mt-5 rounded-2xl border border-primary-foreground/10 bg-primary-deep/45 p-5 shadow-lg" />
+        <div className="px-4 pb-5">
+          <h1 className="max-w-[360px] text-[23px] font-bold leading-tight">Olá, {account.holder}</h1>
+          <p className="mt-2 text-[14px] font-medium text-white/90">{account.company}</p>
+          <p className="mt-1 text-[14px] text-white/90">CNPJ: {account.cnpj}</p>
+          <BalanceCard
+            showAccount
+            className="mt-5 rounded-[22px] border border-white/10 bg-white/20 p-5 shadow-xl backdrop-blur-sm"
+          />
         </div>
       </BrandHeader>
 
-      <main className="bg-background px-5 pb-8 pt-5">
-        <section>
-          <h2 className="text-[22px] font-bold text-foreground">Favoritos</h2>
-          <ul className="mt-4 grid grid-cols-4 gap-x-3 gap-y-6">
-            {favorites.map(({ label, Icon, to, ...rest }) => (
-              <li key={label}>
-                <Link
-                  to={to}
-                  params={"slug" in rest ? { slug: rest.slug } : {}}
-                  className="group flex flex-col items-center text-center"
-                >
-                  <span className="grid size-[74px] place-items-center rounded-[22px] bg-card shadow-[0_8px_25px_rgba(30,50,70,0.08)] transition-transform group-active:scale-95">
-                    <Icon className="size-9 text-primary" strokeWidth={1.8} aria-hidden />
-                  </span>
-                  <span className="mt-3 text-[13px] font-semibold leading-tight text-foreground">
-                    {label}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+      <main className="bg-[#f7f7f8] px-4 pb-28 pt-2 text-[#202124]">
+        <section className="pt-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-[20px] font-bold">Resumo diário</h2>
+            <span className="text-sm text-gray-500">{now.toLocaleDateString("pt-BR")}</span>
+          </div>
+          <div className="mt-3 rounded-[20px] bg-white p-5 shadow-[0_5px_18px_rgba(20,30,60,.08)]">
+            <dl className="grid grid-cols-2 gap-5">
+              <div>
+                <dt className="flex items-center gap-2 text-sm text-gray-500">
+                  <ArrowUp className="size-5 text-[#159d78]" /> Entradas
+                </dt>
+                <dd className="mt-1 text-lg font-bold tabular-nums">{formatBRL(inflow)}</dd>
+              </div>
+              <div>
+                <dt className="flex items-center gap-2 text-sm text-gray-500">
+                  <ArrowDown className="size-5 text-[#df202f]" /> Saídas
+                </dt>
+                <dd className="mt-1 text-lg font-bold tabular-nums">{formatBRL(outflow)}</dd>
+              </div>
+            </dl>
+            <Link to="/app/extrato" className="mt-4 inline-flex items-center gap-1 text-base font-bold text-[#2638a8]">
+              Consultar extrato <ChevronRight className="size-5" />
+            </Link>
+          </div>
+        </section>
+
+        <section className="mt-6">
+          <h2 className="text-[20px] font-bold">Soluções para sua empresa</h2>
           <Link
-            to="/app/servicos"
-            className="mx-auto mt-5 flex w-fit items-center gap-2 text-base font-bold text-primary"
+            to="/app/pix"
+            className="mt-3 flex min-h-[138px] overflow-hidden rounded-[22px] bg-white shadow-[0_5px_18px_rgba(20,30,60,.08)] transition-transform active:scale-[.99]"
           >
-            Ver mais serviços <ChevronRight className="size-5" />
+            <div className="flex w-[34%] shrink-0 items-center justify-center overflow-hidden bg-gradient-to-br from-[#e4ebf4] via-[#dfe9e4] to-[#f2ded9]">
+              <div className="relative flex size-24 items-center justify-center rounded-2xl bg-white/45">
+                <Zap className="size-12 text-[#159d78]" strokeWidth={1.7} />
+                <span className="absolute -right-1 -top-1 grid size-8 place-items-center rounded-lg bg-[#159d78] text-white">
+                  <span className="text-sm font-black">P</span>
+                </span>
+              </div>
+            </div>
+            <div className="flex min-w-0 flex-1 flex-col justify-center p-4">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-[20px] font-bold">Pix</h3>
+                <ChevronRight className="size-5 text-[#2638a8]" />
+              </div>
+              <p className="mt-2 text-sm leading-snug text-gray-600">
+                Pague, receba e transfira a qualquer hora do dia.
+              </p>
+            </div>
           </Link>
         </section>
 
-        <section className="mt-7">
-          <div className="flex items-center justify-between">
-            <h2 className="text-[22px] font-bold">Resumo diário</h2>
-            <span className="text-sm text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span>
-          </div>
-          <div className="mt-3 rounded-2xl bg-card p-5 shadow-[0_8px_25px_rgba(30,50,70,0.06)]">
-            <dl className="grid grid-cols-2 gap-5">
-              <div>
-                <dt className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <ArrowUp className="size-4 text-income" /> Entradas
-                </dt>
-                <dd className="mt-2 text-lg font-semibold tabular-nums">{formatBRL(inflow)}</dd>
-              </div>
-              <div>
-                <dt className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <ArrowDown className="size-4 text-brand-red" /> Saídas
-                </dt>
-                <dd className="mt-2 text-lg font-semibold tabular-nums">{formatBRL(outflow)}</dd>
-              </div>
-            </dl>
-            <Link to="/app/extrato" className="mt-4 inline-flex items-center gap-1 font-semibold text-primary">
-              Ver extrato <ChevronRight className="size-4" />
-            </Link>
+        <section className="mt-6">
+          <h2 className="text-[20px] font-bold">Acesso rápido</h2>
+          <div className="mt-3 flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            {quickAccess.map(({ label, Icon, to }) => (
+              <Link
+                key={label}
+                to={to}
+                className="flex min-w-[88px] flex-col items-center rounded-2xl bg-white px-3 py-4 shadow-[0_5px_18px_rgba(20,30,60,.08)] transition-transform active:scale-95"
+              >
+                <span className="grid size-11 place-items-center rounded-xl bg-[#eef0ff]">
+                  <Icon className="size-6 text-[#2638a8]" strokeWidth={1.8} />
+                </span>
+                <span className="mt-2 text-center text-xs font-semibold leading-tight">{label}</span>
+              </Link>
+            ))}
           </div>
         </section>
 
-        <section className="mt-7">
-          <h2 className="text-[22px] font-bold">Ofertas</h2>
-          <div className="mt-3 overflow-hidden rounded-[22px]">
-            <div className="flex items-stretch gap-2">
-              <Link
-                to="/app/credito"
-                className="flex min-h-[145px] min-w-0 flex-1 overflow-hidden rounded-[22px] bg-card shadow-[0_7px_24px_rgba(30,50,70,0.10)]"
-              >
-                <div className="relative flex w-[29%] shrink-0 items-end justify-center overflow-hidden bg-gradient-to-br from-[#dce8e4] via-[#f1ddd5] to-[#d7d7d7]">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
-                  <img
-                    src="https://images.unsplash.com/photo-1753161022783-160d6579f86d?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=700"
-                    alt="Mulher usando celular"
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="flex min-w-0 flex-1 items-center justify-between gap-2 p-4">
-                  <div className="min-w-0">
-                    <h3 className="text-[17px] font-bold leading-tight text-foreground">
-                      A melhor oferta do consignado
-                    </h3>
-                    <p className="mt-2 text-[13px] leading-snug text-muted-foreground">
-                      Simule e autorize a consulta dos seus dados.
-                    </p>
-                  </div>
-                  <ChevronRight className="size-6 shrink-0 text-primary" />
-                </div>
-              </Link>
-              <div
-                aria-hidden
-                className="flex w-[23%] shrink-0 items-end justify-center overflow-hidden rounded-[22px] bg-gradient-to-br from-[#d8e4e7] via-[#f0e6de] to-[#cfcfcf]"
-              >
-                <div className="h-full w-full">
-                  <img
-                    src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=700"
-                    alt=""
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
+        <section className="mt-6 pb-4">
+          <Link to="/app/servicos" className="flex items-center justify-between rounded-2xl bg-white p-4 shadow-[0_5px_18px_rgba(20,30,60,.08)]">
+            <div className="flex items-center gap-3">
+              <span className="grid size-11 place-items-center rounded-xl bg-[#eef0ff]">
+                <ShoppingBag className="size-6 text-[#2638a8]" />
+              </span>
+              <div>
+                <p className="font-bold">Mais soluções</p>
+                <p className="text-sm text-gray-500">Veja todos os serviços disponíveis</p>
               </div>
             </div>
-          </div>
-          <div className="mt-3 flex justify-center gap-2">
-            <span className="h-2.5 w-12 rounded-full bg-primary" />
-            <span className="size-2.5 rounded-full bg-muted" />
-            <span className="size-2.5 rounded-full bg-muted" />
-          </div>
-        </section>
-
-        <section className="mt-7">
-          <h2 className="text-[22px] font-bold">Benefícios e parcerias</h2>
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            <Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-brand-red px-5 text-primary-foreground shadow-lg">
-              <ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} />
-              <span className="font-bold">Oferta com cashback</span>
-            </Link>
-            <Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-brand-red px-5 text-primary-foreground shadow-lg">
-              <ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} />
-              <span className="font-bold">Superoferta no shop</span>
-            </Link>
-          </div>
+            <ChevronRight className="size-5 text-[#2638a8]" />
+          </Link>
         </section>
       </main>
     </>
