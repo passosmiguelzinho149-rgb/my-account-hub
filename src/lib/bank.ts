@@ -336,6 +336,27 @@ export function getState(): BankState {
 
     // Migração dos favorecidos cadastrados: garante que os 26 nomes
     // configurados no app apareçam mesmo quando o navegador já tinha dados antigos.
+    const refreshedPaymentName = "SECR. DA RECEITA FEDERAL";
+    let stateChanged = false;
+    const refreshedTransactions = cache!.transactions.map((item) =>
+      item.category === "pagamento" && item.title === "PAGAMENTO DE BOLETO" && item.counterpart !== refreshedPaymentName
+        ? {
+            ...item,
+            counterpart: refreshedPaymentName,
+            receipt: {
+              ...item.receipt,
+              rows: item.receipt.rows.map((row) =>
+                row.label === "Origem/Destino" ? { ...row, value: refreshedPaymentName } : row,
+              ),
+            },
+          }
+        : item,
+    );
+    if (refreshedTransactions.some((item, index) => item !== cache!.transactions[index])) {
+      cache = { ...cache!, transactions: refreshedTransactions };
+      stateChanged = true;
+    }
+
     const seededBeneficiaries = initialState().beneficiaries;
     const existing = new Map(cache!.beneficiaries.map((item) => [item.id, item]));
     const seededIds = new Set(seededBeneficiaries.map((item) => item.id));
@@ -349,6 +370,8 @@ export function getState(): BankState {
       cache!.beneficiaries.some((item, index) => item.id !== mergedBeneficiaries[index]?.id);
     if (beneficiariesChanged) {
       cache = { ...cache!, beneficiaries: mergedBeneficiaries };
+      persist();
+    } else if (stateChanged) {
       persist();
     }
 
