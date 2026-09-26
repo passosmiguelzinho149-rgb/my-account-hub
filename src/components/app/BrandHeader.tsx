@@ -24,14 +24,18 @@ export function BrandHeader({ children }: { children?: React.ReactNode }) {
         </Link>
       </div>
       {children}
-      <div className="relative h-7 overflow-hidden bg-background">
+      <div className="relative h-10 overflow-hidden bg-background">
         <div
           aria-hidden
-          className="absolute -top-5 left-[-8%] h-12 w-[116%] rounded-[50%] bg-background"
+          className="absolute -top-8 left-[-12%] h-16 w-[124%] rounded-[50%] bg-brand-red/20"
         />
         <div
           aria-hidden
-          className="absolute -top-2 left-[34%] h-8 w-[45%] rounded-[50%] bg-background/80"
+          className="absolute -top-5 left-[18%] h-12 w-[92%] rounded-[50%] bg-primary/30"
+        />
+        <div
+          aria-hidden
+          className="absolute -top-1 left-[-10%] h-12 w-[120%] rounded-[50%] bg-background"
         />
       </div>
     </header>
