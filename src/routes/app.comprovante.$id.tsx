@@ -32,8 +32,8 @@ function ComprovanteScreen() {
   }
 
   const isPixReceived = tx.category === "pix" && tx.kind === "in";
-  const displayDate = isPixReceived ? "18/06/2026 às 10:32" : formatDateTime(tx.createdAt);
-  const displayDateTime = isPixReceived ? "18/06/2026 10:32" : formatDateTime(tx.createdAt).replace(" às ", " ");
+  const displayDate = formatDateTime(tx.createdAt);
+  const displayDateTime = formatDateTime(tx.createdAt).replace(" às ", " ");
   const payer = "MARCOS NUNES DE MIRANDA";
   const payerDoc = "**.529.644/0001-47";
   const payerBank = "ITAÚ UNIBANCO S.A.";
