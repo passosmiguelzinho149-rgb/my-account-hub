@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { Bell, Fingerprint, Grid2X2, Lock, LockOpen, Menu, MessageCircle, ShieldCheck, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Fingerprint, Lock, LockOpen, ShieldCheck } from "lucide-react";
 import { useSession } from "@/lib/session";
 import {
   checkPin,
@@ -20,12 +20,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Protótipo de demonstração do app Bradesco Empresas e Negócios: acesso com senha, biometria simulada e verificação em duas etapas.",
-      },
-      { property: "og:title", content: "Acessar conta — Bradesco Empresas e Negócios (demo)" },
-      {
-        property: "og:description",
-        content: "Protótipo mobile de conta empresarial com acesso seguro simulado.",
+          "Protótipo de demonstração do app Bradesco Empresas e Negócios: tela de acesso inspirada no aplicativo móvel.",
       },
     ],
   }),
@@ -37,6 +32,14 @@ type Step =
   | { name: "pin" }
   | { name: "bio" }
   | { name: "code"; code: string; method: AccessEntry["method"]; purpose: "login" | "unlock" };
+
+function maskedBranch(value: string) {
+  return value.length > 2 ? `**${value.slice(-2)}` : value;
+}
+
+function maskedAccount(value: string) {
+  return value.length > 3 ? `***${value.slice(-3)}` : value;
+}
 
 function LoginScreen() {
   const { signedIn, hydrated, signIn } = useSession();
@@ -63,9 +66,9 @@ function LoginScreen() {
   };
 
   const submitPin = () => {
-    const r = checkPin(pin);
+    const result = checkPin(pin);
     setPin("");
-    if (!r.ok) return setError(r.reason);
+    if (!result.ok) return setError(result.reason);
     setError(null);
     finish("Senha");
   };
@@ -91,194 +94,229 @@ function LoginScreen() {
     void navigate({ to: "/app", replace: true });
   };
 
+  const startPin = () => {
+    setError(null);
+    if (security.locked) {
+      setError("Desbloqueie a conta para entrar.");
+      return;
+    }
+    setStep({ name: "pin" });
+  };
+
+  const securityAction = () => {
+    setTyped("");
+    setError(null);
+    setStep({
+      name: "code",
+      code: makeCode(),
+      method: "Chave de segurança",
+      purpose: security.locked ? "unlock" : "login",
+    });
+  };
+
   const input =
-    "mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-center text-2xl tracking-[0.5em] text-card-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary";
+    "mt-2 w-full rounded-xl border border-border bg-card px-3 py-3 text-center text-2xl tracking-[0.5em] text-card-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   return (
-    <div className="bg-brand-gradient flex min-h-screen flex-col text-primary-foreground">
-      <div className="mx-auto flex w-full max-w-lg flex-1 flex-col px-4 pt-4 pb-6">
-        <div className="flex items-center gap-2.5">
-          <span className="grid size-10 shrink-0 place-items-center rounded-full bg-card text-lg font-bold text-brand-red">
-            B
-          </span>
-          <span className="min-w-0 leading-tight">
-            <span className="block truncate text-lg font-bold">bradesco</span>
-            <span className="block truncate text-xs opacity-80">empresas e negócios</span>
-          </span>
-        </div>
+    <div className="relative min-h-screen overflow-hidden bg-brand-gradient text-primary-foreground">
+      <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute -bottom-24 -left-20 h-72 w-[125%] rotate-[-12deg] rounded-[50%] bg-white/10" />
+        <div className="absolute -bottom-16 -right-28 h-64 w-[120%] rotate-[-16deg] rounded-[50%] border-t border-white/10 bg-white/[0.04]" />
+        <div className="absolute bottom-[-120px] left-[-18%] h-72 w-[115%] rotate-[-18deg] rounded-[50%] bg-white/[0.06]" />
+      </div>
 
-        <h1 className="mt-10 text-3xl leading-tight font-bold">
-          Uma nova experiência
-          <br />
-          para o seu negócio
-        </h1>
-        <div className="flex-1" />
+      <div className="relative mx-auto flex min-h-screen w-full max-w-lg flex-col px-6 pb-7 pt-4">
+        <header className="flex items-center justify-between">
+          <button
+            type="button"
+            aria-label="Abrir menu"
+            onClick={() => setError("Menu da demonstração.")}
+            className="grid size-10 place-items-center rounded-full text-white/95 transition-colors hover:bg-white/10"
+          >
+            <Menu className="size-7" strokeWidth={1.8} />
+          </button>
 
-        <div className="rounded-2xl bg-card p-4 text-card-foreground shadow-card">
-          <div className="flex items-center gap-3">
-            <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary text-sm font-semibold text-secondary-foreground">
-              CO
+          <div className="flex items-center gap-2">
+            <span className="grid size-9 place-items-center rounded-full bg-white text-sm font-black text-brand-red shadow-sm">
+              B
             </span>
-            <span className="min-w-0">
-              <span className="block truncate font-medium">CPF ••• 151 •••</span>
-              <span className="block text-xs text-muted-foreground">
-                Agência {account.branch} · Conta {account.number}
-              </span>
-            </span>
+            <span className="text-xl font-bold tracking-tight">bradesco</span>
           </div>
 
-          {security.locked && step.name === "home" && (
-            <p className="mt-4 flex items-center gap-2 rounded-lg bg-secondary px-3 py-2 text-sm text-brand-red">
-              <Lock className="size-4 shrink-0" aria-hidden /> Conta de demonstração bloqueada.
-            </p>
-          )}
+          <button
+            type="button"
+            aria-label="Notificações"
+            onClick={() => setError("Não há novas notificações na demonstração.")}
+            className="relative grid size-10 place-items-center rounded-full transition-colors hover:bg-white/10"
+          >
+            <Bell className="size-6" strokeWidth={1.8} />
+            <span className="absolute right-1 top-1 size-2.5 rounded-full bg-[#58c85a] ring-2 ring-brand-red" />
+          </button>
+        </header>
 
-          {step.name === "home" && (
+        <div className="mt-2 text-center text-[11px] font-medium tracking-wide text-white/80">
+          empresas e negócios
+        </div>
+
+        <section className="mt-28">
+          <div className="flex items-center justify-between gap-4">
+            <div className="min-w-0">
+              <h1 className="truncate text-[24px] font-bold leading-tight">{account.holder}</h1>
+              <div className="mt-4 flex items-center gap-7 text-[16px] font-semibold">
+                <span>Agência {maskedBranch(account.branch)}</span>
+                <span>Conta {maskedAccount(account.number)}</span>
+              </div>
+            </div>
             <button
               type="button"
-              onClick={() => (security.locked ? setError("Desbloqueie a conta para entrar.") : setStep({ name: "pin" }))}
-              className="mt-4 w-full rounded-lg bg-primary py-3.5 text-base font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+              aria-label="Selecionar conta"
+              onClick={() => setError("Esta é a única conta cadastrada na demonstração.")}
+              className="shrink-0 p-2 text-white/95"
             >
-              Acessar conta
+              <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="m7 10 5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </button>
+          </div>
+
+          {step.name === "home" && (
+            <>
+              <button
+                type="button"
+                onClick={startPin}
+                className="mt-40 w-full rounded-full bg-white py-4 text-base font-bold text-brand-red shadow-[0_8px_25px_rgba(0,0,0,0.16)] transition-transform active:scale-[0.99]"
+              >
+                Entrar
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setError("Nenhuma outra conta está cadastrada nesta demonstração.")}
+                className="mx-auto mt-7 block text-[16px] font-semibold text-white underline underline-offset-4"
+              >
+                Acessar outra conta
+              </button>
+            </>
           )}
 
           {step.name === "pin" && (
             <form
-              className="mt-4"
-              onSubmit={(e) => {
-                e.preventDefault();
+              className="mt-12 rounded-3xl bg-white p-5 text-card-foreground shadow-2xl"
+              onSubmit={(event) => {
+                event.preventDefault();
                 submitPin();
               }}
             >
-              <label className="block text-sm font-medium">
-                Senha / PIN
-                <input
-                  type="password"
-                  inputMode="numeric"
-                  autoFocus
-                  maxLength={6}
-                  value={pin}
-                  onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
-                  className={input}
-                  aria-label="Senha"
-                />
-              </label>
-              <p className="mt-2 text-xs text-muted-foreground">
-                Senha da demonstração: {DEMO_PIN} (se você não trocou).
+              <div className="flex items-center justify-between">
+                <h2 className="text-lg font-bold">Digite sua senha</h2>
+                <button type="button" onClick={() => setStep({ name: "home" })} aria-label="Voltar">
+                  <X className="size-5 text-muted-foreground" />
+                </button>
+              </div>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Senha da demonstração: {DEMO_PIN}, caso não tenha sido alterada.
               </p>
+              <input
+                type="password"
+                inputMode="numeric"
+                autoFocus
+                maxLength={6}
+                value={pin}
+                onChange={(event) => setPin(event.target.value.replace(/\D/g, ""))}
+                className={input}
+                aria-label="Senha"
+              />
               <button
                 type="submit"
-                className="mt-3 w-full rounded-lg bg-primary py-3.5 font-semibold text-primary-foreground"
+                className="mt-4 w-full rounded-full bg-primary py-3.5 font-bold text-primary-foreground"
               >
-                Entrar
-              </button>
-              <button
-                type="button"
-                onClick={() => setStep({ name: "home" })}
-                className="mt-2 w-full py-2 text-sm font-medium text-primary"
-              >
-                Cancelar
+                Continuar
               </button>
             </form>
           )}
 
           {step.name === "bio" && (
-            <div className="mt-4 flex flex-col items-center gap-2 py-4" aria-live="polite">
+            <div className="mt-12 flex flex-col items-center rounded-3xl bg-white p-7 text-card-foreground shadow-2xl">
               <Fingerprint className="size-14 animate-pulse text-primary" aria-hidden />
-              <p className="text-sm font-medium">Lendo biometria…</p>
+              <p className="mt-3 font-semibold">Lendo biometria…</p>
             </div>
           )}
 
           {step.name === "code" && (
             <form
-              className="mt-4"
-              onSubmit={(e) => {
-                e.preventDefault();
+              className="mt-12 rounded-3xl bg-white p-5 text-card-foreground shadow-2xl"
+              onSubmit={(event) => {
+                event.preventDefault();
                 submitCode();
               }}
             >
-              <p className="flex items-center gap-2 text-sm font-semibold">
-                <ShieldCheck className="size-5 text-primary" aria-hidden />
-                {step.purpose === "unlock" ? "Desbloquear conta" : "Verificação em duas etapas"}
-              </p>
-              <p className="mt-2 rounded-lg bg-secondary px-3 py-2 text-sm text-secondary-foreground">
-                SMS simulado para (65) 9••••-••51: seu código é <strong>{step.code}</strong>
+              <h2 className="text-lg font-bold">
+                {step.purpose === "unlock" ? "Desbloquear conta" : "Chave de segurança"}
+              </h2>
+              <p className="mt-2 rounded-xl bg-secondary px-3 py-3 text-sm text-secondary-foreground">
+                Código simulado: <strong>{step.code}</strong>
               </p>
               <input
                 inputMode="numeric"
                 autoFocus
                 maxLength={6}
                 value={typed}
-                onChange={(e) => setTyped(e.target.value.replace(/\D/g, ""))}
+                onChange={(event) => setTyped(event.target.value.replace(/\D/g, ""))}
                 className={input}
                 aria-label="Código de verificação"
               />
-              <button type="submit" className="mt-3 w-full rounded-lg bg-primary py-3.5 font-semibold text-primary-foreground">
-                Confirmar código
-              </button>
               <button
-                type="button"
-                onClick={() => setStep({ name: "home" })}
-                className="mt-2 w-full py-2 text-sm font-medium text-primary"
+                type="submit"
+                className="mt-4 w-full rounded-full bg-primary py-3.5 font-bold text-primary-foreground"
               >
-                Cancelar
+                Confirmar
               </button>
             </form>
           )}
 
           {error && (
-            <p role="alert" className="mt-3 text-sm text-brand-red">
+            <p role="alert" className="mx-auto mt-5 max-w-sm text-center text-sm font-medium text-white/95">
               {error}
             </p>
           )}
-        </div>
+        </section>
 
-        {step.name === "home" && (
-          <>
-            <button
-              type="button"
-              onClick={biometric}
-              className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border-2 border-primary bg-card py-3.5 text-base font-semibold text-primary"
-            >
-              <Fingerprint className="size-5" aria-hidden />
-              Entrar com biometria
-            </button>
-            {security.locked ? (
+        <div className="mt-auto">
+          {step.name === "home" && (
+            <div className="mb-3 grid grid-cols-3 border-t border-white/30 pt-4">
               <button
                 type="button"
-                onClick={() => {
-                  setTyped("");
-                  setError(null);
-                  setStep({ name: "code", code: makeCode(), method: "Chave de segurança", purpose: "unlock" });
-                }}
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-border bg-card py-3.5 text-base text-card-foreground"
+                onClick={securityAction}
+                className="flex min-h-[96px] flex-col items-center justify-center gap-2 border-r border-white/30 text-center"
               >
-                <LockOpen className="size-5" aria-hidden />
-                Desbloquear conta
+                {security.locked ? <LockOpen className="size-8" strokeWidth={1.8} /> : <Lock className="size-8" strokeWidth={1.8} />}
+                <span className="text-[15px] font-semibold leading-tight">
+                  Chave de<br />segurança
+                </span>
               </button>
-            ) : (
+
               <button
                 type="button"
-                onClick={() => {
-                  setTyped("");
-                  setError(null);
-                  setStep({ name: "code", code: makeCode(), method: "Chave de segurança", purpose: "login" });
-                }}
-                className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg border border-border bg-card py-3.5 text-base text-card-foreground"
+                onClick={() => setError("BIA está disponível como demonstração visual.")}
+                className="flex min-h-[96px] flex-col items-center justify-center gap-2 border-r border-white/30 text-center"
               >
-                <Lock className="size-5" aria-hidden />
-                Chave de segurança
+                <MessageCircle className="size-8" strokeWidth={1.8} />
+                <span className="text-[15px] font-semibold">BIA</span>
               </button>
-            )}
-            <Link
-              to="/recuperar-acesso"
-              className="mt-4 block text-center text-sm font-medium underline underline-offset-4"
-            >
-              Esqueci minha senha
-            </Link>
-          </>
-        )}
+
+              <button
+                type="button"
+                onClick={() => setError("Pix será acessado depois da entrada na conta.")}
+                className="flex min-h-[96px] flex-col items-center justify-center gap-2 text-center"
+              >
+                <Grid2X2 className="size-8" strokeWidth={1.8} />
+                <span className="text-[15px] font-semibold">PIX</span>
+              </button>
+            </div>
+          )}
+
+          <div className="mx-auto mt-2 h-1.5 w-28 rounded-full bg-white/80" />
+        </div>
       </div>
     </div>
   );
