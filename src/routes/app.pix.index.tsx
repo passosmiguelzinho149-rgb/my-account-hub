@@ -15,13 +15,13 @@ import { formatDay, useBank } from "@/lib/bank";
 export const Route = createFileRoute("/app/pix/")({
   head: () => ({
     meta: [
-      { title: "Pix — Conta Empresas (demo)" },
+      { title: "Pix — Conta Empresas" },
       {
         name: "description",
         content:
           "Envie e receba Pix por chave, QR Code ou copia e cola, gerencie chaves, limites e histórico.",
       },
-      { property: "og:title", content: "Pix — Conta Empresas (demo)" },
+      { property: "og:title", content: "Pix — Conta Empresas" },
       {
         property: "og:description",
         content: "Enviar, receber, chaves, limites e histórico de Pix na conta empresarial.",
@@ -73,7 +73,7 @@ function PixHub() {
           <span className="min-w-0">
             <span className="block font-semibold">Histórico e comprovantes</span>
             <span className="block text-sm text-muted-foreground">
-              Consulte todos os Pix desta demonstração.
+              Consulte todos os Pix.
             </span>
           </span>
           <ChevronRight className="ml-auto size-5 shrink-0 text-brand-red" aria-hidden />
@@ -113,10 +113,6 @@ function PixHub() {
             ))}
           </ul>
         )}
-
-        <p className="mt-6 text-xs text-muted-foreground">
-          Ambiente de demonstração: nenhum Pix movimenta dinheiro real.
-        </p>
       </main>
     </>
   );
