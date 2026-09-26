@@ -120,9 +120,6 @@ function Transferencias() {
                     }}
                   >
                     <span className="block truncate text-sm font-semibold">{b.name}</span>
-                    <span className="block truncate text-xs text-muted-foreground">
-                      {b.bank} · {b.branch} / {b.account}
-                    </span>
                   </button>
                   <button type="button" onClick={() => removeBeneficiary(b.id)} aria-label={`Excluir ${b.name}`} className="rounded-full p-2 text-brand-red">
                     <Trash2 className="size-4" aria-hidden />
