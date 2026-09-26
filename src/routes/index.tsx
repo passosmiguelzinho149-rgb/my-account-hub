@@ -253,6 +253,7 @@ function LoginScreen() {
 
           {step.name === "pin" && (
             <form
+              autoComplete="off"
               className="mt-12 rounded-3xl bg-white p-5 text-card-foreground shadow-2xl"
               onSubmit={(event) => {
                 event.preventDefault();
@@ -267,6 +268,8 @@ function LoginScreen() {
               </div>
               <input
                 type="password"
+                name="demo-access-pin"
+                autoComplete="new-password"
                 inputMode="numeric"
                 autoFocus
                 maxLength={6}
@@ -351,7 +354,7 @@ function LoginScreen() {
               >
                 <Fingerprint className="size-8" strokeWidth={1.8} />
                 <span className="text-[15px] font-semibold leading-tight">
-                  {faceRegistered ? "Entrar com\nfacial" : "Cadastrar\nfacial"}
+                  {faceRegistered ? <>Entrar com<br />facial</> : <>Cadastrar<br />facial</>}
                 </span>
               </button>
 
