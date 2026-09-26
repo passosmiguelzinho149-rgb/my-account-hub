@@ -182,7 +182,7 @@ function HomeScreen() {
         <section className="mt-7">
           <h2 className="text-[22px] font-bold">Benefícios e parcerias</h2>
           <div className="mt-3 grid grid-cols-2 gap-3">
-            <Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-brand-red px-5 text-primary-foreground shadow-lg">
+            <Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-gradient-to-br from-[#2638a8] to-[#5b2aa0] px-5 text-white shadow-lg">
               <ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} />
               <span className="font-bold">Oferta com cashback</span>
             </Link>
