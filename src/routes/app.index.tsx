@@ -117,21 +117,39 @@ function HomeScreen() {
 
         <section className="mt-7">
           <h2 className="text-[22px] font-bold">Ofertas</h2>
-          <div className="mt-3 overflow-hidden rounded-3xl bg-card shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
-            <Link to="/app/credito" className="flex min-h-[150px] items-stretch">
-              <div className="w-[30%] bg-gradient-to-br from-red-100 via-red-50 to-white p-4">
-                <div className="flex h-full items-end justify-center">
-                  <span className="text-5xl">👩🏻‍💼</span>
+          <div className="mt-3 overflow-hidden rounded-[22px]">
+            <div className="flex items-stretch gap-2">
+              <Link
+                to="/app/credito"
+                className="flex min-h-[145px] min-w-0 flex-1 overflow-hidden rounded-[22px] bg-card shadow-[0_7px_24px_rgba(30,50,70,0.10)]"
+              >
+                <div className="relative flex w-[29%] shrink-0 items-end justify-center overflow-hidden bg-gradient-to-br from-[#dce8e4] via-[#f1ddd5] to-[#d7d7d7]">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent" />
+                  <div className="relative mb-2 grid size-20 place-items-center rounded-full bg-white/45">
+                    <span className="text-4xl">👩🏻</span>
+                  </div>
+                </div>
+                <div className="flex min-w-0 flex-1 items-center justify-between gap-2 p-4">
+                  <div className="min-w-0">
+                    <h3 className="text-[17px] font-bold leading-tight text-foreground">
+                      A melhor oferta do consignado
+                    </h3>
+                    <p className="mt-2 text-[13px] leading-snug text-muted-foreground">
+                      Simule e autorize a consulta dos seus dados.
+                    </p>
+                  </div>
+                  <ChevronRight className="size-6 shrink-0 text-primary" />
+                </div>
+              </Link>
+              <div
+                aria-hidden
+                className="flex w-[23%] shrink-0 items-end justify-center overflow-hidden rounded-[22px] bg-gradient-to-br from-[#d8e4e7] via-[#f0e6de] to-[#cfcfcf]"
+              >
+                <div className="mb-3 grid size-20 place-items-center rounded-full bg-white/35">
+                  <span className="text-4xl">🧮</span>
                 </div>
               </div>
-              <div className="flex flex-1 items-center justify-between p-5">
-                <div>
-                  <h3 className="text-lg font-bold">A melhor oferta do consignado</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">Simule e autorize a consulta dos seus dados.</p>
-                </div>
-                <ChevronRight className="size-7 shrink-0 text-primary" />
-              </div>
-            </Link>
+            </div>
           </div>
           <div className="mt-3 flex justify-center gap-2">
             <span className="h-2.5 w-12 rounded-full bg-primary" />
