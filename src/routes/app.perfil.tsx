@@ -68,13 +68,13 @@ function PerfilScreen() {
       </BrandHeader>
 
       <main className="-mt-10 px-4 pb-6">
-        <ul className="grid grid-cols-3 gap-2">
+        <ul className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {dataCards.map((c) => (
             <li key={c.slug}>
               <Link
                 to="/app/conta/$slug"
                 params={{ slug: c.slug }}
-                className="flex min-h-20 w-full items-center justify-center rounded-xl bg-card px-3 py-4 text-center text-xs font-medium leading-snug shadow-card sm:text-sm"
+                className="flex min-h-16 w-full items-center justify-center rounded-xl bg-card px-4 py-4 text-center text-sm font-medium leading-snug shadow-card"
               >
                 {c.label}
               </Link>
