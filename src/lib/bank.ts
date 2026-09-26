@@ -198,7 +198,7 @@ function initialState(): BankState {
         category: "pagamento",
         kind: "out",
         title: "PAGAMENTO DE BOLETO",
-        counterpart: "ENERGISA MATO GROSSO",
+        counterpart: "SECR. DA RECEITA FEDERAL",
         amount: 4_280.55,
       }),
       seedTx(7, {
