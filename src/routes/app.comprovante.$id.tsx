@@ -32,7 +32,6 @@ function ComprovanteScreen() {
   }
 
   const isPixReceived = tx.category === "pix" && tx.kind === "in";
-  const date = new Date(tx.createdAt);
   const displayDate = isPixReceived ? "18/06/2026 às 10:32" : formatDateTime(tx.createdAt);
   const displayDateTime = isPixReceived ? "18/06/2026 10:32" : formatDateTime(tx.createdAt).replace(" às ", " ");
   const payer = "MARCOS NUNES DE MIRANDA";
