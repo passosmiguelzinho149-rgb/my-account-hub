@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
-  Bell, ClipboardCopy, FileText, KeyRound, QrCode, ScanLine, X, Zap,
+  Bell, ClipboardCopy, FileText, KeyRound, QrCode, ScanLine, X,
   SlidersHorizontal, Star, UserRound, Hand, ArrowLeftRight,
 } from "lucide-react";
 import { SubHeader } from "@/components/app/SubHeader";
@@ -16,19 +16,26 @@ function PixHub() {
   const streamRef = useRef<MediaStream | null>(null);
   const [scannerOpen, setScannerOpen] = useState(false);
   const [cameraError, setCameraError] = useState("");
+  const [scanMessage, setScanMessage] = useState("");
+  const detectorRef = useRef<{ detect: (source: CanvasImageSource) => Promise<Array<{ rawValue?: string }>> } | null>(null);
+  const scanningRef = useRef(false);
 
   const closeScanner = () => {
     streamRef.current?.getTracks().forEach((track) => track.stop());
     streamRef.current = null;
+    scanningRef.current = false;
     setScannerOpen(false);
   };
 
   const openScanner = async () => {
     setCameraError("");
+    setScanMessage("");
     setScannerOpen(true);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } }, audio: false });
       streamRef.current = stream;
+      const BarcodeDetectorCtor = (window as unknown as { BarcodeDetector?: new (options: { formats: string[] }) => { detect: (source: CanvasImageSource) => Promise<Array<{ rawValue?: string }>> } }).BarcodeDetector;
+      detectorRef.current = BarcodeDetectorCtor ? new BarcodeDetectorCtor({ formats: ["qr_code"] }) : null;
       requestAnimationFrame(() => {
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -39,6 +46,30 @@ function PixHub() {
       setCameraError("Não foi possível abrir a câmera. Autorize o acesso à câmera no navegador.");
     }
   };
+
+  useEffect(() => {
+    if (!scannerOpen || !detectorRef.current) return;
+    scanningRef.current = true;
+    let timer = 0;
+    const scan = async () => {
+      if (!scanningRef.current) return;
+      const video = videoRef.current;
+      if (video && video.readyState >= 2 && detectorRef.current) {
+        try {
+          const codes = await detectorRef.current.detect(video);
+          const value = codes[0]?.rawValue?.trim();
+          if (value) {
+            setScanMessage("QR Code identificado.");
+            scanningRef.current = false;
+            return;
+          }
+        } catch {}
+      }
+      timer = window.setTimeout(scan, 350);
+    };
+    void scan();
+    return () => { scanningRef.current = false; window.clearTimeout(timer); };
+  }, [scannerOpen]);
 
   useEffect(() => () => streamRef.current?.getTracks().forEach((track) => track.stop()), []);
   const card = "flex items-center gap-3 rounded-2xl border border-border/30 bg-white p-4 text-left shadow-[0_6px_16px_rgba(25,35,70,0.10)]";
@@ -103,6 +134,7 @@ function PixHub() {
             <QrCode className="mx-auto size-7" />
             <p className="mt-3 font-semibold">Aponte a câmera para o QR Code</p>
             <p className="mt-1 text-sm text-white/80">Mantenha o código dentro da área indicada.</p>
+            {scanMessage && <p className="mx-auto mt-4 max-w-sm rounded-xl bg-white/90 p-3 text-sm font-semibold text-black">{scanMessage}</p>}
             {cameraError && <p className="mx-auto mt-4 max-w-sm rounded-xl bg-red-600/90 p-3 text-sm">{cameraError}</p>}
           </div>
         </div>
