@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useSession } from "@/lib/session";
 import {
   checkPin,
-  DEMO_PIN,
   makeCode,
   registerSuccess,
   unlockAccount,
@@ -49,6 +48,11 @@ function LoginScreen() {
   const [pin, setPin] = useState("");
   const [typed, setTyped] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [faceRegistered, setFaceRegistered] = useState(false);
+
+  useEffect(() => {
+    setFaceRegistered(window.localStorage.getItem("bradesco-demo-face-credential") === "1");
+  }, []);
 
   useEffect(() => {
     if (hydrated && signedIn) void navigate({ to: "/app", replace: true });
@@ -73,11 +77,58 @@ function LoginScreen() {
     finish("Senha");
   };
 
-  const biometric = () => {
+  const biometric = async () => {
     if (security.locked) return setError("Conta bloqueada. Desbloqueie para entrar.");
-    setError(null);
-    setStep({ name: "bio" });
-    window.setTimeout(() => finish("Biometria"), 1200);
+    if (!window.PublicKeyCredential || !navigator.credentials) {
+      return setError("A biometria facial não está disponível neste navegador ou aparelho.");
+    }
+
+    try {
+      setError(null);
+      setStep({ name: "bio" });
+
+      const credential = faceRegistered
+        ? await navigator.credentials.get({
+            publicKey: {
+              challenge: crypto.getRandomValues(new Uint8Array(32)),
+              userVerification: "required",
+              timeout: 60000,
+            },
+          })
+        : await navigator.credentials.create({
+            publicKey: {
+              challenge: crypto.getRandomValues(new Uint8Array(32)),
+              rp: { name: "Conta Empresas — Demonstração" },
+              user: {
+                id: crypto.getRandomValues(new Uint8Array(16)),
+                name: account.holder.toLowerCase().replace(/\\s+/g, "."),
+                displayName: account.holder,
+              },
+              pubKeyCredParams: [
+                { type: "public-key", alg: -7 },
+                { type: "public-key", alg: -257 },
+              ],
+              authenticatorSelection: {
+                authenticatorAttachment: "platform",
+                userVerification: "required",
+              },
+              timeout: 60000,
+              attestation: "none",
+            },
+          });
+
+      if (!credential) throw new Error("Biometria não concluída.");
+
+      if (!faceRegistered) {
+        window.localStorage.setItem("bradesco-demo-face-credential", "1");
+        setFaceRegistered(true);
+      }
+
+      finish("Biometria");
+    } catch {
+      setStep({ name: "home" });
+      setError("Não foi possível concluir a biometria. Tente novamente ou use sua senha.");
+    }
   };
 
   const submitCode = () => {
@@ -213,9 +264,6 @@ function LoginScreen() {
                   <X className="size-5 text-muted-foreground" />
                 </button>
               </div>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Senha da demonstração: {DEMO_PIN}, caso não tenha sido alterada.
-              </p>
               <input
                 type="password"
                 inputMode="numeric"
@@ -283,7 +331,7 @@ function LoginScreen() {
 
         <div className="mt-auto">
           {step.name === "home" && (
-            <div className="mb-3 grid grid-cols-3 border-t border-white/30 pt-4">
+            <div className="mb-3 grid grid-cols-4 border-t border-white/30 pt-4">
               <button
                 type="button"
                 onClick={securityAction}
@@ -292,6 +340,17 @@ function LoginScreen() {
                 {security.locked ? <LockOpen className="size-8" strokeWidth={1.8} /> : <Lock className="size-8" strokeWidth={1.8} />}
                 <span className="text-[15px] font-semibold leading-tight">
                   Chave de<br />segurança
+                </span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => void biometric()}
+                className="flex min-h-[96px] flex-col items-center justify-center gap-2 border-r border-white/30 text-center"
+              >
+                <Fingerprint className="size-8" strokeWidth={1.8} />
+                <span className="text-[15px] font-semibold leading-tight">
+                  {faceRegistered ? "Entrar com\nfacial" : "Cadastrar\nfacial"}
                 </span>
               </button>
 
