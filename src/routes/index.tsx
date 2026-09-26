@@ -79,52 +79,17 @@ function LoginScreen() {
 
   const biometric = async () => {
     if (security.locked) return setError("Conta bloqueada. Desbloqueie para entrar.");
-    if (!window.PublicKeyCredential || !navigator.credentials) {
-      return setError("A biometria facial não está disponível neste navegador ou aparelho.");
+    setError(null);
+    setStep({ name: "bio" });
+
+    // Biometria facial simulada para a demonstração.
+    // Em um app real, esta etapa seria ligada ao provedor biométrico do aparelho.
+    await new Promise((resolve) => window.setTimeout(resolve, 900));
+    if (!faceRegistered) {
+      window.localStorage.setItem("bradesco-demo-face-credential", "1");
+      setFaceRegistered(true);
     }
-    try {
-      setError(null);
-      setStep({ name: "bio" });
-      const credential = faceRegistered
-        ? await navigator.credentials.get({
-            publicKey: {
-              challenge: crypto.getRandomValues(new Uint8Array(32)),
-              userVerification: "required",
-              timeout: 60000,
-            },
-          })
-        : await navigator.credentials.create({
-            publicKey: {
-              challenge: crypto.getRandomValues(new Uint8Array(32)),
-              rp: { name: "Conta Empresas — Demonstração" },
-              user: {
-                id: crypto.getRandomValues(new Uint8Array(16)),
-                name: account.holder.toLowerCase().replace(/\s+/g, "."),
-                displayName: account.holder,
-              },
-              pubKeyCredParams: [
-                { type: "public-key", alg: -7 },
-                { type: "public-key", alg: -257 },
-              ],
-              authenticatorSelection: {
-                authenticatorAttachment: "platform",
-                residentKey: "required",
-                userVerification: "required",
-              },
-              timeout: 60000,
-              attestation: "none",
-            },
-          });
-      if (!credential) throw new Error("Biometria não concluída.");
-      if (!faceRegistered) {
-        window.localStorage.setItem("bradesco-demo-face-credential", "1");
-        setFaceRegistered(true);
-      }
-      finish("Biometria");
-    } catch {
-      setStep({ name: "home" });
-      setError("Não foi possível concluir a biometria. Tente novamente ou use sua senha.");
-    }
+    finish("Biometria");
   };
 
   const submitCode = () => {
