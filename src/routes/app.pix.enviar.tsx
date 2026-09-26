@@ -129,7 +129,7 @@ function EnviarPix() {
               <div>
                 <p className="font-semibold">Bradesco</p>
                 <p className="mt-1 text-sm">Ag.: 2491 | C/Poup.: 23062-6</p>
-                <p className="mt-2 text-sm text-muted-foreground">Conta demonstrativa</p>
+                <p className="mt-2 text-sm">Saldo disponível: <strong>{formatBRL(balance)}</strong></p>
               </div>
             </div>
           </div>
@@ -139,7 +139,7 @@ function EnviarPix() {
               <span className="mt-1 size-6 shrink-0 rounded-full border-2 border-muted-foreground" />
               <div>
                 <p className="font-semibold">Conta de outra instituição</p>
-                <p className="mt-1 text-sm text-muted-foreground">Opção ilustrativa nesta demonstração.</p>
+                <p className="mt-1 text-sm text-muted-foreground">Você faz a transação por aqui, mas debita de outra instituição.</p>
               </div>
             </div>
           </div>
