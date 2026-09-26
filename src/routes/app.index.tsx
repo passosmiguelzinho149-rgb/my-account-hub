@@ -119,7 +119,7 @@ function HomeScreen() {
 
         <section className="mt-7">
           <h2 className="text-[22px] font-bold">Acesso rápido</h2>
-          <div className="mt-3 grid grid-cols-4 gap-3">
+          <div className="mt-3 grid grid-cols-4 gap-3">\n            <Link to="/app/pix" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1.5 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">\n              <QrCode className="size-9 text-[#313878]" strokeWidth={1.7} />\n              <span className="mt-2 text-[11px] font-semibold leading-tight">Pix</span>\n            </Link>
             <Link to="/app/credito" className="flex min-w-0 min-h-[100px] flex-col items-center justify-center rounded-xl border border-border/60 bg-card px-1 py-3 text-center shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
               <HandCoins className="size-9 text-[#313878]" strokeWidth={1.7} />
               <span className="mt-2 text-[10px] font-semibold leading-tight">Linhas de<br />crédito</span>
