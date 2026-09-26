@@ -19,11 +19,15 @@ import { Route as AppComprovantesRouteImport } from './routes/app.comprovantes'
 import { Route as AppCreditoRouteImport } from './routes/app.credito'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
 import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
+import { Route as AppPagamentosRouteImport } from './routes/app.pagamentos'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppPixRouteImport } from './routes/app.pix'
 import { Route as AppPrivacidadeRouteImport } from './routes/app.privacidade'
+import { Route as AppRecargasRouteImport } from './routes/app.recargas'
+import { Route as AppSaquesRouteImport } from './routes/app.saques'
 import { Route as AppSegurancaRouteImport } from './routes/app.seguranca'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
+import { Route as AppTransferenciasRouteImport } from './routes/app.transferencias'
 import { Route as AppComprovanteIdRouteImport } from './routes/app.comprovante.$id'
 import { Route as AppContaSlugRouteImport } from './routes/app.conta.$slug'
 import { Route as AppPixIndexRouteImport } from './routes/app.pix.index'
@@ -84,6 +88,11 @@ const AppNotificacoesRoute = AppNotificacoesRouteImport.update({
   path: '/notificacoes',
   getParentRoute: () => AppRoute,
 } as any)
+const AppPagamentosRoute = AppPagamentosRouteImport.update({
+  id: '/pagamentos',
+  path: '/pagamentos',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppPerfilRoute = AppPerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -99,6 +108,16 @@ const AppPrivacidadeRoute = AppPrivacidadeRouteImport.update({
   path: '/privacidade',
   getParentRoute: () => AppRoute,
 } as any)
+const AppRecargasRoute = AppRecargasRouteImport.update({
+  id: '/recargas',
+  path: '/recargas',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppSaquesRoute = AppSaquesRouteImport.update({
+  id: '/saques',
+  path: '/saques',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSegurancaRoute = AppSegurancaRouteImport.update({
   id: '/seguranca',
   path: '/seguranca',
@@ -107,6 +126,11 @@ const AppSegurancaRoute = AppSegurancaRouteImport.update({
 const AppServicosRoute = AppServicosRouteImport.update({
   id: '/servicos',
   path: '/servicos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppTransferenciasRoute = AppTransferenciasRouteImport.update({
+  id: '/transferencias',
+  path: '/transferencias',
   getParentRoute: () => AppRoute,
 } as any)
 const AppComprovanteIdRoute = AppComprovanteIdRouteImport.update({
@@ -165,11 +189,15 @@ export interface FileRoutesByFullPath {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/pix': typeof AppPixRouteWithChildren
   '/app/privacidade': typeof AppPrivacidadeRoute
+  '/app/recargas': typeof AppRecargasRoute
+  '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
+  '/app/transferencias': typeof AppTransferenciasRoute
   '/app/': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
@@ -190,10 +218,14 @@ export interface FileRoutesByTo {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/privacidade': typeof AppPrivacidadeRoute
+  '/app/recargas': typeof AppRecargasRoute
+  '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
+  '/app/transferencias': typeof AppTransferenciasRoute
   '/app': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
@@ -216,11 +248,15 @@ export interface FileRoutesById {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/pix': typeof AppPixRouteWithChildren
   '/app/privacidade': typeof AppPrivacidadeRoute
+  '/app/recargas': typeof AppRecargasRoute
+  '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
+  '/app/transferencias': typeof AppTransferenciasRoute
   '/app/': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
   '/app/conta/$slug': typeof AppContaSlugRoute
@@ -244,11 +280,15 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/notificacoes'
+    | '/app/pagamentos'
     | '/app/perfil'
     | '/app/pix'
     | '/app/privacidade'
+    | '/app/recargas'
+    | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
+    | '/app/transferencias'
     | '/app/'
     | '/app/comprovante/$id'
     | '/app/conta/$slug'
@@ -269,10 +309,14 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/notificacoes'
+    | '/app/pagamentos'
     | '/app/perfil'
     | '/app/privacidade'
+    | '/app/recargas'
+    | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
+    | '/app/transferencias'
     | '/app'
     | '/app/comprovante/$id'
     | '/app/conta/$slug'
@@ -294,11 +338,15 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/notificacoes'
+    | '/app/pagamentos'
     | '/app/perfil'
     | '/app/pix'
     | '/app/privacidade'
+    | '/app/recargas'
+    | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
+    | '/app/transferencias'
     | '/app/'
     | '/app/comprovante/$id'
     | '/app/conta/$slug'
@@ -389,6 +437,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppNotificacoesRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/pagamentos': {
+      id: '/app/pagamentos'
+      path: '/pagamentos'
+      fullPath: '/app/pagamentos'
+      preLoaderRoute: typeof AppPagamentosRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/perfil': {
       id: '/app/perfil'
       path: '/perfil'
@@ -410,6 +465,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppPrivacidadeRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/recargas': {
+      id: '/app/recargas'
+      path: '/recargas'
+      fullPath: '/app/recargas'
+      preLoaderRoute: typeof AppRecargasRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/saques': {
+      id: '/app/saques'
+      path: '/saques'
+      fullPath: '/app/saques'
+      preLoaderRoute: typeof AppSaquesRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/seguranca': {
       id: '/app/seguranca'
       path: '/seguranca'
@@ -422,6 +491,13 @@ declare module '@tanstack/react-router' {
       path: '/servicos'
       fullPath: '/app/servicos'
       preLoaderRoute: typeof AppServicosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/transferencias': {
+      id: '/app/transferencias'
+      path: '/transferencias'
+      fullPath: '/app/transferencias'
+      preLoaderRoute: typeof AppTransferenciasRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/comprovante/$id': {
@@ -518,11 +594,15 @@ interface AppRouteChildren {
   AppCreditoRoute: typeof AppCreditoRoute
   AppExtratoRoute: typeof AppExtratoRoute
   AppNotificacoesRoute: typeof AppNotificacoesRoute
+  AppPagamentosRoute: typeof AppPagamentosRoute
   AppPerfilRoute: typeof AppPerfilRoute
   AppPixRoute: typeof AppPixRouteWithChildren
   AppPrivacidadeRoute: typeof AppPrivacidadeRoute
+  AppRecargasRoute: typeof AppRecargasRoute
+  AppSaquesRoute: typeof AppSaquesRoute
   AppSegurancaRoute: typeof AppSegurancaRoute
   AppServicosRoute: typeof AppServicosRoute
+  AppTransferenciasRoute: typeof AppTransferenciasRoute
   AppIndexRoute: typeof AppIndexRoute
   AppComprovanteIdRoute: typeof AppComprovanteIdRoute
   AppContaSlugRoute: typeof AppContaSlugRoute
@@ -536,11 +616,15 @@ const AppRouteChildren: AppRouteChildren = {
   AppCreditoRoute: AppCreditoRoute,
   AppExtratoRoute: AppExtratoRoute,
   AppNotificacoesRoute: AppNotificacoesRoute,
+  AppPagamentosRoute: AppPagamentosRoute,
   AppPerfilRoute: AppPerfilRoute,
   AppPixRoute: AppPixRouteWithChildren,
   AppPrivacidadeRoute: AppPrivacidadeRoute,
+  AppRecargasRoute: AppRecargasRoute,
+  AppSaquesRoute: AppSaquesRoute,
   AppSegurancaRoute: AppSegurancaRoute,
   AppServicosRoute: AppServicosRoute,
+  AppTransferenciasRoute: AppTransferenciasRoute,
   AppIndexRoute: AppIndexRoute,
   AppComprovanteIdRoute: AppComprovanteIdRoute,
   AppContaSlugRoute: AppContaSlugRoute,
