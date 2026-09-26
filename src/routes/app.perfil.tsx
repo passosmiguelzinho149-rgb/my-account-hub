@@ -8,12 +8,12 @@ import { useSession } from "@/lib/session";
 export const Route = createFileRoute("/app/perfil")({
   head: () => ({
     meta: [
-      { title: "Perfil — Conta Empresas (demo)" },
+      { title: "Perfil — Conta Empresas" },
       {
         name: "description",
         content: "Dados pessoais, dados da empresa, dados da conta e preferências de privacidade.",
       },
-      { property: "og:title", content: "Perfil — Conta Empresas (demo)" },
+      { property: "og:title", content: "Perfil — Conta Empresas" },
       {
         property: "og:description",
         content: "Dados pessoais, da empresa, da conta e preferências de privacidade.",
