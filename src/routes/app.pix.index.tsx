@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useRef } from "react";
 import {
   Bell, ClipboardCopy, FileText, KeyRound, QrCode, ScanLine,
   SlidersHorizontal, Star, UserRound, Hand, ArrowLeftRight,
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/app/pix/")({
 });
 
 function PixHub() {
+  const cameraInput = useRef<HTMLInputElement>(null);
   const card = "flex items-center gap-3 rounded-2xl border border-border/30 bg-white p-4 text-left shadow-[0_6px_16px_rgba(25,35,70,0.10)]";
   const tile = "flex min-h-[150px] flex-col items-start justify-center gap-3 rounded-2xl border border-border/30 bg-white p-4 shadow-[0_6px_16px_rgba(25,35,70,0.10)]";
   return (
@@ -36,7 +38,7 @@ function PixHub() {
         <h2 className="mt-8 text-[22px] font-medium">Transferir, pagar e receber</h2>
         <div className="mt-3 grid grid-cols-3 gap-3">
           <Link to="/app/pix/enviar" className={tile}><ClipboardCopy className="size-9 text-[#313878]" strokeWidth={1.5}/><span className="text-base font-medium leading-snug">Pix Copia e Cola</span></Link>
-          <Link to="/app/pix/enviar" className={tile}><ScanLine className="size-9 text-[#313878]" strokeWidth={1.5}/><span className="text-base font-medium leading-snug">Ler um QR Code</span></Link>
+          <button type="button" onClick={() => cameraInput.current?.click()} className={tile}><ScanLine className="size-9 text-[#313878]" strokeWidth={1.5}/><span className="text-base font-medium leading-snug">Ler um QR Code</span><input ref={cameraInput} type="file" accept="image/*" capture="environment" className="hidden" /></button>
           <Link to="/app/pix/receber" className={tile}><ArrowLeftRight className="size-9 text-[#313878]" strokeWidth={1.5}/><span className="text-base font-medium leading-snug">Receber por QR Code</span></Link>
         </div>
 
