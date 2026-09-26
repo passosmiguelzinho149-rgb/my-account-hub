@@ -1,4 +1,5 @@
-import { CircleHelp, Bell, MoreVertical } from "lucide-react";
+import { Bell } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 /** Cabeçalho com gradiente da marca usado nas telas principais. */
 export function BrandHeader({ children }: { children?: React.ReactNode }) {
@@ -14,16 +15,16 @@ export function BrandHeader({ children }: { children?: React.ReactNode }) {
             <span className="block truncate text-xs opacity-80">empresas e negócios</span>
           </span>
         </div>
-        <div className="flex shrink-0 items-center gap-3">
-          <CircleHelp className="size-5" aria-hidden />
-          <span className="relative">
-            <Bell className="size-5" aria-hidden />
-            <span className="absolute -top-1.5 -right-1.5 grid size-4 place-items-center rounded-full bg-brand-red text-[10px] font-bold">
-              3
-            </span>
+        <Link
+          to="/app/notificacoes"
+          aria-label="Notificações"
+          className="relative rounded-full p-1.5 transition-colors hover:bg-primary-foreground/15"
+        >
+          <Bell className="size-6" aria-hidden />
+          <span className="absolute -top-0.5 -right-0.5 grid size-4 place-items-center rounded-full bg-brand-red text-[10px] font-bold">
+            3
           </span>
-          <MoreVertical className="size-5" aria-hidden />
-        </div>
+        </Link>
       </div>
       {children}
       <div className="relative h-7 overflow-hidden bg-background">
