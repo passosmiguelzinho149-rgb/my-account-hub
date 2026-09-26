@@ -7,11 +7,6 @@ export const Route = createFileRoute("/app")({
   component: AppLayout,
 });
 
-/**
- * Layout da área logada: conteúdo + navegação inferior.
- * A checagem de sessão acontece no cliente porque a sessão simulada
- * vive em localStorage (indisponível durante o SSR).
- */
 function AppLayout() {
   const { hydrated, signedIn } = useSession();
   const navigate = useNavigate();
@@ -25,7 +20,7 @@ function AppLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-background pb-32">
+    <div className="min-h-screen bg-background pb-20">
       <div className="mx-auto max-w-lg">
         <Outlet />
       </div>
