@@ -172,7 +172,7 @@ function LoginScreen() {
         <div className="absolute bottom-[-120px] left-[-18%] h-72 w-[115%] rotate-[-18deg] rounded-[50%] bg-white/[0.06]" />
       </div>
 
-      <div className="relative mx-auto flex min-h-screen w-full max-w-lg flex-col px-6 pb-7 pt-4">
+      <div className="mobile-shell relative flex min-h-[100dvh] flex-col px-5 pb-[calc(1.75rem+env(safe-area-inset-bottom))] pt-4">
         <header className="flex items-center justify-between">
           <button
             type="button"
@@ -205,7 +205,7 @@ function LoginScreen() {
           empresas e negócios
         </div>
 
-        <section className="mt-28">
+        <section className="mt-[clamp(5rem,18dvh,7rem)]">
           <div className="flex items-center justify-between gap-4">
             <div className="min-w-0">
               <h1 className="truncate text-[24px] font-bold leading-tight">{account.holder}</h1>
@@ -231,7 +231,7 @@ function LoginScreen() {
               <button
                 type="button"
                 onClick={startPin}
-                className="mt-40 w-full rounded-full bg-white py-4 text-base font-bold text-brand-red shadow-[0_8px_25px_rgba(0,0,0,0.16)] transition-transform active:scale-[0.99]"
+                className="mt-[clamp(8rem,28dvh,11rem)] w-full rounded-full bg-white py-4 text-base font-bold text-brand-red shadow-[0_8px_25px_rgba(0,0,0,0.16)] transition-transform active:scale-[0.99]"
               >
                 Entrar
               </button>
@@ -328,7 +328,7 @@ function LoginScreen() {
           )}
         </section>
 
-        <div className="mt-auto">
+        <div className="mt-auto pt-4">
           {step.name === "home" && (
             <div className="mb-3 grid grid-cols-4 border-t border-white/30 pt-4">
               <button
