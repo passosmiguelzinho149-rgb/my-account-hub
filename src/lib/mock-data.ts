@@ -112,15 +112,24 @@ export function findService(slug: string): ServiceItem | undefined {
 export const creditLines = [
   {
     title: "Capital de giro",
-    body: "Recursos para o dia a dia da empresa, com prazos e carência ajustáveis ao seu fluxo de caixa.",
+    body: "Dinheiro para apoiar o fluxo de caixa ou expandir seu negócio.",
+    icon: "WalletCards",
+  },
+  {
+    title: "Giro Empresarial Bradesco",
+    body: "Valor disponível na hora, com pagamento parcelado.",
+    icon: "Banknote",
   },
   {
     title: "Cheque empresarial",
-    body: "Limite pré-aprovado na conta para cobrir eventuais faltas de saldo, com juros por dia de uso.",
+    body: "Limite disponível para casos de emergência.",
+    icon: "HandCoins",
   },
   {
     title: "Microcrédito",
-    body: "Crédito orientado para pequenos negócios, com acompanhamento de um agente de crédito.",
+    body: "Crédito para investir no desenvolvimento da empresa.",
+    badge: "Com isenção de IOF",
+    icon: "BadgeDollarSign",
   },
 ];
 
