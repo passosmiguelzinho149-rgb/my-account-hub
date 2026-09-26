@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { ConfirmPanel, ErrorNote, Field, PrimaryButton, SelectField } from "@/components/app/OpKit";
 import { formatBRL } from "@/lib/mock-data";
-import { addBeneficiary, formatDay, postTx, removeBeneficiary, useBalance, useBank, type Tx } from "@/lib/bank";
+import { addBeneficiary, formatDay, postTx, removeBeneficiary, useBalance, useBank } from "@/lib/bank";
 import { parseAmount } from "@/lib/pix";
 import { cn } from "@/lib/utils";
 
