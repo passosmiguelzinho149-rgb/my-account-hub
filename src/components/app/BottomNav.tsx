@@ -15,27 +15,28 @@ export function BottomNav() {
     <>
       <div
         aria-hidden
-        className="pointer-events-none fixed inset-x-0 bottom-0 z-30 h-8 overflow-hidden"
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-40 h-16 overflow-hidden"
       >
-        <div className="absolute -bottom-7 left-[-12%] h-12 w-[124%] rounded-[50%] bg-brand-red" />
-        <div className="absolute -bottom-6 left-[18%] h-10 w-[92%] rounded-[50%] bg-primary/35" />
-        <div className="absolute -bottom-8 left-[42%] h-11 w-[70%] rounded-[50%] bg-primary-deep" />
+        <div className="absolute -bottom-9 left-[-12%] h-16 w-[124%] rounded-[50%] bg-brand-red" />
+        <div className="absolute -bottom-7 left-[10%] h-12 w-[105%] rounded-[50%] bg-primary/40" />
+        <div className="absolute -bottom-10 left-[38%] h-14 w-[82%] rounded-[50%] bg-primary-deep" />
       </div>
-      <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/80 bg-card/95 backdrop-blur-md">
-      <ul className="mx-auto flex max-w-lg">
-        {items.map(({ to, label, Icon, exact }) => (
-          <li key={label} className="flex-1">
-            <Link
-              to={to}
-              activeOptions={{ exact }}
-              className="flex flex-col items-center gap-1 py-2.5 text-muted-foreground transition-colors data-[status=active]:text-primary"
-            >
-              <Icon className="size-6" aria-hidden />
-              <span className="text-xs font-medium">{label}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+
+      <nav className="fixed inset-x-0 bottom-16 z-50 border-t border-border/60 bg-card">
+        <ul className="mx-auto flex max-w-lg">
+          {items.map(({ to, label, Icon, exact }) => (
+            <li key={label} className="flex-1">
+              <Link
+                to={to}
+                activeOptions={{ exact }}
+                className="flex h-16 flex-col items-center justify-center gap-1 text-muted-foreground transition-colors data-[status=active]:text-primary"
+              >
+                <Icon className="size-7" aria-hidden />
+                <span className="text-xs font-medium">{label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </nav>
     </>
   );
