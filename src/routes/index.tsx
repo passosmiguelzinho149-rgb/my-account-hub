@@ -245,14 +245,6 @@ function LoginScreen() {
           Chave de segurança
         </button>
 
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          <button type="button" onClick={() => void biometric()} className="rounded-lg border bg-white py-3 text-sm font-semibold text-[#3f3ba5]">
-            {faceRegistered ? "Entrar com facial" : "Cadastrar facial"}
-          </button>
-          <button type="button" onClick={() => setError("Pix será acessado depois da entrada na conta.")} className="rounded-lg border bg-white py-3 text-sm font-semibold text-[#3f3ba5]">
-            PIX
-          </button>
-        </div>
       </main>
     </div>
   );}
