@@ -320,6 +320,29 @@ export function getState(): BankState {
       cache = initialState();
     }
     if (!raw_ok(cache)) cache = initialState();
+
+    // Migração dos dados de demonstração: garante que os três recebimentos
+    // fictícios estejam presentes mesmo quando o navegador já tinha dados antigos.
+    const demoReceipts = [
+      { amount: 26_750_000, date: "2026-06-11" },
+      { amount: 52_625_000, date: "2026-06-16" },
+      { amount: 52_625_000, date: "2026-06-18" },
+    ];
+    const hasAllDemoReceipts = demoReceipts.every(({ amount, date }) =>
+      cache!.transactions.some(
+        (t) =>
+          t.kind === "in" &&
+          t.category === "pix" &&
+          t.amount === amount &&
+          t.counterpart === "REM: MARCOS NUNES DE MIRANDA" &&
+          t.createdAt.startsWith(date),
+      ),
+    );
+
+    if (!hasAllDemoReceipts) {
+      cache = initialState();
+      persist();
+    }
   }
   return cache;
 }
