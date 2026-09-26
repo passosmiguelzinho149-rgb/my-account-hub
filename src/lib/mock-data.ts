@@ -2,7 +2,7 @@
 export const account = {
   holder: "CLEITON OLIVEIRA DOS PASSOS",
   company: "63.031.988 CLEITON OLIVEIRA DOS PASSOS",
-  cnpj: "63.031.988/0001-76",
+  cnpj: "45.755.070/0001-98",
   branch: "2700",
   number: "3574-2",
   balance: 132_000_000,
