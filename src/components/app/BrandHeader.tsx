@@ -1,7 +1,8 @@
 import { Bell, HelpCircle } from "lucide-react";
+import type { ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 
-export function BrandHeader({ children }: { children?: React.ReactNode }) {
+export function BrandHeader({ children }: { children?: ReactNode }) {
   return (
     <header className="bg-brand-gradient text-primary-foreground">
       <div className="flex items-center justify-between gap-3 px-4 pb-4 pt-4">
