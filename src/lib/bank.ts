@@ -1,5 +1,5 @@
 /**
- * "Banco de dados" da demonstração.
+ * "Banco de dados" local do aplicativo.
  * Tudo vive no aparelho (localStorage) e persiste durante o uso do app.
  * Nenhuma operação movimenta dinheiro real.
  */
@@ -88,7 +88,7 @@ export interface BankState {
   pixKeys: PixKey[];
 }
 
-const STORAGE_KEY = "bradesco-demo-bank-v2";
+const STORAGE_KEY = "conta-empresas-bank-v2";
 
 /* --------------------------------------------------------------- utilidades */
 
@@ -254,7 +254,7 @@ function initialState(): BankState {
         id: "n2",
         kind: "seguranca",
         title: "Aviso de segurança",
-        body: "Nunca compartilhe sua senha ou token. Este é um ambiente de demonstração.",
+        body: "Nunca compartilhe sua senha ou token. Este é um ambiente do aplicativo.",
         createdAt: new Date(Date.now() - 86_400_000).toISOString(),
         read: false,
       },
@@ -268,33 +268,33 @@ function initialState(): BankState {
       },
     ],
     beneficiaries: [
-      { id: "pix-demo-23", name: "MARIA AUXILIADORA DE OLIVEIRA", doc: "000.000.000-00", bank: "Banco DEMO", branch: "0000", account: "DEMO-23" },
-      { id: "pix-demo-7", name: "JOSÉ MARIA GOMES PEIXOTO", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-07" },
-      { id: "pix-demo-24", name: "MARIA JOSE DE OLIVEIRA", doc: "000.000.000-00", bank: "Banco DEMO", branch: "0000", account: "DEMO-24" },
-      { id: "pix-demo-6", name: "KATIANE DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-06" },
-      { id: "pix-demo-3", name: "VIVIANI DE OLIVEIRA SOUZA", doc: "000.000.000-00", bank: "237 — Banco DEMO", branch: "1249", account: "DEMO-03" },
-      { id: "pix-demo-12", name: "MOACIR GOMES DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-12" },
-      { id: "pix-demo-8", name: "MARIA JOSE GOMES DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-08" },
-      { id: "pix-demo-27", name: "JOSE RAUGI NETO", doc: "000.000.000-00", bank: "Banco DEMO", branch: "0000", account: "DEMO-27" },
-      { id: "pix-demo-14", name: "VILSON VILMAR DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-14" },
-      { id: "pix-demo-1", name: "TATIANE DE OLIVEIRA", doc: "000.000.000-00", bank: "237 — Banco DEMO", branch: "1249", account: "DEMO-01" },
-      { id: "pix-demo-2", name: "CLEBER OLIVEIRA PASSOS", doc: "000.000.000-00", bank: "237 — Banco DEMO", branch: "1249", account: "DEMO-02" },
-      { id: "pix-demo-4", name: "RODRIGO DE OLIVEIRA PEGO", doc: "000.000.000-00", bank: "104 — Banco DEMO", branch: "2086", account: "DEMO-04" },
-      { id: "pix-demo-5", name: "CLEIDIANE DOS PASSOS OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-05" },
-      { id: "pix-demo-9", name: "ELIANE PEGO DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-09" },
-      { id: "pix-demo-10", name: "JOSIANE DE SOUSA PARANHOS SILVA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-10" },
-      { id: "pix-demo-11", name: "ADRIANO DE SOUZA PARANHOS", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-11" },
-      { id: "pix-demo-13", name: "JUSTINIANO DE SOUZA PARANHOS", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-13" },
-      { id: "pix-demo-15", name: "ROGÉRIO DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-15" },
-      { id: "pix-demo-16", name: "WILLIAM PARANHOS DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-16" },
-      { id: "pix-demo-17", name: "SOLANGE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-17" },
-      { id: "pix-demo-18", name: "YURI GABRYEL OLIVEIRA CARDOSO", doc: "000.000.000-00", bank: "748 — Banco DEMO", branch: "0804", account: "DEMO-18" },
-      { id: "pix-demo-19", name: "JOSINE PARANHOS DE OLIVEIRA", doc: "000.000.000-00", bank: "208 — Banco DEMO", branch: "0020", account: "DEMO-19" },
-      { id: "pix-demo-20", name: "YARA GABRIELLY OLIVEIRA CARDOSO", doc: "000.000.000-00", bank: "336 — Banco DEMO", branch: "0001", account: "DEMO-20" },
-      { id: "pix-demo-21", name: "REGINALDO DE OLIVEIRA PEGO", doc: "000.000.000-00", bank: "341 — Banco DEMO", branch: "1360", account: "DEMO-21" },
-      { id: "pix-demo-22", name: "GUILHERME DE OLIVEIRA PEGO", doc: "000.000.000-00", bank: "237 — Banco DEMO", branch: "1249", account: "DEMO-22" },
-      { id: "pix-demo-25", name: "VALDINEI PARANHOS DE OLIVEIRA", doc: "000.000.000-00", bank: "Banco DEMO", branch: "0000", account: "DEMO-25" },
-      { id: "pix-demo-26", name: "SABRINA OLIVEIRA DE FREITAS", doc: "000.000.000-00", bank: "Banco DEMO", branch: "0000", account: "DEMO-26" },
+      { id: "pix-local-23", name: "MARIA AUXILIADORA DE OLIVEIRA", doc: "000.000.000-00", bank: "Banco", branch: "0000", account: "CONTA-23" },
+      { id: "pix-local-7", name: "JOSÉ MARIA GOMES PEIXOTO", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-07" },
+      { id: "pix-local-24", name: "MARIA JOSE DE OLIVEIRA", doc: "000.000.000-00", bank: "Banco", branch: "0000", account: "CONTA-24" },
+      { id: "pix-local-6", name: "KATIANE DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-06" },
+      { id: "pix-local-3", name: "VIVIANI DE OLIVEIRA SOUZA", doc: "000.000.000-00", bank: "237 — Banco", branch: "1249", account: "CONTA-03" },
+      { id: "pix-local-12", name: "MOACIR GOMES DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-12" },
+      { id: "pix-local-8", name: "MARIA JOSE GOMES DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-08" },
+      { id: "pix-local-27", name: "JOSE RAUGI NETO", doc: "000.000.000-00", bank: "Banco", branch: "0000", account: "CONTA-27" },
+      { id: "pix-local-14", name: "VILSON VILMAR DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-14" },
+      { id: "pix-local-1", name: "TATIANE DE OLIVEIRA", doc: "000.000.000-00", bank: "237 — Banco", branch: "1249", account: "CONTA-01" },
+      { id: "pix-local-2", name: "CLEBER OLIVEIRA PASSOS", doc: "000.000.000-00", bank: "237 — Banco", branch: "1249", account: "CONTA-02" },
+      { id: "pix-local-4", name: "RODRIGO DE OLIVEIRA PEGO", doc: "000.000.000-00", bank: "104 — Banco", branch: "2086", account: "CONTA-04" },
+      { id: "pix-local-5", name: "CLEIDIANE DOS PASSOS OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-05" },
+      { id: "pix-local-9", name: "ELIANE PEGO DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-09" },
+      { id: "pix-local-10", name: "JOSIANE DE SOUSA PARANHOS SILVA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-10" },
+      { id: "pix-local-11", name: "ADRIANO DE SOUZA PARANHOS", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-11" },
+      { id: "pix-local-13", name: "JUSTINIANO DE SOUZA PARANHOS", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-13" },
+      { id: "pix-local-15", name: "ROGÉRIO DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-15" },
+      { id: "pix-local-16", name: "WILLIAM PARANHOS DE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-16" },
+      { id: "pix-local-17", name: "SOLANGE OLIVEIRA", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-17" },
+      { id: "pix-local-18", name: "YURI GABRYEL OLIVEIRA CARDOSO", doc: "000.000.000-00", bank: "748 — Banco", branch: "0804", account: "CONTA-18" },
+      { id: "pix-local-19", name: "JOSINE PARANHOS DE OLIVEIRA", doc: "000.000.000-00", bank: "208 — Banco", branch: "0020", account: "CONTA-19" },
+      { id: "pix-local-20", name: "YARA GABRIELLY OLIVEIRA CARDOSO", doc: "000.000.000-00", bank: "336 — Banco", branch: "0001", account: "CONTA-20" },
+      { id: "pix-local-21", name: "REGINALDO DE OLIVEIRA PEGO", doc: "000.000.000-00", bank: "341 — Banco", branch: "1360", account: "CONTA-21" },
+      { id: "pix-local-22", name: "GUILHERME DE OLIVEIRA PEGO", doc: "000.000.000-00", bank: "237 — Banco", branch: "1249", account: "CONTA-22" },
+      { id: "pix-local-25", name: "VALDINEI PARANHOS DE OLIVEIRA", doc: "000.000.000-00", bank: "Banco", branch: "0000", account: "CONTA-25" },
+      { id: "pix-local-26", name: "SABRINA OLIVEIRA DE FREITAS", doc: "000.000.000-00", bank: "Banco", branch: "0000", account: "CONTA-26" },
     ],
     pixKeys: [
       { id: "k1", type: "CNPJ", value: account.cnpj },
@@ -332,7 +332,7 @@ export function getState(): BankState {
     }
     if (!raw_ok(cache)) cache = initialState();
 
-    // Migração dos favorecidos de demonstração: garante que os 26 nomes
+    // Migração dos favorecidos cadastrados: garante que os 26 nomes
     // configurados no app apareçam mesmo quando o navegador já tinha dados antigos.
     const seededBeneficiaries = initialState().beneficiaries;
     const existing = new Map(cache!.beneficiaries.map((item) => [item.id, item]));
@@ -350,14 +350,14 @@ export function getState(): BankState {
       persist();
     }
 
-    // Migração dos dados de demonstração: garante que os três recebimentos
-    // fictícios estejam presentes mesmo quando o navegador já tinha dados antigos.
-    const demoReceipts = [
+    // Migração dos dados cadastrados: garante que os três recebimentos
+    // cadastrados estejam presentes mesmo quando o navegador já tinha dados antigos.
+    const seedReceipts = [
       { amount: 26_750_000, date: "2026-06-11" },
       { amount: 52_625_000, date: "2026-06-16" },
       { amount: 52_625_000, date: "2026-06-18" },
     ];
-    const hasAllDemoReceipts = demoReceipts.every(({ amount, date }) =>
+    const hasAllSeedReceipts = seedReceipts.every(({ amount, date }) =>
       cache!.transactions.some(
         (t) =>
           t.kind === "in" &&
@@ -368,7 +368,7 @@ export function getState(): BankState {
       ),
     );
 
-    if (!hasAllDemoReceipts) {
+    if (!hasAllSeedReceipts) {
       cache = initialState();
       persist();
     }
@@ -407,7 +407,7 @@ export function useBalance(): number {
   return computeBalance(useBank());
 }
 
-export function resetDemo(): void {
+export function resetApp(): void {
   cache = initialState();
   persist();
   listeners.forEach((l) => l());
