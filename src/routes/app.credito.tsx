@@ -20,7 +20,7 @@ const creditIcons = { WalletCards, Banknote, HandCoins, BadgeDollarSign } as con
 function CreditoScreen() {
   const [open, setOpen] = useState<string | null>(null);
   const [contracting, setContracting] = useState<string | null>(null);
-  const [amount, setAmount] = useState(30000);
+  const [amount, setAmount] = useState(1000000);
   const [dueDate, setDueDate] = useState("2026-10-30");
 
   if (contracting) {
@@ -30,11 +30,11 @@ function CreditoScreen() {
         <main className="mx-auto w-full max-w-[430px] px-5 pb-8 pt-5">
           <div className="h-1.5 overflow-hidden rounded-full bg-[#dce5f7]"><div className="h-full w-1/2 rounded-full bg-[#1685e6]" /></div>
           <p className="mt-2 text-right text-[11px] text-muted-foreground">Passo 1 de 2</p>
-          <div className="mt-6 rounded-lg bg-[#eef3ff] px-4 py-3 text-center text-sm">Valor disponível: <strong>R$ 30.000,00</strong></div>
+          <div className="mt-6 rounded-lg bg-[#eef3ff] px-4 py-3 text-center text-sm">Valor disponível: <strong>R$ 1.000.000,00</strong></div>
           <label className="mt-6 block text-sm font-medium text-[#31588f]">Digite ou escolha um valor</label>
           <div className="mt-1 rounded-lg border-2 border-[#4795d8] bg-white px-3 py-2 text-lg">{amount.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</div>
-          <input aria-label="Valor do crédito" type="range" min="1000" max="30000" step="500" value={amount} onChange={(e) => setAmount(Number(e.target.value))} className="mt-6 w-full accent-[#1685e6]" />
-          <div className="mt-1 flex justify-between text-xs"><span>R$ 1.000,00</span><span>R$ 30.000,00</span></div>
+          <input aria-label="Valor do crédito" type="range" min="1000" max="1000000" step="500" value={amount} onChange={(e) => setAmount(Number(e.target.value))} className="mt-6 w-full accent-[#1685e6]" />
+          <div className="mt-1 flex justify-between text-xs"><span>R$ 1.000,00</span><span>R$ 1.000.000,00</span></div>
           <label className="mt-8 block text-sm font-medium">Vencimento da primeira parcela</label>
           <div className="mt-1 flex items-center gap-2 rounded-lg border border-border bg-white px-3 py-3"><CalendarDays className="size-5 text-[#313878]" /><input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} className="min-w-0 flex-1 bg-transparent outline-none" /></div>
           <p className="mt-2 text-xs text-muted-foreground">Escolha uma data disponível para a primeira parcela.</p>
