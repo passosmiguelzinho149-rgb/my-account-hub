@@ -33,7 +33,7 @@ export interface SecurityState {
 /** PIN inicial da demonstração (mostrado na tela de login). */
 export const DEMO_PIN = "230716";
 export const MAX_ATTEMPTS = 3;
-const KEY = "bradesco-demo-security-v1";
+const KEY = "bradesco-demo-security-v2";
 
 function initial(): SecurityState {
   return {
