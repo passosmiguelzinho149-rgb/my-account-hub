@@ -18,12 +18,9 @@ export function BrandHeader({ children }: { children?: React.ReactNode }) {
         <Link
           to="/app/notificacoes"
           aria-label="Notificações"
-          className="relative rounded-full p-1.5 transition-colors hover:bg-primary-foreground/15"
+          className="rounded-full p-1.5 transition-colors hover:bg-primary-foreground/15"
         >
           <Bell className="size-6" aria-hidden />
-          <span className="absolute -top-0.5 -right-0.5 grid size-4 place-items-center rounded-full bg-brand-red text-[10px] font-bold">
-            3
-          </span>
         </Link>
       </div>
       {children}
