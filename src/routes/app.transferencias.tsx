@@ -214,12 +214,18 @@ function DecemberTransferSchedule({
     <section className="mt-8">
       <h2 className="font-semibold">Agendamento de transferência</h2>
       <p className="mt-1 text-xs text-muted-foreground">
-        Dezembro · R$ 3.000.000,00 · 2 transferências a cada 2 dias
+        Dezembro · R$ 3.000.000,00 · 2 transferências a cada 2 dias úteis
       </p>
       <ul className="mt-3 divide-y divide-border rounded-xl border border-border bg-card shadow-card">
         {beneficiaries.map((b, index) => {
+          const weekdaysInDecember: number[] = [];
+          for (let day = 1; day <= 31; day += 1) {
+            const weekday = new Date(2026, 11, day).getDay();
+            if (weekday !== 0 && weekday !== 6) weekdaysInDecember.push(day);
+          }
           const group = Math.floor(index / 2);
-          const day = 1 + group * 2;
+          const day = weekdaysInDecember[group * 2];
+          if (!day) return null;
           const scheduledDate = `2026-12-${String(day).padStart(2, "0")}`;
           return (
             <li key={b.id}>
