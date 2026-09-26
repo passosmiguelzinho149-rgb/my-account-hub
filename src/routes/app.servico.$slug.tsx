@@ -11,15 +11,15 @@ export const Route = createFileRoute("/app/servico/$slug")({
   },
   head: () => ({
     meta: [
-      { title: "Serviço — Conta Empresas (demo)" },
+      { title: "Serviço — Conta Empresas" },
       {
         name: "description",
-        content: "Tela de demonstração de serviço da conta empresarial. Nenhuma operação real é realizada.",
+        content: "Serviço da conta empresarial.",
       },
-      { property: "og:title", content: "Serviço — Conta Empresas (demo)" },
+      { property: "og:title", content: "Serviço — Conta Empresas" },
       {
         property: "og:description",
-        content: "Tela de demonstração de serviço da conta empresarial.",
+        content: "Serviço da conta empresarial.",
       },
     ],
   }),
@@ -69,7 +69,7 @@ function ServicoScreen() {
       <main className="px-4 py-5">
         <h2 className="text-xl font-bold break-words">{service.label}</h2>
         <p className="mt-2 text-muted-foreground">
-          Tela de demonstração de <strong className="text-foreground">{service.label}</strong>.
+          Serviço <strong className="text-foreground">{service.label}</strong>.
           Nenhuma operação real é realizada aqui.
         </p>
         <ul className="mt-5 grid grid-cols-2 gap-4">
