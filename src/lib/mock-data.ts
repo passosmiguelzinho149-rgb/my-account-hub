@@ -1,4 +1,4 @@
-/** Dados fictícios da conta de demonstração. Nenhuma operação real acontece. */
+/** Dados locais da conta do aplicativo. */
 export const account = {
   holder: "CLEITON OLIVEIRA DOS PASSOS",
   company: "63.031.988 CLEITON OLIVEIRA DOS PASSOS",
@@ -146,7 +146,7 @@ export const accountPages: AccountPage[] = [
   {
     slug: "dados-pessoais",
     title: "Dados pessoais",
-    intro: "Informações do titular cadastradas nesta demonstração.",
+    intro: "Informações do titular cadastradas no aplicativo.",
     rows: [
       { label: "Nome", value: account.holder },
       { label: "CPF", value: "•••.•••.151-••" },
@@ -189,17 +189,17 @@ export const accountPages: AccountPage[] = [
   {
     slug: "sobre-o-app",
     title: "Sobre o App",
-    intro: "Protótipo visual de demonstração. Nenhuma operação bancária real é realizada.",
+    intro: "Informações do aplicativo.",
     rows: [
-      { label: "Versão", value: "1.0.0 (demo)" },
-      { label: "Ambiente", value: "Demonstração" },
+      { label: "Versão", value: "1.0.0" },
+      { label: "Ambiente", value: "Aplicativo" },
       { label: "Última atualização", value: "18/06/2026" },
     ],
   },
   {
     slug: "propostas-da-empresa",
     title: "Propostas da empresa",
-    intro: "Você não possui propostas em andamento nesta demonstração.",
+    intro: "Você não possui propostas em andamento.",
     rows: [
       { label: "Em análise", value: "0" },
       { label: "Aprovadas", value: "0" },
