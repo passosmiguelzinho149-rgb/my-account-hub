@@ -17,8 +17,9 @@ export function BottomNav() {
         aria-hidden
         className="pointer-events-none fixed inset-x-0 bottom-0 z-30 h-8 overflow-hidden"
       >
-        <div className="absolute -bottom-6 left-[-8%] h-12 w-[116%] rounded-[50%] bg-brand-red" />
-        <div className="absolute -bottom-7 left-[28%] h-11 w-[55%] rounded-[50%] bg-primary-deep" />
+        <div className="absolute -bottom-7 left-[-12%] h-12 w-[124%] rounded-[50%] bg-brand-red" />
+        <div className="absolute -bottom-6 left-[18%] h-10 w-[92%] rounded-[50%] bg-primary/35" />
+        <div className="absolute -bottom-8 left-[42%] h-11 w-[70%] rounded-[50%] bg-primary-deep" />
       </div>
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border/80 bg-card/95 backdrop-blur-md">
       <ul className="mx-auto flex max-w-lg">
