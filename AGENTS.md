@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Centralize os pictogramas lineares de Serviços e Acesso rápido em `ServiceGlyph` e use `--icon-ink`, para manter traço e cor consistentes com a referência visual.

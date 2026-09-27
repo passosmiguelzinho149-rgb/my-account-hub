@@ -79,7 +79,11 @@ export interface ServiceItem {
     | "/app/pix"
     | "/app/comprovantes"
     | "/app/pix/limites"
-    | "/app/notas-fiscais";
+    | "/app/notas-fiscais"
+    | "/app/pagamentos"
+    | "/app/transferencias"
+    | "/app/recargas"
+    | "/app/saques";
 }
 
 export const services: ServiceItem[] = [

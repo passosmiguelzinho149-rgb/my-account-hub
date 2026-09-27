@@ -3,7 +3,7 @@ import {
   FileChartColumn, FilePenLine, HandCoins, MessageCircle, Receipt,
   ScanLine, Smartphone, TrendingUp, WalletCards,
 } from "lucide-react";
-import type { ComponentType, SVGProps } from "react";
+import type { ComponentType, ReactNode, SVGProps } from "react";
 
 type GlyphProps = SVGProps<SVGSVGElement> & { size?: number; strokeWidth?: number };
 
@@ -32,7 +32,7 @@ export function ServiceGlyph({ slug, className }: { slug: string; className?: st
   const Icon = lucideGlyphs[slug];
   if (Icon) return <Icon {...shared} strokeWidth={1.45} />;
 
-  const paths: Record<string, React.ReactNode> = {
+  const paths: Record<string, ReactNode> = {
     pix: <><path d="m24 6 7.5 7.5a5 5 0 0 0 7 0l2-2M24 6l-7.5 7.5a5 5 0 0 1-7 0l-2-2M24 42l7.5-7.5a5 5 0 0 1 7 0l2 2M24 42l-7.5-7.5a5 5 0 0 0-7 0l-2 2"/><path d="m6 24 7.5-7.5a5 5 0 0 1 7 0L24 20l3.5-3.5a5 5 0 0 1 7 0L42 24l-7.5 7.5a5 5 0 0 1-7 0L24 28l-3.5 3.5a5 5 0 0 1-7 0Z"/></>,
     saldo: <><path d="M12 5h20l5 5v26l-5 5H12a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3Z"/><path d="M15 15h17M15 21h17M15 27h10M31 33l-5 7 8-4"/></>,
     extrato: <><path d="M9 39V7a3 3 0 0 1 3-3h20l5 5v14M15 14h16M15 20h12"/><circle cx="32" cy="33" r="10"/><path d="M35 29h-4a2 2 0 0 0 0 4h2a2 2 0 0 1 0 4h-4m3-10v2m0 8v2"/></>,

@@ -4,15 +4,11 @@ import {
   ArrowDown,
   ArrowUp,
   ChevronRight,
-  CreditCard,
-  HandCoins,
-  MessageCircleMore,
-  PieChart,
   ShoppingBag,
-  QrCode,
 } from "lucide-react";
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { BalanceCard } from "@/components/app/BalanceCard";
+import { ServiceGlyph } from "@/components/app/ServiceGlyph";
 import { account, formatBRL } from "@/lib/mock-data";
 import { useBank } from "@/lib/bank";
 
@@ -21,6 +17,10 @@ export const Route = createFileRoute("/app/")({
     meta: [
       { title: "Início — Conta Empresas" },
       { name: "description", content: "Tela inicial da conta empresarial." },
+      { property: "og:title", content: "Início — Conta Empresas" },
+      { property: "og:description", content: "Acompanhe saldo, extrato e serviços da conta empresarial." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: HomeScreen,
@@ -120,11 +120,11 @@ function HomeScreen() {
         <section className="mt-7">
           <h2 className="text-[22px] font-bold">Acesso rápido</h2>
           <div className="mt-3 grid grid-cols-5 gap-2">
-              <Link to="/app/pix" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-xl border border-border/20 bg-white px-1 text-center shadow-[0_5px_14px_rgba(25,35,70,0.10)]"><QrCode className="size-8 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[10px] font-medium">Pix</span></Link>
-              <Link to="/app/credito" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-xl border border-border/20 bg-white px-1 text-center shadow-[0_5px_14px_rgba(25,35,70,0.10)]"><HandCoins className="size-8 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[10px] font-medium leading-tight">Linhas de<br />crédito</span></Link>
-              <Link to="/app/cartoes" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-xl border border-border/20 bg-white px-1 text-center shadow-[0_5px_14px_rgba(25,35,70,0.10)]"><CreditCard className="size-8 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[10px] font-medium">Cartões</span></Link>
-              <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-xl border border-border/20 bg-white px-1 text-center shadow-[0_5px_14px_rgba(25,35,70,0.10)]"><PieChart className="size-8 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[10px] font-medium leading-tight">Open<br />Finance</span></Link>
-              <Link to="/app/chat" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-xl border border-border/20 bg-white px-1 text-center shadow-[0_5px_14px_rgba(25,35,70,0.10)]"><MessageCircleMore className="size-8 text-[#152d78]" strokeWidth={1.7} /><span className="mt-2 text-[10px] font-medium">WhatsApp</span></Link>
+              <Link to="/app/pix" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="pix" className="size-8" /><span className="mt-2 text-[10px] font-medium">Pix</span></Link>
+              <Link to="/app/credito" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="linhas-de-credito" className="size-8" /><span className="mt-2 text-[10px] font-medium leading-tight">Linhas de<br />crédito</span></Link>
+              <Link to="/app/cartoes" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="cartoes" className="size-8" /><span className="mt-2 text-[10px] font-medium">Cartões</span></Link>
+              <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="open-finance" className="size-8" /><span className="mt-2 text-[10px] font-medium leading-tight">Open<br />Finance</span></Link>
+              <Link to="/app/chat" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="whatsapp" className="size-8" /><span className="mt-2 text-[10px] font-medium">WhatsApp</span></Link>
           </div>
         </section>
 
