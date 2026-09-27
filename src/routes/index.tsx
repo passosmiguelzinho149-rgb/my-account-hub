@@ -165,8 +165,8 @@ function LoginScreen() {
     "mt-2 w-full rounded-xl border border-border bg-card px-3 py-3 text-center text-2xl tracking-[0.5em] text-card-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   return (
-    <div className="min-h-[100dvh] bg-[#f4f4f4] text-foreground">
-      <section className="relative min-h-[62dvh] overflow-hidden bg-brand-gradient px-6 pb-24 pt-[calc(1.25rem+env(safe-area-inset-top))] text-white">
+    <div className="fixed inset-0 h-[100dvh] overflow-hidden bg-[#f4f4f4] text-foreground">
+      <section className="relative h-[62dvh] overflow-hidden bg-brand-gradient px-6 pb-24 pt-[calc(1.25rem+env(safe-area-inset-top))] text-white">
         <div aria-hidden className="absolute inset-0 opacity-30">
           <div className="absolute left-[10%] top-[30%] size-72 rounded-full border-[42px] border-white/10" />
           <div className="absolute -bottom-24 -right-16 size-80 rounded-full border-[50px] border-[#e81f4f]/40" />
@@ -195,7 +195,7 @@ function LoginScreen() {
         </h1>
       </section>
 
-      <main className="relative z-10 mx-auto -mt-16 w-full max-w-md px-5 pb-[calc(2rem+env(safe-area-inset-bottom))]">
+      <main className="absolute inset-x-0 top-[62dvh] z-10 mx-auto -translate-y-16 w-full max-w-md px-5 pb-[calc(1rem+env(safe-area-inset-bottom))]">
         {step.name === "home" && (
           <section className="rounded-sm bg-white p-5 shadow-[0_5px_18px_rgba(0,0,0,0.18)]">
             <div className="flex flex-wrap items-center gap-2 text-[20px]">
@@ -240,7 +240,7 @@ function LoginScreen() {
 
         {error && <p role="alert" className="mt-4 text-center text-sm font-medium text-destructive">{error}</p>}
 
-        <button type="button" onClick={securityAction} className="mt-[clamp(9rem,24dvh,14rem)] flex w-full items-center justify-center gap-3 rounded-lg border border-[#3f3ba5] bg-white py-4 font-semibold text-[#3f3ba5]">
+        <button type="button" onClick={securityAction} className="mt-[clamp(2rem,8dvh,5rem)] flex w-full items-center justify-center gap-3 rounded-lg border border-[#3f3ba5] bg-white py-4 font-semibold text-[#3f3ba5]">
           {security.locked ? <LockOpen className="size-6" /> : <Lock className="size-6" />}
           Chave de segurança
         </button>
