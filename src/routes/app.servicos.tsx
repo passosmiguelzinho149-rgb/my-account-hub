@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { icons, MessageCircleMore, QrCode } from "lucide-react";
 import { BrandHeader } from "@/components/app/BrandHeader";
+import { ServiceGlyph } from "@/components/app/ServiceGlyph";
 import { services } from "@/lib/mock-data";
 
 export const Route = createFileRoute("/app/servicos")({
@@ -16,17 +16,12 @@ export const Route = createFileRoute("/app/servicos")({
         property: "og:description",
         content: "Pix, extrato, cartões, limites e demais serviços da conta empresarial.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ServicosScreen,
 });
-
-function ServiceIcon({ name }: { name: string }) {
-  if (name === "MessageCircle") return <MessageCircleMore className="size-9 text-[#152d78]" strokeWidth={1.7} aria-hidden />;
-  if (name === "Zap") return <QrCode className="size-9 text-[#152d78]" strokeWidth={1.7} aria-hidden />;
-  const Icon = icons[name as keyof typeof icons] ?? icons.Circle;
-  return <Icon className="size-9 text-[#152d78]" strokeWidth={1.7} aria-hidden />;
-}
 
 function ServicosScreen() {
   return (
@@ -49,18 +44,18 @@ function ServicosScreen() {
               {s.route ? (
                 <Link
                   to={s.route}
-                  className="flex min-h-[118px] w-full flex-col items-center justify-center gap-2 rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)] transition-transform active:scale-[0.97]"
+                   className="flex min-h-[118px] w-full flex-col items-center justify-center gap-2 rounded-lg border border-border/20 bg-card px-2 py-3 text-center shadow-card transition-transform active:scale-[0.97]"
                 >
-                  <ServiceIcon name={s.icon} />
+                   <ServiceGlyph slug={s.slug} />
                   <span className="max-w-[100px] text-[13px] font-medium leading-[1.12]">{s.label}</span>
                 </Link>
               ) : (
                 <Link
                   to="/app/servico/$slug"
                   params={{ slug: s.slug }}
-                  className="flex min-h-[118px] w-full flex-col items-center justify-center gap-2 rounded-2xl border border-border/20 bg-white px-2 py-3 text-center shadow-[0_7px_18px_rgba(25,35,70,0.12)] transition-transform active:scale-[0.97]"
+                   className="flex min-h-[118px] w-full flex-col items-center justify-center gap-2 rounded-lg border border-border/20 bg-card px-2 py-3 text-center shadow-card transition-transform active:scale-[0.97]"
                 >
-                  <ServiceIcon name={s.icon} />
+                   <ServiceGlyph slug={s.slug} />
                   <span className="max-w-[100px] text-[13px] font-medium leading-[1.12]">{s.label}</span>
                 </Link>
               )}

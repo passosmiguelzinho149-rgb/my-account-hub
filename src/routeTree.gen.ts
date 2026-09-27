@@ -18,6 +18,7 @@ import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppComprovantesRouteImport } from './routes/app.comprovantes'
 import { Route as AppCreditoRouteImport } from './routes/app.credito'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
+import { Route as AppNotasFiscaisRouteImport } from './routes/app.notas-fiscais'
 import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
 import { Route as AppPagamentosRouteImport } from './routes/app.pagamentos'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
@@ -81,6 +82,11 @@ const AppCreditoRoute = AppCreditoRouteImport.update({
 const AppExtratoRoute = AppExtratoRouteImport.update({
   id: '/extrato',
   path: '/extrato',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppNotasFiscaisRoute = AppNotasFiscaisRouteImport.update({
+  id: '/notas-fiscais',
+  path: '/notas-fiscais',
   getParentRoute: () => AppRoute,
 } as any)
 const AppNotificacoesRoute = AppNotificacoesRouteImport.update({
@@ -188,6 +194,7 @@ export interface FileRoutesByFullPath {
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -217,6 +224,7 @@ export interface FileRoutesByTo {
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -247,6 +255,7 @@ export interface FileRoutesById {
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
@@ -279,6 +288,7 @@ export interface FileRouteTypes {
     | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
+    | '/app/notas-fiscais'
     | '/app/notificacoes'
     | '/app/pagamentos'
     | '/app/perfil'
@@ -308,6 +318,7 @@ export interface FileRouteTypes {
     | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
+    | '/app/notas-fiscais'
     | '/app/notificacoes'
     | '/app/pagamentos'
     | '/app/perfil'
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
+    | '/app/notas-fiscais'
     | '/app/notificacoes'
     | '/app/pagamentos'
     | '/app/perfil'
@@ -428,6 +440,13 @@ declare module '@tanstack/react-router' {
       path: '/extrato'
       fullPath: '/app/extrato'
       preLoaderRoute: typeof AppExtratoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/notas-fiscais': {
+      id: '/app/notas-fiscais'
+      path: '/notas-fiscais'
+      fullPath: '/app/notas-fiscais'
+      preLoaderRoute: typeof AppNotasFiscaisRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/notificacoes': {
@@ -593,6 +612,7 @@ interface AppRouteChildren {
   AppComprovantesRoute: typeof AppComprovantesRoute
   AppCreditoRoute: typeof AppCreditoRoute
   AppExtratoRoute: typeof AppExtratoRoute
+  AppNotasFiscaisRoute: typeof AppNotasFiscaisRoute
   AppNotificacoesRoute: typeof AppNotificacoesRoute
   AppPagamentosRoute: typeof AppPagamentosRoute
   AppPerfilRoute: typeof AppPerfilRoute
@@ -615,6 +635,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppComprovantesRoute: AppComprovantesRoute,
   AppCreditoRoute: AppCreditoRoute,
   AppExtratoRoute: AppExtratoRoute,
+  AppNotasFiscaisRoute: AppNotasFiscaisRoute,
   AppNotificacoesRoute: AppNotificacoesRoute,
   AppPagamentosRoute: AppPagamentosRoute,
   AppPerfilRoute: AppPerfilRoute,
