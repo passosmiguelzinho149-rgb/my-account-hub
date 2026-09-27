@@ -1,7 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { SubHeader } from "@/components/app/SubHeader";
 import { account, findService, formatBRL } from "@/lib/mock-data";
-import { Eye, EyeOff, WalletCards } from "lucide-react";
+import { Eye, EyeOff, WalletCards, CheckCircle2 } from "lucide-react";
 import { useState } from "react";
 
 export const Route = createFileRoute("/app/servico/$slug")({
@@ -32,6 +32,7 @@ function ServicoScreen() {
   const { slug } = Route.useParams();
   const service = findService(slug);
   const [showBalance, setShowBalance] = useState(true);
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
   if (!service) return null;
 
   if (slug === "saldo") {
@@ -77,13 +78,21 @@ function ServicoScreen() {
             <li key={a}>
               <button
                 type="button"
-                className="w-full rounded-xl border border-border bg-card py-6 text-base font-medium shadow-card transition-colors hover:bg-secondary"
+                onClick={() => setSelectedAction(a)}
+                className="w-full rounded-xl border border-border bg-card py-6 text-base font-medium shadow-card transition-colors hover:bg-secondary active:scale-[0.98]"
               >
                 {a}
               </button>
             </li>
           ))}
         </ul>
+        {selectedAction && (
+          <section className="mt-5 rounded-xl border border-border bg-card p-4 shadow-card">
+            <div className="flex items-center gap-2 font-semibold"><CheckCircle2 className="size-5 text-primary" />{selectedAction}</div>
+            <p className="mt-2 text-sm text-muted-foreground">A opção {selectedAction.toLowerCase()} de {service.label} foi aberta. Este recurso funciona localmente no aplicativo e não executa operação bancária real.</p>
+            <button type="button" onClick={() => setSelectedAction(null)} className="mt-4 w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground">Fechar</button>
+          </section>
+        )}
       </main>
     </>
   );
