@@ -39,9 +39,9 @@ export function BalanceCard({
         </div>
       )}
       <p className={cn("text-base", showAccount && "mt-5")}>Saldo disponível</p>
-      <div className="mt-1 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-        <div className="flex min-w-0 items-center gap-3">
-          <p className="truncate text-3xl font-bold tabular-nums">
+      <div className="mt-1 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-2 sm:gap-3">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+          <p className="whitespace-nowrap text-[clamp(1.35rem,6.2vw,1.875rem)] font-bold leading-tight tabular-nums">
             {balanceHidden ? "R$ ••••••••" : formatBRL(balance)}
           </p>
           <button
@@ -59,7 +59,7 @@ export function BalanceCard({
           </button>
         </div>
         {!hideDetailsLink && (
-          <Link to="/app/extrato" className="shrink-0 self-end pb-1 text-base font-semibold underline underline-offset-4">
+          <Link to="/app/extrato" className="shrink-0 self-end pb-0.5 text-sm font-semibold underline underline-offset-4 sm:text-base">
             Ver detalhes
           </Link>
         )}
