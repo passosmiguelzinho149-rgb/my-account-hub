@@ -80,6 +80,9 @@ function Transferencias() {
   const type = internal ? "Entre contas Bradesco" : "TED para outro banco";
 
   const check = () => {
+    if (date && !isBusinessDay(new Date(`${date}T12:00:00`))) {
+      return setError("Escolha um dia útil. Transferências agendadas não podem cair em finais de semana ou feriados.");
+    }
     if (name.trim().length < 3) return setError("Informe o nome do favorecido.");
     if (doc.replace(/\D/g, "").length < 11) return setError("Informe um CPF ou CNPJ válido.");
     if (!/^\d{4}$/.test(branch)) return setError("A agência deve ter 4 números.");
@@ -227,12 +230,32 @@ export function ScheduledList({ category }: { category: "transferencia" | "pagam
 }
 
 
+const nationalHolidays2026 = new Set([
+  "2026-01-01",
+  "2026-04-21",
+  "2026-05-01",
+  "2026-09-07",
+  "2026-10-12",
+  "2026-11-02",
+  "2026-11-15",
+  "2026-11-20",
+  "2026-12-25",
+]);
+
+function dateKey(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+}
+
+function isBusinessDay(date: Date) {
+  const weekday = date.getDay();
+  return weekday !== 0 && weekday !== 6 && !nationalHolidays2026.has(dateKey(date));
+}
+
 function buildTransferSchedule(count: number) {
   const businessDays: Date[] = [];
   const cursor = new Date(2026, 11, 1);
   while (businessDays.length < Math.ceil(count / 2) * 2) {
-    const weekday = cursor.getDay();
-    if (weekday !== 0 && weekday !== 6) businessDays.push(new Date(cursor));
+    if (isBusinessDay(cursor)) businessDays.push(new Date(cursor));
     cursor.setDate(cursor.getDate() + 1);
   }
   return businessDays;
