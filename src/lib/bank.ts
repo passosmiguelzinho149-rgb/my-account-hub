@@ -208,6 +208,13 @@ function initialState(): BankState {
         counterpart: "PATRICIA RODRIGUES",
         amount: 7_018_585,
       }),
+      seedTxAt("2026-09-19T09:15:00-04:00", {
+        category: "pagamento",
+        kind: "out",
+        title: "RECEITA FED - DARF",
+        counterpart: "RECEITA FED - DARF",
+        amount: 7_018_585,
+      }),
       seedTxAt("2026-06-11T10:32:00-04:00", {
         category: "pix",
         kind: "in",
