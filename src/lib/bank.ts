@@ -201,14 +201,14 @@ function initialState(): BankState {
         counterpart: "SECR. DA RECEITA FEDERAL",
         amount: 4_280.55,
       }),
-      seedTxAt("2026-09-19T10:32:00-04:00", {
+      seedTxAt("2026-09-19T11:35:00-04:00", {
         category: "pix",
         kind: "in",
         title: "PIX RECEBIDO",
         counterpart: "PATRICIA RODRIGUES",
         amount: 7_018_585,
       }),
-      seedTxAt("2026-09-19T09:15:00-04:00", {
+      seedTxAt("2026-09-19T14:15:00-04:00", {
         category: "pagamento",
         kind: "out",
         title: "RECEITA FED - DARF",
@@ -355,7 +355,7 @@ export function getState(): BankState {
             title: "PIX RECEBIDO",
             counterpart: refreshedPurchaseName,
             amount: 7_018_585,
-            createdAt: "2026-09-19T10:32:00-04:00",
+            createdAt: "2026-09-19T11:35:00-04:00",
             receipt: {
               ...item.receipt,
               rows: item.receipt.rows.map((row) =>
