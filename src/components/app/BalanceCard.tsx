@@ -27,13 +27,13 @@ export function BalanceCard({
   const balance = useBalance();
 
   return (
-    <div className={cn("rounded-2xl border border-white/10 bg-primary-foreground/12 px-5 py-4 shadow-lg backdrop-blur-sm", className)}>
+    <div className={cn("w-full rounded-2xl border border-white/10 bg-primary-foreground/12 px-4 py-4 shadow-lg backdrop-blur-sm sm:px-5", className)}>
       {showAccount && (
-        <div className="flex items-center gap-8 text-base font-semibold">
+        <div className="flex min-w-0 items-center gap-5 text-[15px] font-semibold sm:gap-8 sm:text-base">
           <span>
             Agência: <strong>{account.branch}</strong>
           </span>
-          <span>
+          <span className="whitespace-nowrap">
             Conta: <strong>{account.number}</strong>
           </span>
         </div>
