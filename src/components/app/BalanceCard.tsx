@@ -39,9 +39,9 @@ export function BalanceCard({
         </div>
       )}
       <p className={cn("text-base", showAccount && "mt-5")}>Saldo disponível</p>
-      <div className="mt-1 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-2 sm:gap-3">
-        <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-          <p className="whitespace-nowrap text-[clamp(1.35rem,6.2vw,1.875rem)] font-bold leading-tight tabular-nums">
+      <div className="mt-1 flex min-w-0 items-end justify-between gap-3">
+        <div className="flex min-w-0 flex-1 items-center gap-2">
+          <p className="min-w-0 whitespace-nowrap text-[clamp(1.05rem,5vw,1.75rem)] font-bold leading-tight tracking-tight tabular-nums">
             {balanceHidden ? "R$ ••••••••" : formatBRL(balance)}
           </p>
           <button
@@ -52,14 +52,14 @@ export function BalanceCard({
             className="shrink-0 rounded-full p-1 transition-colors hover:bg-primary-foreground/20 focus-visible:ring-2 focus-visible:ring-primary-foreground/70 focus-visible:outline-none"
           >
             {balanceHidden ? (
-              <EyeOff className="size-6" aria-hidden />
+              <EyeOff className="size-5 sm:size-6" aria-hidden />
             ) : (
-              <Eye className="size-6" aria-hidden />
+              <Eye className="size-5 sm:size-6" aria-hidden />
             )}
           </button>
         </div>
         {!hideDetailsLink && (
-          <Link to="/app/extrato" className="shrink-0 self-end pb-0.5 text-sm font-semibold underline underline-offset-4 sm:text-base">
+          <Link to="/app/extrato" className="shrink-0 self-end pb-0.5 text-xs font-semibold underline underline-offset-4 sm:text-sm">
             Ver detalhes
           </Link>
         )}
