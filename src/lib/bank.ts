@@ -435,12 +435,14 @@ export function useBank(): BankState {
   return useSyncExternalStore(subscribe, getState, getState);
 }
 
-/** Saldo disponível considerando as operações já efetivadas. */
+/** Saldo disponível considerando o saldo inicial e as operações já efetivadas. */
+const OPENING_BALANCE = 7_017_672.60;
+
 export function computeBalance(state: BankState): number {
   return state.transactions.reduce((total, t) => {
     if (t.status !== "Concluído") return total;
     return t.kind === "in" ? total + t.amount : total - t.amount;
-  }, 0);
+  }, OPENING_BALANCE);
 }
 
 export function useBalance(): number {
