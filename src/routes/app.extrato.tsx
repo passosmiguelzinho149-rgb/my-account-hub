@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Search, SlidersHorizontal } from "lucide-react";
+import { Download, Search, SlidersHorizontal } from "lucide-react";
 import { useState } from "react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { BalanceCard } from "@/components/app/BalanceCard";
@@ -36,6 +36,10 @@ function ExtratoScreen() {
   const days = Number.parseInt(period, 10);
   const since = Date.now() - days * 86_400_000;
 
+  const exportPdf = () => {
+    window.print();
+  };
+
   const filtered = transactions.filter((t) => {
     if (tab === "Entradas" && t.kind !== "in") return false;
     if (tab === "Saídas" && t.kind !== "out") return false;
@@ -58,7 +62,12 @@ function ExtratoScreen() {
       <main className="-mt-4 rounded-t-2xl bg-card px-4 pt-4 pb-4">
         <div className="mx-auto h-1.5 w-12 rounded-full bg-border" />
 
-        <label className="mt-4 flex items-center gap-2 rounded-lg border border-border px-3 py-2.5">
+        <button type="button" onClick={exportPdf} className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg border border-primary px-4 py-3 font-semibold text-primary print:hidden">
+          <Download className="size-5" aria-hidden />
+          Exportar extrato em PDF
+        </button>
+
+        <label className="mt-4 flex items-center gap-2 rounded-lg border border-border px-3 py-2.5 print:hidden">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -69,7 +78,7 @@ function ExtratoScreen() {
           <Search className="size-5 shrink-0 text-foreground" aria-hidden />
         </label>
 
-        <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-1 print:hidden">
           <button
             type="button"
             className="flex shrink-0 items-center gap-1.5 rounded-full bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground"
@@ -94,7 +103,7 @@ function ExtratoScreen() {
           ))}
         </div>
 
-        <div className="mt-4 flex gap-5 border-b border-border">
+        <div className="mt-4 flex gap-5 border-b border-border print:hidden">
           {tabs.map((t) => (
             <button
               key={t}
