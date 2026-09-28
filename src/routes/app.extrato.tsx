@@ -51,6 +51,13 @@ function ExtratoScreen() {
     return t.title.toLowerCase().includes(q) || t.counterpart.toLowerCase().includes(q);
   });
 
+  const sorted = [...filtered].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+  const grouped = sorted.reduce<Record<string, typeof sorted>>((groups, transaction) => {
+    const key = transaction.createdAt.slice(0, 10);
+    (groups[key] ??= []).push(transaction);
+    return groups;
+  }, {});
+
   return (
     <>
       <SubHeader title="Extrato" variant="deep" compactActions>
@@ -121,47 +128,48 @@ function ExtratoScreen() {
           ))}
         </div>
 
-        <ul className="divide-y divide-border">
-          {filtered.map((t) => (
-            <li key={t.id}>
-              <Link to="/app/comprovante/$id" params={{ id: t.id }} className="grid grid-cols-[3rem_minmax(0,1fr)_auto] gap-3 py-4">
-              <div className="text-center">
-                <p className="text-2xl leading-none font-bold">{formatDay(t.createdAt).slice(0, 2)}</p>
-                <p className="text-sm text-muted-foreground">
-                  {new Date(t.createdAt).toLocaleDateString("pt-BR", { month: "short" }).replace(".", "")}
-                </p>
-              </div>
-              <div className="min-w-0">
-                <p className="flex items-center gap-2 font-bold">
-                  <span
-                    className={cn(
-                      "size-2 shrink-0 rounded-full",
-                      t.kind === "in" ? "bg-income" : "bg-brand-red",
-                    )}
-                    aria-hidden
-                  />
-                  <span className="min-w-0 break-words">{t.title}</span>
-                </p>
-                <p className="mt-1 text-sm break-words text-muted-foreground">{t.counterpart}</p>
-                <p className="text-sm text-muted-foreground">{formatDay(t.createdAt)} · {t.status}</p>
-              </div>
-              <p
-                className={cn(
-                  "shrink-0 self-center text-right font-semibold tabular-nums",
-                  t.kind === "in" ? "text-income" : "text-brand-red",
-                )}
-              >
-                {balanceHidden ? "R$ ••••" : formatBRL(t.amount)}
-              </p>
-              </Link>
-            </li>
-          ))}
-          {filtered.length === 0 && (
-            <li className="py-8 text-center text-sm text-muted-foreground">
+        <div className="mt-2">
+          {Object.entries(grouped).map(([date, items]) => {
+            const dateLabel = new Date(`${date}T12:00:00`).toLocaleDateString("pt-BR", {
+              day: "2-digit",
+              month: "long",
+              year: "numeric",
+            });
+            return (
+              <section key={date} className="border-b border-border">
+                <div className="sticky top-0 z-10 -mx-4 bg-muted/95 px-4 py-2 text-sm font-bold capitalize backdrop-blur">
+                  {dateLabel}
+                </div>
+                <ul className="divide-y divide-border">
+                  {items.map((t) => (
+                    <li key={t.id}>
+                      <Link to="/app/comprovante/$id" params={{ id: t.id }} className="grid grid-cols-[minmax(0,1fr)_auto] gap-3 py-4">
+                        <div className="min-w-0">
+                          <p className="flex items-center gap-2 font-bold">
+                            <span className={cn("size-2 shrink-0 rounded-full", t.kind === "in" ? "bg-income" : "bg-brand-red")} aria-hidden />
+                            <span className="min-w-0 break-words">{t.title}</span>
+                          </p>
+                          <p className="mt-1 text-sm break-words text-muted-foreground">{t.counterpart}</p>
+                          <p className="text-sm text-muted-foreground">
+                            {new Date(t.createdAt).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })} · {t.status}
+                          </p>
+                        </div>
+                        <p className={cn("shrink-0 self-center text-right font-semibold tabular-nums", t.kind === "in" ? "text-income" : "text-brand-red")}>
+                          {balanceHidden ? "R$ ••••" : formatBRL(t.amount)}
+                        </p>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })}
+          {sorted.length === 0 && (
+            <div className="py-8 text-center text-sm text-muted-foreground">
               Nenhum lançamento para este filtro.
-            </li>
+            </div>
           )}
-        </ul>
+        </div>
 
         <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-t border-border pt-4">
           <p className="truncate font-semibold">Saldo do dia</p>
