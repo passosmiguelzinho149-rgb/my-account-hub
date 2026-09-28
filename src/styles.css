@@ -263,3 +263,15 @@
     max-width: 100%;
   }
 }
+
+
+/* Oculta o badge flutuante do Lovable quando ele estiver dentro do DOM da página. */
+a[href*="lovable.dev"][target="_blank"],
+a[href*="lovable.app"][target="_blank"],
+[data-lovable-badge],
+[id*="lovable-badge"],
+[class*="lovable-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
