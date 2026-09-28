@@ -5,7 +5,7 @@ export const account = {
   cnpj: "45.755.070/0001-98",
   branch: "2700",
   number: "3574-2",
-  balance: 132_000_000,
+  balance: 131_994_807.05,
   inflow: 132_000_000,
   outflow: 0,
   summaryDate: "18/06/2026",
