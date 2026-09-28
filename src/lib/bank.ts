@@ -381,6 +381,28 @@ export function getState(): BankState {
       stateChanged = true;
     }
 
+    // Garante os dois lançamentos de 19/09 também para quem já possui dados no localStorage.
+    const septemberEntries = initialState().transactions.filter((t) =>
+      t.createdAt.startsWith("2026-09-19") &&
+      (t.counterpart === "PATRICIA RODRIGUES" || t.counterpart === "RECEITA FED - DARF"),
+    );
+    const missingSeptemberEntries = septemberEntries.filter(
+      (seed) =>
+        !cache!.transactions.some(
+          (t) =>
+            t.createdAt.startsWith("2026-09-19") &&
+            t.counterpart === seed.counterpart &&
+            t.amount === seed.amount,
+        ),
+    );
+    if (missingSeptemberEntries.length > 0) {
+      cache = {
+        ...cache!,
+        transactions: [...missingSeptemberEntries, ...cache!.transactions],
+      };
+      stateChanged = true;
+    }
+
     const seededBeneficiaries = initialState().beneficiaries;
     const existing = new Map(cache!.beneficiaries.map((item) => [item.id, item]));
     const seededIds = new Set(seededBeneficiaries.map((item) => item.id));
