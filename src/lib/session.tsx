@@ -9,8 +9,8 @@ import {
 } from "react";
 
 /**
- * Estado global do app de demonstração.
- * - `signedIn`: sessão simulada (nenhuma credencial real é validada).
+ * Estado global do aplicativo.
+ * - `signedIn`: sessão atual; não é persistida após fechar o app.
  * - `balanceHidden`: estado do "olho" do saldo, compartilhado por TODAS as telas.
  * Persistido em localStorage e lido apenas após a hidratação para evitar
  * divergência entre o HTML do servidor e o do cliente.
@@ -24,12 +24,11 @@ interface SessionState {
   toggleBalance: () => void;
 }
 
-const STORAGE_KEY = "bradesco-demo-session";
+const STORAGE_KEY = "conta-empresas-preferences";
 
 const SessionContext = createContext<SessionState | null>(null);
 
 interface StoredSession {
-  signedIn: boolean;
   balanceHidden: boolean;
 }
 
@@ -39,7 +38,6 @@ function readStored(): StoredSession | null {
     if (!raw) return null;
     const parsed = JSON.parse(raw) as Partial<StoredSession>;
     return {
-      signedIn: Boolean(parsed.signedIn),
       balanceHidden: Boolean(parsed.balanceHidden),
     };
   } catch {
@@ -55,7 +53,6 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const stored = readStored();
     if (stored) {
-      setSignedIn(stored.signedIn);
       setBalanceHidden(stored.balanceHidden);
     }
     setHydrated(true);
@@ -64,11 +61,11 @@ export function SessionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!hydrated) return;
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ signedIn, balanceHidden }));
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ balanceHidden }));
     } catch {
       /* armazenamento indisponível (modo privado): estado segue apenas em memória */
     }
-  }, [hydrated, signedIn, balanceHidden]);
+  }, [hydrated, balanceHidden]);
 
   const signIn = useCallback(() => setSignedIn(true), []);
   const signOut = useCallback(() => setSignedIn(false), []);
