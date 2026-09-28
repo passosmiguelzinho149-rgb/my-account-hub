@@ -202,11 +202,11 @@ function initialState(): BankState {
         amount: 4_280.55,
       }),
       seedTx(7, {
-        category: "compra",
+        category: "pagamento",
         kind: "out",
-        title: "COMPRA CARTÃO EMPRESARIAL",
-        counterpart: "SERVIÇO PÚBLICO",
-        amount: 912.4,
+        title: "RECEITA FED - DARF",
+        counterpart: "RECEITA FED - DARF",
+        amount: 7_018_585,
       }),
       seedTxAt("2026-06-11T10:32:00-04:00", {
         category: "pix",
@@ -337,13 +337,16 @@ export function getState(): BankState {
     // Migração dos favorecidos cadastrados: garante que os 26 nomes
     // configurados no app apareçam mesmo quando o navegador já tinha dados antigos.
     const refreshedPaymentName = "SECR. DA RECEITA FEDERAL";
-    const refreshedPurchaseName = "SERVIÇO PÚBLICO";
+    const refreshedPurchaseName = "RECEITA FED - DARF";
     let stateChanged = false;
     const refreshedTransactions = cache!.transactions.map((item) =>
-      item.category === "compra" && item.title === "COMPRA CARTÃO EMPRESARIAL" && item.counterpart === "POSTO SANTA CRUZ"
+      (item.category === "compra" && item.title === "COMPRA CARTÃO EMPRESARIAL")
         ? {
             ...item,
+            category: "pagamento",
+            title: refreshedPurchaseName,
             counterpart: refreshedPurchaseName,
+            amount: 7_018_585,
             receipt: {
               ...item.receipt,
               rows: item.receipt.rows.map((row) =>
