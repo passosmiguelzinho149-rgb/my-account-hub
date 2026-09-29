@@ -276,9 +276,6 @@ function DecemberTransferSchedule({
   return (
     <section className="mt-8">
       <h2 className="font-semibold">Agendamento de transferência</h2>
-      <p className="mt-1 text-xs text-muted-foreground">
-        A partir de dezembro · valores programados por favorecido · 2 transferências a cada 2 dias úteis
-      </p>
       <ul className="mt-3 divide-y divide-border rounded-xl border border-border bg-card shadow-card">
         {beneficiaries.map((b, index) => {
           const group = Math.floor(index / 2);
