@@ -82,15 +82,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-capable", content: "yes" },
       { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
-      { name: "apple-mobile-web-app-title", content: "Conta Empresas" },
+      { name: "apple-mobile-web-app-title", content: "Bradesco Empresas e Negócios" },
       { name: "format-detection", content: "telephone=no" },
-      { title: "Conta Empresas — app de demonstração" },
+      { title: "Bradesco Empresas e Negócios — app de demonstração" },
       {
         name: "description",
         content:
           "Protótipo mobile de conta bancária empresarial: saldo, extrato, serviços e perfil. Demonstração sem operações reais.",
       },
-      { property: "og:title", content: "Conta Empresas — app de demonstração" },
+      { property: "og:title", content: "Bradesco Empresas e Negócios — app de demonstração" },
       {
         property: "og:description",
         content: "Protótipo mobile de conta bancária empresarial: saldo, extrato, serviços e perfil.",
