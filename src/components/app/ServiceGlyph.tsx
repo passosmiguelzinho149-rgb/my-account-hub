@@ -1,6 +1,6 @@
 import {
   ArrowLeftRight, Banknote, CalendarDays, CarFront, CreditCard,
-  FileChartColumn, FilePenLine, HandCoins, MessageCircle, Receipt,
+  FileChartColumn, FilePenLine, HandCoins, Receipt,
   ScanLine, Smartphone, TrendingUp, WalletCards,
 } from "lucide-react";
 import type { ComponentType, ReactNode, SVGProps } from "react";
