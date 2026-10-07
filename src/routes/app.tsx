@@ -70,17 +70,9 @@ function AppLayout() {
       <BottomNav />
       {privacyHidden && (
         <div
-          className="privacy-screen fixed inset-0 z-[9999] grid place-items-center bg-[#11131d]"
+          className="privacy-screen fixed inset-0 z-[9999] bg-black"
           aria-hidden="true"
-        >
-          <div className="text-center text-white/90">
-            <div className="mx-auto mb-3 grid size-14 place-items-center rounded-full border border-white/20 bg-white/10 text-2xl">
-              🔒
-            </div>
-            <p className="text-base font-semibold">Tela protegida</p>
-            <p className="mt-1 text-xs text-white/60">O conteúdo fica oculto fora da tela.</p>
-          </div>
-        </div>
+        />
       )}
     </div>
   );
