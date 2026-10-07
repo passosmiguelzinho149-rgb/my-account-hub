@@ -13,18 +13,16 @@ interface BalanceCardProps {
   className?: string;
 }
 
-/**
- * Card de saldo com o "olho" de ocultar/mostrar.
- * O saldo vem do banco de dados da demonstração, então muda conforme
- * as operações simuladas (Pix, pagamentos, transferências...).
- */
+const PIX_EMITIDO_OUTRA_IF_MESMA_TIT = 132_500;
+
+/** Card de saldo com o "olho" de ocultar/mostrar. */
 export function BalanceCard({
   showAccount = false,
   hideDetailsLink = false,
   className,
 }: BalanceCardProps) {
   const { balanceHidden, toggleBalance } = useSession();
-  const balance = useBalance();
+  const balance = useBalance() - PIX_EMITIDO_OUTRA_IF_MESMA_TIT;
 
   return (
     <div className={cn("w-full rounded-2xl border border-white/10 bg-primary-foreground/12 px-4 py-4 shadow-lg backdrop-blur-sm sm:px-5", className)}>
