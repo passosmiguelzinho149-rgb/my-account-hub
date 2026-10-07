@@ -1,10 +1,12 @@
 {
-  "name": "Bradesco Empresas e Negócios",
-  "short_name": "Bradesco Empresa",
-  "description": "Aplicativo mobile de conta empresarial.",
+  "name": "Conta Empresas — Demonstração",
+  "short_name": "Conta Empresas",
+  "description": "Aplicativo de demonstração de conta empresarial, sem operações bancárias reais.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
   "background_color": "#ffffff",
   "theme_color": "#2f2b9f",
   "orientation": "portrait",
@@ -14,6 +16,12 @@
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }
