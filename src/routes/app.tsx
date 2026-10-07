@@ -19,6 +19,10 @@ function AppLayout() {
   useEffect(() => {
     const hideForPrivacy = () => setPrivacyHidden(true);
     const restoreAfterFocus = () => setPrivacyHidden(false);
+    const handleVisibilityChange = () => {
+      if (document.hidden) hideForPrivacy();
+      else restoreAfterFocus();
+    };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       const key = event.key.toLowerCase();
@@ -37,10 +41,7 @@ function AppLayout() {
     const handleContextMenu = (event: MouseEvent) => event.preventDefault();
     const handleDragStart = (event: DragEvent) => event.preventDefault();
 
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) hideForPrivacy();
-      else restoreAfterFocus();
-    });
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     window.addEventListener("blur", hideForPrivacy);
     window.addEventListener("focus", restoreAfterFocus);
     window.addEventListener("keydown", handleKeyDown);
@@ -48,6 +49,7 @@ function AppLayout() {
     document.addEventListener("dragstart", handleDragStart);
 
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       window.removeEventListener("blur", hideForPrivacy);
       window.removeEventListener("focus", restoreAfterFocus);
       window.removeEventListener("keydown", handleKeyDown);
