@@ -27,25 +27,25 @@ function ServicosScreen() {
   return (
     <>
       <BrandHeader />
-      <main className="mx-auto w-full max-w-[1180px] bg-[#f7f9fc] px-4 py-6 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <h1 className="text-[32px] font-bold tracking-[-0.03em] text-[#13264b] sm:text-[40px]">Serviços</h1>
-            <p className="mt-1 text-xs font-bold uppercase tracking-[.14em] text-[#66758d]">Ambiente simulado</p>
+      <main className="mx-auto w-full max-w-[430px] bg-[#f7f9fc] px-3 pb-5 pt-4">
+        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0">
+            <h1 className="text-[27px] font-bold tracking-[-0.03em] text-[#13264b]">Serviços</h1>
+            <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[.12em] text-[#66758d]">Ambiente simulado</p>
           </div>
-          <button type="button" onClick={() => setCustomizing((value) => !value)} className="inline-flex shrink-0 items-center gap-2 rounded-xl border border-[#8ba9d0] bg-white px-3 py-2.5 text-sm font-semibold text-[#0b4fa8] shadow-[0_3px_10px_rgba(25,63,111,.08)] sm:px-5 sm:text-base">
-            {customizing ? <Check className="size-5" /> : <Settings2 className="size-5" />}
+          <button type="button" onClick={() => setCustomizing((value) => !value)} className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-lg border border-[#8ba9d0] bg-white px-2.5 text-[12px] font-semibold text-[#0b4fa8] shadow-[0_2px_7px_rgba(25,63,111,.08)]">
+            {customizing ? <Check className="size-4" /> : <Settings2 className="size-4" />}
             {customizing ? "Concluir" : "Personalizar"}
           </button>
         </div>
 
-        {customizing && <section className="mt-5 rounded-2xl border border-[#dce6f2] bg-white p-4 shadow-[0_6px_18px_rgba(31,61,100,.08)]"><div className="flex items-start gap-3"><span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#eaf2ff] text-[#0b4fa8]"><Check className="size-5"/></span><div><p className="font-semibold text-[#13264b]">Escolha seus atalhos</p><p className="mt-1 text-sm text-[#66758d]">Toque nos serviços para marcar ou desmarcar favoritos. Isso altera somente a organização visual do simulador.</p></div></div></section>}
+        {customizing && <section className="mt-3 rounded-xl border border-[#dce6f2] bg-white p-3 shadow-[0_4px_12px_rgba(31,61,100,.07)]"><div className="flex items-start gap-2"><span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#eaf2ff] text-[#0b4fa8]"><Check className="size-4"/></span><div><p className="text-sm font-semibold text-[#13264b]">Escolha seus atalhos</p><p className="mt-0.5 text-xs leading-snug text-[#66758d]">Toque nos serviços para marcar ou desmarcar favoritos.</p></div></div></section>}
 
-        <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 lg:gap-4">
+        <ul className="mt-4 grid grid-cols-4 gap-2">
           {services.map((s) => {
-            const card = <><ServiceGlyph slug={s.slug} className="size-11 text-[#0b4fa8] sm:size-12" /><div className="mt-auto flex w-full items-end justify-between gap-2"><span className="text-left text-[14px] font-semibold leading-tight text-[#13264b] sm:text-[15px]">{s.label}</span>{!customizing && <ChevronRight className="size-5 shrink-0 text-[#315c91]" />}</div>{customizing && <span className={`absolute right-3 top-3 grid size-6 place-items-center rounded-full ${favorites.includes(s.slug) ? "bg-[#0b4fa8] text-white" : "bg-[#eef2f7] text-[#718096]"}`}>{favorites.includes(s.slug) ? <Check className="size-4"/> : <X className="size-4"/>}</span>}</>;
-            const className = "relative flex h-[138px] w-full flex-col items-start rounded-2xl border border-[#e8eef5] bg-white p-4 text-left shadow-[0_7px_20px_rgba(31,61,100,.08)] transition-all hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(31,61,100,.12)] active:scale-[0.98] sm:h-[150px] sm:p-5";
-            return <li key={s.slug}>{customizing ? <button type="button" onClick={() => toggleFavorite(s.slug)} className={className}>{card}</button> : s.route ? <Link to={s.route} className={className}>{card}</Link> : <Link to="/app/servico/$slug" params={{ slug: s.slug }} className={className}>{card}</Link>}</li>;
+            const card = <><ServiceGlyph slug={s.slug} className="size-8 text-[#0b4fa8]" /><div className="mt-auto flex w-full items-end justify-between gap-0.5"><span className="min-w-0 text-left text-[10px] font-semibold leading-[1.08] text-[#13264b] break-words">{s.label}</span>{!customizing && <ChevronRight className="size-3.5 shrink-0 text-[#315c91]" />}</div>{customizing && <span className={`absolute right-1.5 top-1.5 grid size-4 place-items-center rounded-full ${favorites.includes(s.slug) ? "bg-[#0b4fa8] text-white" : "bg-[#eef2f7] text-[#718096]"}`}>{favorites.includes(s.slug) ? <Check className="size-2.5"/> : <X className="size-2.5"/>}</span>}</>;
+            const className = "relative flex h-[91px] min-w-0 w-full flex-col items-start rounded-xl border border-[#e8eef5] bg-white p-2.5 text-left shadow-[0_4px_12px_rgba(31,61,100,.08)] transition-transform active:scale-[0.97]";
+            return <li key={s.slug} className="min-w-0">{customizing ? <button type="button" onClick={() => toggleFavorite(s.slug)} className={className}>{card}</button> : s.route ? <Link to={s.route} className={className}>{card}</Link> : <Link to="/app/servico/$slug" params={{ slug: s.slug }} className={className}>{card}</Link>}</li>;
           })}
         </ul>
       </main>
