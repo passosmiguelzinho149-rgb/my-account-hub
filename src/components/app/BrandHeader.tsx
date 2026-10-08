@@ -8,13 +8,11 @@ export function BrandHeader({ children }: { children?: ReactNode }) {
   return (
     <header className="bg-brand-gradient text-primary-foreground">
       <div className="mobile-safe-top flex items-center justify-between gap-3 px-5 pb-5 pt-4">
-        <div className="flex min-w-0 items-center gap-2.5">
-          <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white" aria-hidden>
-            <img src="/bradesco-symbol.svg?v=red-4" alt="" className="size-10 object-contain" />
-          </span>
-          <span className="min-w-0 leading-tight">
-            <span className="block truncate text-[19px] font-bold tracking-tight">bradesco</span>
-            <span className="block truncate text-xs font-medium text-white/90">empresas e negócios</span>
+        <div className="flex min-w-0 items-center gap-3">
+          <img src="/bradesco-symbol.svg?v=white-1" alt="" aria-hidden className="h-14 w-14 shrink-0 object-contain" />
+          <span className="min-w-0 leading-none">
+            <span className="block truncate text-[28px] font-bold tracking-[-0.04em] text-white">bradesco</span>
+            <span className="mt-1 block truncate text-[14px] font-normal leading-tight text-white/95">empresas e negócios</span>
           </span>
         </div>
         <div className="flex items-center gap-1">
