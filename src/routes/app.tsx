@@ -26,12 +26,7 @@ function AppLayout() {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       const key = event.key.toLowerCase();
-      if (
-        (event.ctrlKey || event.metaKey) &&
-        ["c", "x", "s", "p", "u"].includes(key)
-      ) {
-        event.preventDefault();
-      }
+      if ((event.ctrlKey || event.metaKey) && ["c", "x", "s", "p", "u"].includes(key)) event.preventDefault();
       if (event.key === "PrintScreen") {
         setPrivacyHidden(true);
         window.setTimeout(() => setPrivacyHidden(false), 1200);
@@ -58,22 +53,14 @@ function AppLayout() {
     };
   }, []);
 
-  if (!hydrated || !signedIn) {
-    return <div className="min-h-screen bg-background" aria-busy="true" />;
-  }
+  if (!hydrated || !signedIn) return <div className="min-h-screen bg-background" aria-busy="true" />;
 
   return (
     <div className="min-h-screen bg-background mobile-bottom-space">
-      <div className="mobile-shell">
-        <Outlet />
-      </div>
+      <div className="simulation-ribbon" role="status" aria-label="Ambiente simulado">AMBIENTE SIMULADO · SEM OPERAÇÕES REAIS</div>
+      <div className="mobile-shell app-surface"><Outlet /></div>
       <BottomNav />
-      {privacyHidden && (
-        <div
-          className="privacy-screen fixed inset-0 z-[9999] bg-black"
-          aria-hidden="true"
-        />
-      )}
+      {privacyHidden && <div className="privacy-screen fixed inset-0 z-[9999] bg-black" aria-hidden="true" />}
     </div>
   );
 }
