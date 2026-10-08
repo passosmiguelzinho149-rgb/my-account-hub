@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Símbolo vermelho decorativo"><g fill="none" stroke="#CC092F" stroke-linecap="round" stroke-linejoin="round"><path d="M20 43 C29 15 61 8 82 25 C65 18 42 23 28 39 C20 48 18 60 22 70" stroke-width="9"/><path d="M16 48 C35 31 67 30 88 48 C76 39 55 37 39 45 C30 49 24 56 22 64" stroke-width="8"/><path d="M43 61 L43 84" stroke-width="9"/><path d="M57 56 L57 84" stroke-width="9"/></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Símbolo vermelho decorativo">
+  <g fill="none" stroke="#CC092F" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 49 C34 18 76 5 103 29 C83 16 52 18 32 42 C19 57 18 75 31 89" stroke-width="9"/>
+    <path d="M8 51 C32 35 68 32 98 48 C116 58 119 72 107 84 C98 93 88 99 79 104 C94 97 108 91 116 81 C127 68 120 54 102 45 C76 32 43 31 18 43" stroke-width="9"/>
+    <path d="M49 91 L49 116 L60 116 L60 85 Z" fill="#CC092F" stroke="none"/>
+    <path d="M66 80 L66 116 L79 116 L79 73 Z" fill="#CC092F" stroke="none"/>
+  </g>
+</svg>
