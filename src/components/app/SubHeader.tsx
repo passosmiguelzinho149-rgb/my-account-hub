@@ -33,20 +33,20 @@ export function SubHeader({
       className={
         variant === "gradient"
           ? "bg-brand-gradient text-primary-foreground"
-          : "bg-primary-deep text-primary-foreground"
+          : "border-b border-white/10 bg-gradient-to-r from-[#10162f] via-[#172348] to-[#0b1024] text-white shadow-[0_8px_24px_rgba(11,16,36,.18)]"
       }
     >
-      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3">
+      <div className="grid min-h-[62px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-3">
         <div className="flex min-w-0 items-center gap-3">
           <button
             type="button"
             onClick={goBack}
             aria-label="Voltar"
-            className="shrink-0 rounded-full p-1 transition-colors hover:bg-primary-foreground/15 focus-visible:ring-2 focus-visible:ring-primary-foreground/70 focus-visible:outline-none"
+            className="shrink-0 rounded-full p-1 transition-colors hover:bg-white/15 focus-visible:ring-2 focus-visible:ring-white/70 focus-visible:outline-none"
           >
             <ArrowLeft className="size-6" aria-hidden />
           </button>
-          <h1 className="truncate text-lg font-semibold">{title}</h1>
+          <h1 className="truncate text-lg font-bold tracking-[-0.01em]">{title}</h1>
         </div>
         {!compactActions && (
           <div className="flex shrink-0 items-center gap-3">
