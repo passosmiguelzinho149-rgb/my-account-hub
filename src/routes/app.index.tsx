@@ -1,6 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
-import { ArrowDown, ArrowUp, ChevronRight, Clock3, ShoppingBag } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  ArrowDown,
+  ArrowUp,
+  ChevronRight,
+  ShoppingBag,
+} from "lucide-react";
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { BalanceCard } from "@/components/app/BalanceCard";
 import { ServiceGlyph } from "@/components/app/ServiceGlyph";
@@ -31,13 +36,11 @@ function HomeScreen() {
   }, []);
 
   const today = now.toDateString();
-  const dayTx = transactions.filter((t) => t.status === "Concluído" && new Date(t.createdAt).toDateString() === today);
+  const dayTx = transactions.filter(
+    (t) => t.status === "Concluído" && new Date(t.createdAt).toDateString() === today,
+  );
   const inflow = dayTx.filter((t) => t.kind === "in").reduce((s, t) => s + t.amount, 0);
   const outflow = dayTx.filter((t) => t.kind === "out").reduce((s, t) => s + t.amount, 0);
-  const recentTransactions = useMemo(
-    () => [...transactions].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()).slice(0, 3),
-    [transactions],
-  );
 
   return (
     <>
@@ -48,54 +51,118 @@ function HomeScreen() {
             <p className="mt-1 text-sm font-medium opacity-90">{account.company}</p>
             <p className="mt-1 text-sm font-medium opacity-90">CNPJ: {account.cnpj}</p>
           </div>
-          <BalanceCard showAccount className="mt-5 rounded-2xl border border-primary-foreground/10 bg-primary-deep/45 p-5 shadow-lg" />
+          <BalanceCard
+            showAccount
+            className="mt-5 rounded-2xl border border-primary-foreground/10 bg-primary-deep/45 p-5 shadow-lg"
+          />
         </div>
       </BrandHeader>
 
       <main className="mx-auto w-full max-w-[430px] bg-background px-4 pb-8 pt-5">
         <section>
           <div className="rounded-xl border border-border/60 bg-card p-5 shadow-[0_8px_25px_rgba(30,50,70,0.06)]">
-            <div className="flex items-center justify-between gap-3"><h2 className="text-[20px] font-bold">Resumo diário</h2><span className="text-sm text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span></div>
+            <div className="flex items-center justify-between">
+              <h2 className="text-[20px] font-bold">Resumo diário</h2>
+              <span className="text-sm text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span>
+            </div>
             <dl className="mt-5 grid grid-cols-2 divide-x divide-border">
-              <div className="pr-4"><dt className="flex items-center gap-2 text-sm text-muted-foreground"><ArrowUp className="size-4 text-income" /> Entradas</dt><dd className="mt-2 text-lg font-semibold tabular-nums">{formatBRL(inflow)}</dd></div>
-              <div className="pl-4"><dt className="flex items-center gap-2 text-sm text-muted-foreground"><ArrowDown className="size-4 text-brand-red" /> Saídas</dt><dd className="mt-2 text-lg font-semibold tabular-nums">{formatBRL(outflow)}</dd></div>
+              <div className="pr-4">
+                <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <ArrowUp className="size-4 text-income" /> Entradas
+                </dt>
+                <dd className="mt-2 text-lg font-semibold tabular-nums">{formatBRL(inflow)}</dd>
+              </div>
+              <div className="pl-4">
+                <dt className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <ArrowDown className="size-4 text-brand-red" /> Saídas
+                </dt>
+                <dd className="mt-2 text-lg font-semibold tabular-nums">{formatBRL(outflow)}</dd>
+              </div>
             </dl>
-            <Link to="/app/extrato" className="mt-5 inline-flex items-center gap-1 font-semibold text-primary underline underline-offset-2">Consultar extrato <ChevronRight className="size-4" /></Link>
+            <Link
+              to="/app/extrato"
+              className="mt-5 inline-flex items-center gap-1 font-semibold text-primary underline underline-offset-2"
+            >
+              Consultar extrato <ChevronRight className="size-4" />
+            </Link>
           </div>
         </section>
 
-        {recentTransactions.length > 0 && (
-          <section className="mt-7">
-            <div className="mb-3 flex items-center justify-between gap-3"><h2 className="text-[22px] font-bold">Últimas movimentações</h2><Link to="/app/extrato" className="shrink-0 text-sm font-semibold text-primary">Ver extrato</Link></div>
-            <div className="overflow-hidden rounded-2xl border border-border/60 bg-card shadow-card">
-              {recentTransactions.map((tx, index) => (
-                <div key={tx.id} className={`flex items-center gap-3 px-4 py-4 ${index ? "border-t border-border/70" : ""}`}>
-                  <span className="grid size-10 shrink-0 place-items-center rounded-full bg-muted"><Clock3 className="size-5 text-primary" /></span>
-                  <div className="min-w-0 flex-1"><p className="truncate text-sm font-semibold">{tx.title}</p><p className="mt-0.5 truncate text-xs text-muted-foreground">{tx.counterpart}</p><p className="mt-1 text-[11px] text-muted-foreground">{new Date(tx.createdAt).toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}</p></div>
-                  <div className="text-right"><p className={`whitespace-nowrap text-sm font-bold tabular-nums ${tx.kind === "in" ? "text-income" : "text-foreground"}`}>{tx.kind === "in" ? "+ " : "- "}{formatBRL(tx.amount)}</p><p className="mt-1 text-[11px] text-muted-foreground">{tx.status}</p></div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
         <section className="mt-7">
           <h2 className="text-[22px] font-bold">Soluções para sua empresa</h2>
-          <div className="mt-3 overflow-hidden rounded-3xl bg-card shadow-[0_8px_25px_rgba(30,50,70,0.08)]"><Link to="/app/credito" className="flex min-h-[154px] items-stretch"><div className="w-[30%] shrink-0 overflow-hidden"><img src="https://images.unsplash.com/photo-1753161022783-160d6579f86d?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=700" alt="Pessoa usando celular" className="h-full w-full object-cover" /></div><div className="flex flex-1 items-center justify-between gap-3 p-5"><div><h3 className="text-lg font-bold">Linhas de crédito</h3><p className="mt-2 text-[15px] leading-snug text-muted-foreground">Exclusivas para você que é MEI!<br />Clique aqui.</p></div><ChevronRight className="size-7 shrink-0 text-primary" /></div></Link></div>
-          <div className="mt-3 flex justify-center gap-2"><span className="size-2.5 rounded-full bg-muted" /><span className="h-2.5 w-12 rounded-full bg-primary" /><span className="size-2.5 rounded-full bg-muted" /></div>
+          <div className="mt-3 overflow-hidden rounded-3xl bg-card shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+            <Link to="/app/credito" className="flex min-h-[154px] items-stretch">
+              <div className="w-[30%] shrink-0 overflow-hidden">
+                <img
+                  src="https://images.unsplash.com/photo-1753161022783-160d6579f86d?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=700"
+                  alt="Pessoa usando celular"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="flex flex-1 items-center justify-between gap-3 p-5">
+                <div>
+                  <h3 className="text-lg font-bold">Linhas de crédito</h3>
+                  <p className="mt-2 text-[15px] leading-snug text-muted-foreground">
+                    Exclusivas para você que é MEI!<br />Clique aqui.
+                  </p>
+                </div>
+                <ChevronRight className="size-7 shrink-0 text-primary" />
+              </div>
+            </Link>
+          </div>
+          <div className="mt-3 flex justify-center gap-2">
+            <span className="size-2.5 rounded-full bg-muted" />
+            <span className="h-2.5 w-12 rounded-full bg-primary" />
+            <span className="size-2.5 rounded-full bg-muted" />
+          </div>
         </section>
 
-        <section className="mt-7"><h2 className="text-[22px] font-bold">Acesso rápido</h2><div className="mt-3 grid grid-cols-5 gap-2">
-          <Link to="/app/pix" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="pix" className="size-8" /><span className="mt-2 text-[10px] font-medium">Pix</span></Link>
-          <Link to="/app/credito" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="linhas-de-credito" className="size-8" /><span className="mt-2 text-[10px] font-medium leading-tight">Linhas de<br />crédito</span></Link>
-          <Link to="/app/cartoes" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="cartoes" className="size-8" /><span className="mt-2 text-[10px] font-medium">Cartões</span></Link>
-          <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="open-finance" className="size-8" /><span className="mt-2 text-[10px] font-medium leading-tight">Open<br />Finance</span></Link>
-          <Link to="/app/chat" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="whatsapp" className="size-8" /><span className="mt-2 text-[10px] font-medium">WhatsApp</span></Link>
-        </div></section>
+        <section className="mt-7">
+          <h2 className="text-[22px] font-bold">Acesso rápido</h2>
+          <div className="mt-3 grid grid-cols-5 gap-2">
+              <Link to="/app/pix" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="pix" className="size-8" /><span className="mt-2 text-[10px] font-medium">Pix</span></Link>
+              <Link to="/app/credito" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="linhas-de-credito" className="size-8" /><span className="mt-2 text-[10px] font-medium leading-tight">Linhas de<br />crédito</span></Link>
+              <Link to="/app/cartoes" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="cartoes" className="size-8" /><span className="mt-2 text-[10px] font-medium">Cartões</span></Link>
+              <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="open-finance" className="size-8" /><span className="mt-2 text-[10px] font-medium leading-tight">Open<br />Finance</span></Link>
+              <Link to="/app/chat" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="whatsapp" className="size-8" /><span className="mt-2 text-[10px] font-medium">WhatsApp</span></Link>
+          </div>
+        </section>
 
-        <section className="mt-7"><h2 className="text-[22px] font-bold">Ofertas</h2><div className="mt-3 overflow-hidden rounded-3xl bg-card shadow-[0_8px_25px_rgba(30,50,70,0.08)]"><Link to="/app/credito" className="flex min-h-[150px] items-stretch"><div className="w-[30%] bg-gradient-to-br from-red-100 via-red-50 to-white"><img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=700" alt="Pessoa usando celular" className="h-full w-full object-cover" /></div><div className="flex flex-1 items-center justify-between p-5"><div><h3 className="text-lg font-bold">A melhor oferta do consignado</h3><p className="mt-2 text-sm text-muted-foreground">Consulte as condições disponíveis para sua empresa.</p></div><ChevronRight className="size-7 shrink-0 text-primary" /></div></Link></div></section>
+        <section className="mt-7">
+          <h2 className="text-[22px] font-bold">Ofertas</h2>
+          <div className="mt-3 overflow-hidden rounded-3xl bg-card shadow-[0_8px_25px_rgba(30,50,70,0.08)]">
+            <Link to="/app/credito" className="flex min-h-[150px] items-stretch">
+              <div className="w-[30%] bg-gradient-to-br from-red-100 via-red-50 to-white">
+                <img
+                  src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?auto=format&fit=crop&fm=jpg&ixlib=rb-4.1.0&q=80&w=700"
+                  alt="Pessoa usando celular"
+                  className="h-full w-full object-cover"
+                />
+              </div>
+              <div className="flex flex-1 items-center justify-between p-5">
+                <div>
+                  <h3 className="text-lg font-bold">A melhor oferta do consignado</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">Simule e autorize a consulta dos seus dados.</p>
+                </div>
+                <ChevronRight className="size-7 shrink-0 text-primary" />
+              </div>
+            </Link>
+          </div>
+        </section>
 
-        <section className="mt-7"><h2 className="text-[22px] font-bold">Benefícios e parcerias</h2><div className="mt-3 grid grid-cols-2 gap-3"><Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-gradient-to-br from-[#2638a8] to-[#5b2aa0] px-5 text-white shadow-lg"><ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} /><span className="font-bold">Oferta com cashback</span></Link><Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-brand-red px-5 text-primary-foreground shadow-lg"><ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} /><span className="font-bold">Superoferta no shop</span></Link></div></section>
+        <section className="mt-7">
+          <h2 className="text-[22px] font-bold">Benefícios e parcerias</h2>
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            <Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-gradient-to-br from-[#2638a8] to-[#5b2aa0] px-5 text-white shadow-lg">
+              <ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} />
+              <span className="font-bold">Oferta com cashback</span>
+            </Link>
+            <Link to="/app/servicos" className="flex min-h-[100px] items-center gap-3 rounded-2xl bg-brand-red px-5 text-primary-foreground shadow-lg">
+              <ShoppingBag className="size-10 shrink-0" strokeWidth={1.6} />
+              <span className="font-bold">Superoferta no shop</span>
+            </Link>
+          </div>
+        </section>
       </main>
     </>
   );
