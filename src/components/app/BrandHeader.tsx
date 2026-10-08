@@ -10,7 +10,7 @@ export function BrandHeader({ children }: { children?: ReactNode }) {
       <div className="mobile-safe-top flex items-center justify-between gap-3 px-5 pb-5 pt-4">
         <div className="flex min-w-0 items-center gap-2.5">
           <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white" aria-hidden>
-            <img src="/bradesco-symbol.svg?v=red-3" alt="" className="size-9 object-contain" />
+            <img src="/bradesco-symbol.svg?v=red-4" alt="" className="size-10 object-contain" />
           </span>
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-[19px] font-bold tracking-tight">bradesco</span>
