@@ -118,13 +118,15 @@ function HomeScreen() {
         </section>
 
         <section className="mt-7">
-          <h2 className="text-[22px] font-bold">Acesso rápido</h2>
-          <div className="mt-3 grid grid-cols-5 gap-2">
-              <Link to="/app/pix" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="pix" className="size-8" /><span className="mt-2 text-[10px] font-medium">Pix</span></Link>
-              <Link to="/app/credito" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="linhas-de-credito" className="size-8" /><span className="mt-2 text-[10px] font-medium leading-tight">Linhas de<br />crédito</span></Link>
-              <Link to="/app/cartoes" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="cartoes" className="size-8" /><span className="mt-2 text-[10px] font-medium">Cartões</span></Link>
-              <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="open-finance" className="size-8" /><span className="mt-2 text-[10px] font-medium leading-tight">Open<br />Finance</span></Link>
-              <Link to="/app/chat" className="flex min-h-[92px] min-w-0 flex-col items-center justify-center rounded-lg border border-border/20 bg-card px-1 text-center shadow-card"><ServiceGlyph slug="whatsapp" className="size-8" /><span className="mt-2 text-[10px] font-medium">WhatsApp</span></Link>
+          <h2 className="text-[28px] font-bold tracking-[-0.02em]">Acesso rápido</h2>
+          <div className="-mx-4 mt-4 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="flex w-max gap-3">
+              <Link to="/app/pix" className="flex h-[126px] w-[108px] shrink-0 flex-col items-center justify-center rounded-[24px] border border-[#29345c] bg-[#171d35] px-2 text-center text-white shadow-[0_8px_20px_rgba(5,10,30,.22)]"><ServiceGlyph slug="pix" className="size-11 text-[#91a2ff]" /><span className="mt-4 text-[17px] font-normal leading-tight">Pix</span></Link>
+              <Link to="/app/credito" className="flex h-[126px] w-[108px] shrink-0 flex-col items-center justify-center rounded-[24px] border border-[#29345c] bg-[#171d35] px-2 text-center text-white shadow-[0_8px_20px_rgba(5,10,30,.22)]"><ServiceGlyph slug="linhas-de-credito" className="size-11 text-[#91a2ff]" /><span className="mt-4 text-[17px] font-normal leading-[1.05]">Linhas de<br />crédito</span></Link>
+              <Link to="/app/cartoes" className="flex h-[126px] w-[108px] shrink-0 flex-col items-center justify-center rounded-[24px] border border-[#29345c] bg-[#171d35] px-2 text-center text-white shadow-[0_8px_20px_rgba(5,10,30,.22)]"><ServiceGlyph slug="cartoes" className="size-11 text-[#91a2ff]" /><span className="mt-4 text-[17px] font-normal leading-tight">Cartões</span></Link>
+              <Link to="/app/servico/$slug" params={{ slug: "open-finance" }} className="flex h-[126px] w-[108px] shrink-0 flex-col items-center justify-center rounded-[24px] border border-[#29345c] bg-[#171d35] px-2 text-center text-white shadow-[0_8px_20px_rgba(5,10,30,.22)]"><ServiceGlyph slug="open-finance" className="size-11 text-[#91a2ff]" /><span className="mt-4 text-[17px] font-normal leading-[1.05]">Open<br />Finance</span></Link>
+              <Link to="/app/chat" className="flex h-[126px] w-[108px] shrink-0 flex-col items-center justify-center rounded-[24px] border border-[#29345c] bg-[#171d35] px-2 text-center text-white shadow-[0_8px_20px_rgba(5,10,30,.22)]"><ServiceGlyph slug="whatsapp" className="size-11 text-[#91a2ff]" /><span className="mt-4 text-[17px] font-normal leading-tight">WhatsApp</span></Link>
+            </div>
           </div>
         </section>
 
