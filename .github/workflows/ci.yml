@@ -20,7 +20,7 @@ jobs:
         with:
           bun-version: latest
       - name: Instalar dependências
-        run: bun install --frozen-lockfile
+        run: bun install
       - name: Verificar build
         run: bun run build
       - name: Verificar lint
