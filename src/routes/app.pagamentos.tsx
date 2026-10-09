@@ -6,7 +6,7 @@ import { ConfirmPanel, ErrorNote, Field, PrimaryButton } from "@/components/app/
 import { Switch } from "@/components/ui/switch";
 import { formatBRL } from "@/lib/mock-data";
 import { postTx, useBalance } from "@/lib/bank";
-import { ScheduledList } from "./app.transferencias";
+import { ScheduledList } from "@/components/app/ScheduledList";
 
 export const Route = createFileRoute("/app/pagamentos")({
   head: () => ({ meta: [{ title: "Pagamentos — Conta Empresas" }] }),
