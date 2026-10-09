@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Centralize os pictogramas lineares de Serviços e Acesso rápido em `ServiceGlyph` e use `--icon-ink`, para manter traço e cor consistentes com a referência visual.
+- Nenhum bloqueio, ocultação ou captura de tela acontece por padrão: o app só bloqueia quando o usuário liga o modo privacidade, porque o comportamento automático atrapalhava o uso comum.
