@@ -13,11 +13,13 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AppRouteImport } from './routes/app'
 import { Route as RecuperarAcessoRouteImport } from './routes/recuperar-acesso'
 import { Route as AppIndexRouteImport } from './routes/app.index'
+import { Route as AppAgendamentosRouteImport } from './routes/app.agendamentos'
 import { Route as AppCartoesRouteImport } from './routes/app.cartoes'
 import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppComprovantesRouteImport } from './routes/app.comprovantes'
 import { Route as AppCreditoRouteImport } from './routes/app.credito'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
+import { Route as AppFavorecidosRouteImport } from './routes/app.favorecidos'
 import { Route as AppNotasFiscaisRouteImport } from './routes/app.notas-fiscais'
 import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
 import { Route as AppPagamentosRouteImport } from './routes/app.pagamentos'
@@ -59,6 +61,11 @@ const AppIndexRoute = AppIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AppRoute,
 } as any)
+const AppAgendamentosRoute = AppAgendamentosRouteImport.update({
+  id: '/agendamentos',
+  path: '/agendamentos',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppCartoesRoute = AppCartoesRouteImport.update({
   id: '/cartoes',
   path: '/cartoes',
@@ -82,6 +89,11 @@ const AppCreditoRoute = AppCreditoRouteImport.update({
 const AppExtratoRoute = AppExtratoRouteImport.update({
   id: '/extrato',
   path: '/extrato',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFavorecidosRoute = AppFavorecidosRouteImport.update({
+  id: '/favorecidos',
+  path: '/favorecidos',
   getParentRoute: () => AppRoute,
 } as any)
 const AppNotasFiscaisRoute = AppNotasFiscaisRouteImport.update({
@@ -189,11 +201,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/recuperar-acesso': typeof RecuperarAcessoRoute
+  '/app/agendamentos': typeof AppAgendamentosRoute
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/favorecidos': typeof AppFavorecidosRoute
   '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/pagamentos': typeof AppPagamentosRoute
@@ -219,11 +233,13 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/recuperar-acesso': typeof RecuperarAcessoRoute
+  '/app/agendamentos': typeof AppAgendamentosRoute
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/favorecidos': typeof AppFavorecidosRoute
   '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/pagamentos': typeof AppPagamentosRoute
@@ -250,11 +266,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/app': typeof AppRouteWithChildren
   '/recuperar-acesso': typeof RecuperarAcessoRoute
+  '/app/agendamentos': typeof AppAgendamentosRoute
   '/app/cartoes': typeof AppCartoesRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
+  '/app/favorecidos': typeof AppFavorecidosRoute
   '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
   '/app/pagamentos': typeof AppPagamentosRoute
@@ -283,11 +301,13 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/recuperar-acesso'
+    | '/app/agendamentos'
     | '/app/cartoes'
     | '/app/chat'
     | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
+    | '/app/favorecidos'
     | '/app/notas-fiscais'
     | '/app/notificacoes'
     | '/app/pagamentos'
@@ -313,11 +333,13 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/recuperar-acesso'
+    | '/app/agendamentos'
     | '/app/cartoes'
     | '/app/chat'
     | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
+    | '/app/favorecidos'
     | '/app/notas-fiscais'
     | '/app/notificacoes'
     | '/app/pagamentos'
@@ -343,11 +365,13 @@ export interface FileRouteTypes {
     | '/'
     | '/app'
     | '/recuperar-acesso'
+    | '/app/agendamentos'
     | '/app/cartoes'
     | '/app/chat'
     | '/app/comprovantes'
     | '/app/credito'
     | '/app/extrato'
+    | '/app/favorecidos'
     | '/app/notas-fiscais'
     | '/app/notificacoes'
     | '/app/pagamentos'
@@ -407,6 +431,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppIndexRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/agendamentos': {
+      id: '/app/agendamentos'
+      path: '/agendamentos'
+      fullPath: '/app/agendamentos'
+      preLoaderRoute: typeof AppAgendamentosRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/cartoes': {
       id: '/app/cartoes'
       path: '/cartoes'
@@ -440,6 +471,13 @@ declare module '@tanstack/react-router' {
       path: '/extrato'
       fullPath: '/app/extrato'
       preLoaderRoute: typeof AppExtratoRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/favorecidos': {
+      id: '/app/favorecidos'
+      path: '/favorecidos'
+      fullPath: '/app/favorecidos'
+      preLoaderRoute: typeof AppFavorecidosRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/notas-fiscais': {
@@ -607,11 +645,13 @@ const AppPixRouteWithChildren =
   AppPixRoute._addFileChildren(AppPixRouteChildren)
 
 interface AppRouteChildren {
+  AppAgendamentosRoute: typeof AppAgendamentosRoute
   AppCartoesRoute: typeof AppCartoesRoute
   AppChatRoute: typeof AppChatRoute
   AppComprovantesRoute: typeof AppComprovantesRoute
   AppCreditoRoute: typeof AppCreditoRoute
   AppExtratoRoute: typeof AppExtratoRoute
+  AppFavorecidosRoute: typeof AppFavorecidosRoute
   AppNotasFiscaisRoute: typeof AppNotasFiscaisRoute
   AppNotificacoesRoute: typeof AppNotificacoesRoute
   AppPagamentosRoute: typeof AppPagamentosRoute
@@ -630,11 +670,13 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppAgendamentosRoute: AppAgendamentosRoute,
   AppCartoesRoute: AppCartoesRoute,
   AppChatRoute: AppChatRoute,
   AppComprovantesRoute: AppComprovantesRoute,
   AppCreditoRoute: AppCreditoRoute,
   AppExtratoRoute: AppExtratoRoute,
+  AppFavorecidosRoute: AppFavorecidosRoute,
   AppNotasFiscaisRoute: AppNotasFiscaisRoute,
   AppNotificacoesRoute: AppNotificacoesRoute,
   AppPagamentosRoute: AppPagamentosRoute,
