@@ -19,8 +19,6 @@ function AppLayout() {
     if (hydrated && !signedIn) void navigate({ to: "/", replace: true });
   }, [hydrated, signedIn, navigate]);
 
-  // O bloqueio só existe para quem ligou o modo privacidade em
-  // “Gerenciar dados e privacidade”. Desligado, o app nunca esconde a tela.
   useEffect(() => {
     if (!privacyMode) {
       setLocked(false);
@@ -47,7 +45,6 @@ function AppLayout() {
 
   return (
     <div className="min-h-screen bg-background mobile-bottom-space">
-      <div className="simulation-ribbon" role="status" aria-label="Ambiente simulado">AMBIENTE SIMULADO · SEM OPERAÇÕES REAIS</div>
       <div className="mobile-shell app-surface"><Outlet /></div>
       <BottomNav />
       {locked && <PrivacyLock onUnlock={() => setLocked(false)} />}
