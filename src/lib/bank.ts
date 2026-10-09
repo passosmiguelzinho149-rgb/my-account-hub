@@ -346,7 +346,7 @@ export function getState(): BankState {
     const refreshedPaymentName = "SECR. DA RECEITA FEDERAL";
     const refreshedPurchaseName = "PATRICIA RODRIGUES";
     let stateChanged = false;
-    const refreshedTransactions = cache!.transactions.map((item) =>
+    const refreshedTransactions = cache!.transactions.map((item): Tx =>
       (item.category === "compra" && item.title === "COMPRA CARTÃO EMPRESARIAL")
         ? {
             ...item,
@@ -444,7 +444,7 @@ export function getState(): BankState {
       persist();
     }
   }
-  return cache;
+  return cache ?? initialState();
 }
 
 function raw_ok(state: BankState | null): boolean {
