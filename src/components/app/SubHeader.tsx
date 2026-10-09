@@ -46,7 +46,7 @@ export function SubHeader({
           >
             <ArrowLeft className="size-6" aria-hidden />
           </button>
-          <h1 className="truncate text-lg font-bold tracking-[-0.01em]">{title}</h1>
+          <h1 className="line-clamp-2 text-lg font-bold leading-snug tracking-[-0.01em] [overflow-wrap:anywhere]">{title}</h1>
         </div>
         {!compactActions && (
           <div className="flex shrink-0 items-center gap-3">
