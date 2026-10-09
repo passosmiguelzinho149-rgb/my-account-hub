@@ -69,11 +69,60 @@ function PerfilScreen() {
         </div>
       </BrandHeader>
       <main className="mx-auto w-full max-w-[430px] px-4 pb-6 pt-2">
-        <ul className="grid grid-cols-3 gap-2">{dataCards.map((c) => <li key={c.slug}><Link to="/app/conta/$slug" params={{ slug: c.slug }} className="flex min-h-[92px] w-full items-center justify-center rounded-xl bg-card px-2 py-3 text-center text-[13px] font-medium leading-tight shadow-card">{c.label}</Link></li>)}</ul>
-        <nav className="mt-5 overflow-hidden rounded-xl bg-card shadow-card"><ul className="divide-y divide-border">
-          {menuItems.map((item) => <li key={item.slug}>{"dedicated" in item ? <Link to={item.dedicated} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4"><span className="min-w-0 break-words">{item.label}</span><ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden /></Link> : <Link to="/app/conta/$slug" params={{ slug: item.slug }} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4"><span className="min-w-0 break-words">{item.label}</span><ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden /></Link>}</li>)}
-          <li><button type="button" onClick={handleSignOut} className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 text-left"><span className="flex min-w-0 items-center gap-2 font-medium text-brand-red"><LogOut className="size-5 shrink-0" aria-hidden />Sair</span><ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden /></button></li>
-        </ul></nav>
+        <ul className="grid grid-cols-3 gap-2">
+          {dataCards.map((c) => (
+            <li key={c.slug}>
+              <Link
+                to="/app/conta/$slug"
+                params={{ slug: c.slug }}
+                className="flex min-h-[92px] w-full items-center justify-center rounded-xl bg-card px-1.5 py-3 text-center text-[12px] font-medium leading-snug text-balance hyphens-none shadow-card"
+              >
+                {c.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <nav className="mt-5 overflow-hidden rounded-xl bg-card shadow-card">
+          <ul className="divide-y divide-border">
+            {menuItems.map((item) => (
+              <li key={item.slug}>
+                {
+                  "dedicated" in item ? (
+                    <Link
+                      to={item.dedicated}
+                      className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 text-[15px] leading-snug"
+                    >
+                      <span className="min-w-0 break-words">{item.label}</span>
+                      <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/app/conta/$slug"
+                      params={{ slug: item.slug }}
+                      className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 text-[15px] leading-snug"
+                    >
+                      <span className="min-w-0 break-words">{item.label}</span>
+                      <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
+                    </Link>
+                  )
+                }
+              </li>
+            ))}
+            <li>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 text-left text-[15px] leading-snug"
+              >
+                <span className="flex min-w-0 items-center gap-2 font-medium text-brand-red">
+                  <LogOut className="size-5 shrink-0" aria-hidden />
+                  Sair
+                </span>
+                <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
+              </button>
+            </li>
+          </ul>
+        </nav>
       </main>
     </>
   );

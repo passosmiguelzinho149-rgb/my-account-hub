@@ -15,6 +15,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useSession } from "@/lib/session";
+import { setPrivacyMode, usePrivacyMode } from "@/lib/privacy-mode";
 
 export const Route = createFileRoute("/app/privacidade")({
   head: () => ({
@@ -96,6 +97,7 @@ function defaultConsents(): ConsentMap {
 function PrivacidadeScreen() {
   const { signOut } = useSession();
   const navigate = useNavigate();
+  const privacyMode = usePrivacyMode();
   const [values, setValues] = useState<ConsentMap>(defaultConsents);
 
   // Lê os consentimentos salvos apenas após a hidratação (localStorage indisponível no SSR).
@@ -123,6 +125,7 @@ function PrivacidadeScreen() {
     } catch {
       /* ignora */
     }
+    setPrivacyMode(false);
     signOut();
     void navigate({ to: "/", replace: true });
   };
@@ -135,6 +138,27 @@ function PrivacidadeScreen() {
           Controle como seus dados são usados nesta demonstração. As alterações são salvas
           automaticamente neste dispositivo.
         </p>
+
+        <section aria-label="Modo privacidade" className="mt-6">
+          <h2 className="mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
+            Modo privacidade
+          </h2>
+          <div className="flex items-center gap-3 rounded-xl bg-card p-4 shadow-card">
+            <div className="min-w-0 flex-1">
+              <p className="font-medium">Bloquear ao sair do app</p>
+              <p className="mt-0.5 text-sm text-muted-foreground">
+                Quando você sair do aplicativo, a tela é bloqueada e só volta com a sua senha.
+                Desligado, o app nunca esconde a tela sozinho.
+              </p>
+            </div>
+            <Switch
+              checked={privacyMode}
+              onCheckedChange={setPrivacyMode}
+              aria-label="Bloquear ao sair do app"
+            />
+          </div>
+        </section>
+
 
         <section aria-label="Consentimentos">
           <h2 className="mt-6 mb-2 text-sm font-semibold text-muted-foreground uppercase tracking-wide">
