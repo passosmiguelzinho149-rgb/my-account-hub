@@ -1,7 +1,7 @@
 {
-  "name": "Conta Empresas — Demonstração",
-  "short_name": "Conta Empresas",
-  "description": "Aplicativo de demonstração de conta empresarial, sem operações bancárias reais.",
+  "name": "Bradesco Empresas e Negócios — Demonstração",
+  "short_name": "Bradesco Demo",
+  "description": "Aplicativo de demonstração visual, sem operações bancárias reais.",
   "id": "/app",
   "start_url": "/app",
   "scope": "/",
