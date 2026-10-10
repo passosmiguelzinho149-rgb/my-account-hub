@@ -20,8 +20,10 @@ import { Route as AppComprovantesRouteImport } from './routes/app.comprovantes'
 import { Route as AppCreditoRouteImport } from './routes/app.credito'
 import { Route as AppExtratoRouteImport } from './routes/app.extrato'
 import { Route as AppFavorecidosRouteImport } from './routes/app.favorecidos'
+import { Route as AppInvestimentosRouteImport } from './routes/app.investimentos'
 import { Route as AppNotasFiscaisRouteImport } from './routes/app.notas-fiscais'
 import { Route as AppNotificacoesRouteImport } from './routes/app.notificacoes'
+import { Route as AppOpenFinanceRouteImport } from './routes/app.open-finance'
 import { Route as AppPagamentosRouteImport } from './routes/app.pagamentos'
 import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppPixRouteImport } from './routes/app.pix'
@@ -30,6 +32,7 @@ import { Route as AppRecargasRouteImport } from './routes/app.recargas'
 import { Route as AppSaquesRouteImport } from './routes/app.saques'
 import { Route as AppSegurancaRouteImport } from './routes/app.seguranca'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
+import { Route as AppShopRouteImport } from './routes/app.shop'
 import { Route as AppTransferenciasRouteImport } from './routes/app.transferencias'
 import { Route as AppComprovanteIdRouteImport } from './routes/app.comprovante.$id'
 import { Route as AppContaSlugRouteImport } from './routes/app.conta.$slug'
@@ -96,6 +99,11 @@ const AppFavorecidosRoute = AppFavorecidosRouteImport.update({
   path: '/favorecidos',
   getParentRoute: () => AppRoute,
 } as any)
+const AppInvestimentosRoute = AppInvestimentosRouteImport.update({
+  id: '/investimentos',
+  path: '/investimentos',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppNotasFiscaisRoute = AppNotasFiscaisRouteImport.update({
   id: '/notas-fiscais',
   path: '/notas-fiscais',
@@ -104,6 +112,11 @@ const AppNotasFiscaisRoute = AppNotasFiscaisRouteImport.update({
 const AppNotificacoesRoute = AppNotificacoesRouteImport.update({
   id: '/notificacoes',
   path: '/notificacoes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppOpenFinanceRoute = AppOpenFinanceRouteImport.update({
+  id: '/open-finance',
+  path: '/open-finance',
   getParentRoute: () => AppRoute,
 } as any)
 const AppPagamentosRoute = AppPagamentosRouteImport.update({
@@ -144,6 +157,11 @@ const AppSegurancaRoute = AppSegurancaRouteImport.update({
 const AppServicosRoute = AppServicosRouteImport.update({
   id: '/servicos',
   path: '/servicos',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppShopRoute = AppShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
   getParentRoute: () => AppRoute,
 } as any)
 const AppTransferenciasRoute = AppTransferenciasRouteImport.update({
@@ -208,8 +226,10 @@ export interface FileRoutesByFullPath {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/favorecidos': typeof AppFavorecidosRoute
+  '/app/investimentos': typeof AppInvestimentosRoute
   '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/open-finance': typeof AppOpenFinanceRoute
   '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/pix': typeof AppPixRouteWithChildren
@@ -218,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
+  '/app/shop': typeof AppShopRoute
   '/app/transferencias': typeof AppTransferenciasRoute
   '/app/': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
@@ -240,8 +261,10 @@ export interface FileRoutesByTo {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/favorecidos': typeof AppFavorecidosRoute
+  '/app/investimentos': typeof AppInvestimentosRoute
   '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/open-finance': typeof AppOpenFinanceRoute
   '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/privacidade': typeof AppPrivacidadeRoute
@@ -249,6 +272,7 @@ export interface FileRoutesByTo {
   '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
+  '/app/shop': typeof AppShopRoute
   '/app/transferencias': typeof AppTransferenciasRoute
   '/app': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
@@ -273,8 +297,10 @@ export interface FileRoutesById {
   '/app/credito': typeof AppCreditoRoute
   '/app/extrato': typeof AppExtratoRoute
   '/app/favorecidos': typeof AppFavorecidosRoute
+  '/app/investimentos': typeof AppInvestimentosRoute
   '/app/notas-fiscais': typeof AppNotasFiscaisRoute
   '/app/notificacoes': typeof AppNotificacoesRoute
+  '/app/open-finance': typeof AppOpenFinanceRoute
   '/app/pagamentos': typeof AppPagamentosRoute
   '/app/perfil': typeof AppPerfilRoute
   '/app/pix': typeof AppPixRouteWithChildren
@@ -283,6 +309,7 @@ export interface FileRoutesById {
   '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
+  '/app/shop': typeof AppShopRoute
   '/app/transferencias': typeof AppTransferenciasRoute
   '/app/': typeof AppIndexRoute
   '/app/comprovante/$id': typeof AppComprovanteIdRoute
@@ -308,8 +335,10 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/favorecidos'
+    | '/app/investimentos'
     | '/app/notas-fiscais'
     | '/app/notificacoes'
+    | '/app/open-finance'
     | '/app/pagamentos'
     | '/app/perfil'
     | '/app/pix'
@@ -318,6 +347,7 @@ export interface FileRouteTypes {
     | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
+    | '/app/shop'
     | '/app/transferencias'
     | '/app/'
     | '/app/comprovante/$id'
@@ -340,8 +370,10 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/favorecidos'
+    | '/app/investimentos'
     | '/app/notas-fiscais'
     | '/app/notificacoes'
+    | '/app/open-finance'
     | '/app/pagamentos'
     | '/app/perfil'
     | '/app/privacidade'
@@ -349,6 +381,7 @@ export interface FileRouteTypes {
     | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
+    | '/app/shop'
     | '/app/transferencias'
     | '/app'
     | '/app/comprovante/$id'
@@ -372,8 +405,10 @@ export interface FileRouteTypes {
     | '/app/credito'
     | '/app/extrato'
     | '/app/favorecidos'
+    | '/app/investimentos'
     | '/app/notas-fiscais'
     | '/app/notificacoes'
+    | '/app/open-finance'
     | '/app/pagamentos'
     | '/app/perfil'
     | '/app/pix'
@@ -382,6 +417,7 @@ export interface FileRouteTypes {
     | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
+    | '/app/shop'
     | '/app/transferencias'
     | '/app/'
     | '/app/comprovante/$id'
@@ -480,6 +516,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppFavorecidosRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/investimentos': {
+      id: '/app/investimentos'
+      path: '/investimentos'
+      fullPath: '/app/investimentos'
+      preLoaderRoute: typeof AppInvestimentosRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/notas-fiscais': {
       id: '/app/notas-fiscais'
       path: '/notas-fiscais'
@@ -492,6 +535,13 @@ declare module '@tanstack/react-router' {
       path: '/notificacoes'
       fullPath: '/app/notificacoes'
       preLoaderRoute: typeof AppNotificacoesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/open-finance': {
+      id: '/app/open-finance'
+      path: '/open-finance'
+      fullPath: '/app/open-finance'
+      preLoaderRoute: typeof AppOpenFinanceRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/pagamentos': {
@@ -548,6 +598,13 @@ declare module '@tanstack/react-router' {
       path: '/servicos'
       fullPath: '/app/servicos'
       preLoaderRoute: typeof AppServicosRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/shop': {
+      id: '/app/shop'
+      path: '/shop'
+      fullPath: '/app/shop'
+      preLoaderRoute: typeof AppShopRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/transferencias': {
@@ -652,8 +709,10 @@ interface AppRouteChildren {
   AppCreditoRoute: typeof AppCreditoRoute
   AppExtratoRoute: typeof AppExtratoRoute
   AppFavorecidosRoute: typeof AppFavorecidosRoute
+  AppInvestimentosRoute: typeof AppInvestimentosRoute
   AppNotasFiscaisRoute: typeof AppNotasFiscaisRoute
   AppNotificacoesRoute: typeof AppNotificacoesRoute
+  AppOpenFinanceRoute: typeof AppOpenFinanceRoute
   AppPagamentosRoute: typeof AppPagamentosRoute
   AppPerfilRoute: typeof AppPerfilRoute
   AppPixRoute: typeof AppPixRouteWithChildren
@@ -662,6 +721,7 @@ interface AppRouteChildren {
   AppSaquesRoute: typeof AppSaquesRoute
   AppSegurancaRoute: typeof AppSegurancaRoute
   AppServicosRoute: typeof AppServicosRoute
+  AppShopRoute: typeof AppShopRoute
   AppTransferenciasRoute: typeof AppTransferenciasRoute
   AppIndexRoute: typeof AppIndexRoute
   AppComprovanteIdRoute: typeof AppComprovanteIdRoute
@@ -677,8 +737,10 @@ const AppRouteChildren: AppRouteChildren = {
   AppCreditoRoute: AppCreditoRoute,
   AppExtratoRoute: AppExtratoRoute,
   AppFavorecidosRoute: AppFavorecidosRoute,
+  AppInvestimentosRoute: AppInvestimentosRoute,
   AppNotasFiscaisRoute: AppNotasFiscaisRoute,
   AppNotificacoesRoute: AppNotificacoesRoute,
+  AppOpenFinanceRoute: AppOpenFinanceRoute,
   AppPagamentosRoute: AppPagamentosRoute,
   AppPerfilRoute: AppPerfilRoute,
   AppPixRoute: AppPixRouteWithChildren,
@@ -687,6 +749,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppSaquesRoute: AppSaquesRoute,
   AppSegurancaRoute: AppSegurancaRoute,
   AppServicosRoute: AppServicosRoute,
+  AppShopRoute: AppShopRoute,
   AppTransferenciasRoute: AppTransferenciasRoute,
   AppIndexRoute: AppIndexRoute,
   AppComprovanteIdRoute: AppComprovanteIdRoute,
