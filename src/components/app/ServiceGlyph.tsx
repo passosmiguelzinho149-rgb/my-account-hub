@@ -40,6 +40,13 @@ export function ServiceGlyph({ slug, className }: { slug: string; className?: st
     limites: <><path d="M8 12h32M8 21h32M8 30h32M8 38c6-6 11-8 19-8"/><rect x="18" y="9" width="7" height="6" rx="1" fill="var(--color-card)"/><rect x="29" y="18" width="7" height="6" rx="1" fill="var(--color-card)"/></>,
     comprovantes: <><path d="M10 8h28v27l-4 6-5-3-5 3-5-3-5 3-4-6V8ZM17 15h14M17 21h14M21 31h6"/><path d="M21 26h6"/></>,
     buscador: <><path d="M13 5H8a3 3 0 0 0-3 3v5M35 5h5a3 3 0 0 1 3 3v5M5 35v5a3 3 0 0 0 3 3h5M43 35v5a3 3 0 0 1-3 3h-5M8 24h32"/><path d="M14 19v10M18 19v10M23 19v10M27 19v10M32 19v10M36 19v10"/></>,
+    "renda-fixa": <><path d="M10 38V18a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v20"/><path d="M6 38h36M14 38V26h6v12M22 38V20h6v18M30 38v-8h6v8"/></>,
+    fundos: <><path d="M8 40h32M10 40V30M18 40V22M26 40V26M34 40V16"/><path d="M8 18 20 12l8 6 12-10"/><path d="M34 8h6v6"/></>,
+    reserva: <><path d="M8 22a16 12 0 0 1 32 0v10a6 6 0 0 1-6 6H14a6 6 0 0 1-6-6V22Z"/><path d="M24 6v6M24 12a4 4 0 0 1 0 8M20 12h4M14 30c2 2 5 3 10 3s8-1 10-3"/></>,
+    ofertas: <><path d="M10 10h16l14 14-16 16L10 26V10Z"/><circle cx="17" cy="17" r="2.5"/></>,
+    cashback: <><path d="M40 20a16 16 0 1 0 2 8"/><path d="M40 10v10h-8"/><path d="M20 20h5a3 3 0 0 1 0 6h-4a3 3 0 0 0 0 6h6m-3-16v3m0 12v3"/></>,
+    parceiros: <><circle cx="16" cy="18" r="6"/><circle cx="32" cy="18" r="6"/><path d="M5 40c0-6 5-10 11-10s11 4 11 10M21 40c0-6 5-10 11-10s11 4 11 10"/></>,
+    shop: <><path d="M10 16h28l-3 24a4 4 0 0 1-4 4H17a4 4 0 0 1-4-4l-3-24Z"/><path d="M17 20V12a7 7 0 0 1 14 0v8"/></>,
     recebiveis: <><path d="M9 15a17 17 0 0 1 29 0l3-5m0 5h-8M39 33a17 17 0 0 1-29 0l-3 5m0-5h8M27 18h-5a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-6m4-15v3m0 12v3"/></>,
   };
 
