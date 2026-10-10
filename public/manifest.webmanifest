@@ -1,6 +1,6 @@
 {
   "name": "Bradesco Empresas e Negócios — Demonstração",
-  "short_name": "Bradesco Demo",
+  "short_name": "Bradesco Empresas Demo",
   "description": "Aplicativo de demonstração visual, sem operações bancárias reais.",
   "id": "/app",
   "start_url": "/app",
