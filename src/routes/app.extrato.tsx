@@ -6,7 +6,7 @@ import { useBank, useBalance, type Tx } from "@/lib/bank";
 import { useSession } from "@/lib/session";
 
 export const Route = createFileRoute("/app/extrato")({
-  head: () => ({ meta: [{ title: "Extrato — Conta Empresas (simulado)" }, { name: "description", content: "Extrato da conta empresarial em ambiente simulado." }] }),
+  head: () => ({ meta: [{ title: "Extrato — Conta Empresas" }, { name: "description", content: "Extrato da conta empresarial." }] }),
   component: ExtratoScreen,
 });
 
@@ -53,7 +53,6 @@ function ExtratoScreen() {
       <button type="button" onClick={()=>window.print()} className="fixed bottom-[86px] left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-2 rounded-[14px] bg-[#3d439b] px-8 py-3.5 text-[15px] font-bold text-white shadow-lg print:hidden">
         <Share2 className="size-4"/> Compartilhar extrato
       </button>
-      <p className="mt-2 text-center text-[10px] font-medium text-muted-foreground">AMBIENTE SIMULADO · SEM MOVIMENTAÇÃO BANCÁRIA REAL</p>
     </main>
   </div>;
 }
@@ -67,7 +66,7 @@ function TransactionRow({t,hidden}:{t:Tx;hidden:boolean}) {
       <p className="text-[15px] font-extrabold leading-tight text-[#17171b]">{title}</p>
       <p className="mt-1 text-[13px] leading-[1.25] text-[#65656b]">{t.counterpart}</p>
       <p className="mt-0.5 text-[13px] text-[#65656b]">{day} · {t.status}</p>
-      <p className="mt-0.5 text-[12px] text-[#77777c]">Documento {t.id.slice(-7).replace(/\D/g,"") || "simulado"}</p>
+      <p className="mt-0.5 text-[12px] text-[#77777c]">Documento {t.id.slice(-7).replace(/\D/g,"") || "0000"}</p>
     </div>
     <p className={`pt-7 text-[14px] font-semibold tabular-nums ${t.kind==="in"?"text-[#087b43]":"text-[#333640]"}`}>{hidden?"R$ ••••":`${t.kind==="in"?"":"- "}${formatBRL(t.amount)}`}</p>
   </div>;
