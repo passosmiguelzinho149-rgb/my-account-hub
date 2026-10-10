@@ -27,7 +27,6 @@ function ServicosScreen() {
         <div className="flex items-center justify-between gap-3 px-1">
           <div className="min-w-0">
             <h1 className="text-[24px] font-bold tracking-[-0.02em] text-[#30343b] sm:text-[30px]">Serviços</h1>
-            <p className="mt-0.5 text-[9px] font-semibold uppercase tracking-[.12em] text-[#7b8492]">Ambiente simulado</p>
           </div>
           <button type="button" onClick={() => setCustomizing((value) => !value)} className="inline-flex h-8 shrink-0 items-center gap-1 rounded-full border border-[#d7e0eb] bg-white px-2.5 text-[11px] font-semibold text-[#315c91] shadow-sm sm:h-9 sm:px-3 sm:text-xs">
             {customizing ? <Check className="size-3.5" /> : <Settings2 className="size-3.5" />}
