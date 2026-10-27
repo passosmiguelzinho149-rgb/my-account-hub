@@ -5,4 +5,5 @@
 - [x] Login demonstrativo (senha/PIN, recuperação, troca de senha, 2 etapas, dispositivos, histórico de acessos, bloqueio)
 - [x] Transferências, Pagamentos, Recargas, Saques (fluxos demonstrativos)
 - [x] Modo privacidade opt-in (bloqueia ao sair do app) + Perfil arrumado no celular
+- [x] Acesso rápido arrastável para a esquerda (dedo e mouse) com setas e barra de progresso
 - [ ] Cartões completos, demais seções (Investimentos, Open Finance, Shop, etc.)
