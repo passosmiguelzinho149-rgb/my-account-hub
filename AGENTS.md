@@ -11,3 +11,4 @@
 
 - Centralize os pictogramas lineares de Serviços e Acesso rápido em `ServiceGlyph` e use `--icon-ink`, para manter traço e cor consistentes com a referência visual.
 - Nenhum bloqueio, ocultação ou captura de tela acontece por padrão: o app só bloqueia quando o usuário liga o modo privacidade, porque o comportamento automático atrapalhava o uso comum.
+- Fileiras de atalhos que não cabem na tela usam `QuickAccessRail` (arrasto com dedo e mouse, setas e barra de progresso), porque o usuário precisa perceber e puxar o conteúdo para os lados.
