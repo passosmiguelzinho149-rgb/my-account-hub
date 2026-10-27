@@ -20,24 +20,31 @@ function ExtratoScreen() {
   const allTransactions = transactions.some((t) => t.id === pixEmitido.id) ? transactions : [pixEmitido, ...transactions];
   const items = allTransactions.filter((t) => t.status !== "Agendado").sort((a,b)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime());
 
-  return <div className="min-h-full bg-[#3d439b]">
-    <SubHeader title="Extrato" variant="deep" compactActions>
-      <div className="px-5 pb-10 pt-4">
-        <div className="rounded-[16px] bg-white/10 px-5 py-5 shadow-[0_8px_20px_rgba(12,18,80,.16)]">
-          <div className="flex items-center justify-between gap-4">
-            <div className="min-w-0"><p className="text-[16px] font-medium text-white/95">Saldo disponível</p><div className="mt-2 flex items-center gap-3"><p className="text-[18px] font-bold text-white">{balanceHidden ? "R$ ••••••••" : formatBRL(balance)}</p><Eye className="size-5 text-white/80" /></div></div>
-            <button type="button" className="shrink-0 text-[15px] font-semibold text-white underline underline-offset-2">Ver detalhes</button>
+  return <div className="min-h-full bg-[#151f70]">
+    <div className="bg-[radial-gradient(circle_at_82%_15%,rgba(69,75,176,.48),transparent_35%),linear-gradient(145deg,#101a61_0%,#17247d_52%,#111958_100%)]">
+      <SubHeader title="Extrato" variant="deep" compactActions>
+        <div className="px-5 pb-10 pt-4">
+          <div className="rounded-[16px] border border-white/[.04] bg-[#29327f]/80 px-5 py-5 shadow-[0_10px_26px_rgba(5,10,55,.24)]">
+            <div className="flex items-center justify-between gap-4">
+              <div className="min-w-0"><p className="text-[16px] font-medium text-white/95">Saldo disponível</p><div className="mt-2 flex items-center gap-3"><p className="text-[18px] font-bold text-white">{balanceHidden ? "R$ ••••••••" : formatBRL(balance)}</p><Eye className="size-5 text-white/85" /></div></div>
+              <button type="button" className="shrink-0 text-[15px] font-semibold text-white underline underline-offset-2">Ver detalhes</button>
+            </div>
+          </div>
+          <div className="mt-4 rounded-[16px] border border-white/[.04] bg-[#263078]/75 px-5 py-5 shadow-[0_10px_26px_rgba(5,10,55,.20)]">
+            <p className="text-[17px] font-bold leading-snug text-white">O que achou dessa experiência?</p>
+            <p className="mt-1 text-[16px] font-semibold text-white/95">Sua opinião é importante.</p>
+            <button type="button" className="mt-4 text-[17px] font-bold text-white underline underline-offset-4">Avaliar ›</button>
           </div>
         </div>
-      </div>
-    </SubHeader>
+      </SubHeader>
+    </div>
 
     <main className="-mt-1 min-h-[70vh] rounded-t-[28px] bg-white px-4 pb-28 pt-4 shadow-[0_-7px_22px_rgba(15,20,70,.16)]">
       <div className="mx-auto mb-5 h-1 w-12 rounded-full bg-[#d7d7da]" />
       <section className="mx-auto max-w-[410px]">
         <div className="flex h-[58px] items-center rounded-[16px] border border-[#bfc1c8] bg-white pl-5 shadow-sm"><input aria-label="Buscar lançamentos" placeholder="Buscar lançamentos" className="min-w-0 flex-1 bg-transparent text-[17px] outline-none placeholder:text-[#33353b]"/><button type="button" className="grid h-full w-16 place-items-center border-l border-[#d6d7db]"><Search className="size-6 text-[#4d535e]"/></button></div>
         <div className="mt-4 flex gap-2 overflow-x-auto pb-1 text-[15px] font-semibold text-[#315ec9] [scrollbar-width:none]"><button className="flex shrink-0 items-center gap-2 rounded-[18px] bg-[#3565d5] px-4 py-2 text-white"><SlidersHorizontal className="size-4"/>Filtrar</button><button className="shrink-0 rounded-[18px] bg-[#f1f3f7] px-5 py-2">7 dias</button><button className="shrink-0 rounded-[18px] bg-[#f1f3f7] px-5 py-2">15 dias</button><button className="shrink-0 rounded-[18px] bg-[#f1f3f7] px-5 py-2">30 dias</button><button className="shrink-0 rounded-[18px] bg-[#f1f3f7] px-5 py-2">60 dias</button></div>
-        <div className="mt-5 grid grid-cols-4 border-b border-[#dedfe3] text-center text-[16px]"><button className="border-b-[3px] border-[#3d439b] pb-3">Todos</button><button className="pb-3">Entradas</button><button className="pb-3">Saídas</button><button className="pb-3">Futuros</button></div>
+        <div className="mt-5 grid grid-cols-4 border-b border-[#dedfe3] text-center text-[16px]"><button className="border-b-[3px] border-[#273896] pb-3">Todos</button><button className="pb-3">Entradas</button><button className="pb-3">Saídas</button><button className="pb-3">Futuros</button></div>
       </section>
 
       <section className="mx-auto mt-5 max-w-[410px] divide-y divide-[#dedfe3]">
@@ -48,7 +55,7 @@ function ExtratoScreen() {
         <div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(120deg,#050817_0%,#11166d_48%,#651147_100%)] px-6 py-7 text-white shadow-[0_12px_30px_rgba(21,25,93,.22)]"><div className="absolute -right-8 -top-10 size-36 rounded-full bg-[#d51c70]/25 blur-2xl"/><div className="relative flex items-start gap-3"><ShieldCheck className="mt-1 size-7 shrink-0 text-white/90"/><div><h2 className="text-[22px] font-extrabold leading-tight">Atenção às transferências!</h2><p className="mt-3 text-[17px] font-semibold leading-snug text-white/95">Antes de transferir, confira os dados e valide o destinatário.</p></div></div></div>
       </section>
 
-      <button type="button" onClick={()=>window.print()} className="fixed bottom-[86px] left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-2 rounded-[14px] bg-[#3d439b] px-8 py-3.5 text-[15px] font-bold text-white shadow-lg print:hidden"><Share2 className="size-4"/> Compartilhar extrato</button>
+      <button type="button" onClick={()=>window.print()} className="fixed bottom-[86px] left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-2 rounded-[14px] bg-[#273896] px-8 py-3.5 text-[15px] font-bold text-white shadow-lg print:hidden"><Share2 className="size-4"/> Compartilhar extrato</button>
     </main>
   </div>;
 }
