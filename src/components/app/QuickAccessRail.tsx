@@ -118,6 +118,8 @@ export function QuickAccessRail({ title, children, className }: QuickAccessRailP
       <div className="relative mt-3">
         <div
           ref={railRef}
+          draggable={false}
+          onDragStart={(event) => event.preventDefault()}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerUp={onPointerEnd}
@@ -125,7 +127,7 @@ export function QuickAccessRail({ title, children, className }: QuickAccessRailP
           onPointerLeave={onPointerEnd}
           onClickCapture={onClickCapture}
           className={cn(
-            "flex cursor-grab snap-x snap-proximity gap-3 overflow-x-auto overscroll-x-contain pb-3 [scrollbar-width:none] active:cursor-grabbing [&::-webkit-scrollbar]:hidden",
+            "flex cursor-grab touch-pan-x snap-x snap-proximity gap-3 overflow-x-auto overscroll-x-contain select-none pb-3 [scrollbar-width:none] active:cursor-grabbing [&::-webkit-scrollbar]:hidden",
             className,
           )}
         >
