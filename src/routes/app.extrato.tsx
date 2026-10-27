@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Eye, Share2 } from "lucide-react";
+import { Eye, Share2, ShieldCheck } from "lucide-react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { formatBRL } from "@/lib/mock-data";
 import { useBank, useBalance, type Tx } from "@/lib/bank";
@@ -40,6 +40,25 @@ function ExtratoScreen() {
 
     <main className="-mt-1 min-h-[70vh] rounded-t-[28px] bg-white px-5 pb-28 pt-4 shadow-[0_-7px_22px_rgba(15,20,70,.16)]">
       <div className="mx-auto mb-5 h-1 w-12 rounded-full bg-[#d7d7da]" />
+
+      <section className="mx-auto mb-7 max-w-[390px]">
+        <div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(120deg,#050817_0%,#11166d_48%,#651147_100%)] px-6 py-7 text-white shadow-[0_12px_30px_rgba(21,25,93,.22)]">
+          <div className="absolute -right-8 -top-10 size-36 rounded-full bg-[#d51c70]/25 blur-2xl" />
+          <div className="absolute -bottom-12 left-8 size-36 rounded-full bg-[#1748ff]/25 blur-2xl" />
+          <div className="relative flex items-start gap-3">
+            <ShieldCheck className="mt-1 size-7 shrink-0 text-white/90" strokeWidth={1.7}/>
+            <div>
+              <h2 className="text-[22px] font-extrabold leading-tight">Atenção às transferências!</h2>
+              <p className="mt-3 text-[17px] font-semibold leading-snug text-white/95">Antes de transferir, confira os dados e valide o destinatário.</p>
+            </div>
+          </div>
+        </div>
+        <div className="mt-5 flex items-center justify-center gap-2" aria-hidden="true">
+          <span className="h-2.5 w-14 rounded-full bg-[#293ba8]" />
+          <span className="size-2.5 rounded-full bg-[#d1d1d4]" />
+        </div>
+      </section>
+
       <div className="relative mx-auto max-w-[390px] pl-9">
         <div className="absolute bottom-2 left-[13px] top-1 w-[2px] bg-[#b9b9bc]" />
         <ul className="space-y-0">
