@@ -29,6 +29,7 @@ import { Route as AppPerfilRouteImport } from './routes/app.perfil'
 import { Route as AppPixRouteImport } from './routes/app.pix'
 import { Route as AppPrivacidadeRouteImport } from './routes/app.privacidade'
 import { Route as AppRecargasRouteImport } from './routes/app.recargas'
+import { Route as AppSaldoRouteImport } from './routes/app.saldo'
 import { Route as AppSaquesRouteImport } from './routes/app.saques'
 import { Route as AppSegurancaRouteImport } from './routes/app.seguranca'
 import { Route as AppServicosRouteImport } from './routes/app.servicos'
@@ -144,6 +145,11 @@ const AppRecargasRoute = AppRecargasRouteImport.update({
   path: '/recargas',
   getParentRoute: () => AppRoute,
 } as any)
+const AppSaldoRoute = AppSaldoRouteImport.update({
+  id: '/saldo',
+  path: '/saldo',
+  getParentRoute: () => AppRoute,
+} as any)
 const AppSaquesRoute = AppSaquesRouteImport.update({
   id: '/saques',
   path: '/saques',
@@ -235,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/app/pix': typeof AppPixRouteWithChildren
   '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/recargas': typeof AppRecargasRoute
+  '/app/saldo': typeof AppSaldoRoute
   '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
@@ -269,6 +276,7 @@ export interface FileRoutesByTo {
   '/app/perfil': typeof AppPerfilRoute
   '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/recargas': typeof AppRecargasRoute
+  '/app/saldo': typeof AppSaldoRoute
   '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
@@ -306,6 +314,7 @@ export interface FileRoutesById {
   '/app/pix': typeof AppPixRouteWithChildren
   '/app/privacidade': typeof AppPrivacidadeRoute
   '/app/recargas': typeof AppRecargasRoute
+  '/app/saldo': typeof AppSaldoRoute
   '/app/saques': typeof AppSaquesRoute
   '/app/seguranca': typeof AppSegurancaRoute
   '/app/servicos': typeof AppServicosRoute
@@ -344,6 +353,7 @@ export interface FileRouteTypes {
     | '/app/pix'
     | '/app/privacidade'
     | '/app/recargas'
+    | '/app/saldo'
     | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
@@ -378,6 +388,7 @@ export interface FileRouteTypes {
     | '/app/perfil'
     | '/app/privacidade'
     | '/app/recargas'
+    | '/app/saldo'
     | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
@@ -414,6 +425,7 @@ export interface FileRouteTypes {
     | '/app/pix'
     | '/app/privacidade'
     | '/app/recargas'
+    | '/app/saldo'
     | '/app/saques'
     | '/app/seguranca'
     | '/app/servicos'
@@ -579,6 +591,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppRecargasRouteImport
       parentRoute: typeof AppRoute
     }
+    '/app/saldo': {
+      id: '/app/saldo'
+      path: '/saldo'
+      fullPath: '/app/saldo'
+      preLoaderRoute: typeof AppSaldoRouteImport
+      parentRoute: typeof AppRoute
+    }
     '/app/saques': {
       id: '/app/saques'
       path: '/saques'
@@ -718,6 +737,7 @@ interface AppRouteChildren {
   AppPixRoute: typeof AppPixRouteWithChildren
   AppPrivacidadeRoute: typeof AppPrivacidadeRoute
   AppRecargasRoute: typeof AppRecargasRoute
+  AppSaldoRoute: typeof AppSaldoRoute
   AppSaquesRoute: typeof AppSaquesRoute
   AppSegurancaRoute: typeof AppSegurancaRoute
   AppServicosRoute: typeof AppServicosRoute
@@ -746,6 +766,7 @@ const AppRouteChildren: AppRouteChildren = {
   AppPixRoute: AppPixRouteWithChildren,
   AppPrivacidadeRoute: AppPrivacidadeRoute,
   AppRecargasRoute: AppRecargasRoute,
+  AppSaldoRoute: AppSaldoRoute,
   AppSaquesRoute: AppSaquesRoute,
   AppSegurancaRoute: AppSegurancaRoute,
   AppServicosRoute: AppServicosRoute,
