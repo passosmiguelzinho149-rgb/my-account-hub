@@ -1,6 +1,6 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ChangeEvent } from "react";
-import { ChevronRight, Camera, LogOut } from "lucide-react";
+import { Building2, Camera, ChevronRight, FileText, LogOut, UserRound, WalletCards } from "lucide-react";
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { account } from "@/lib/mock-data";
 import { useSession } from "@/lib/session";
@@ -18,9 +18,9 @@ export const Route = createFileRoute("/app/perfil")({
 });
 
 const dataCards = [
-  { slug: "dados-pessoais", label: "Dados pessoais" },
-  { slug: "dados-da-empresa", label: "Dados da empresa" },
-  { slug: "dados-da-conta", label: "Dados da conta" },
+  { slug: "dados-pessoais", label: "Dados pessoais", icon: UserRound },
+  { slug: "dados-da-empresa", label: "Dados da empresa", icon: FileText },
+  { slug: "dados-da-conta", label: "Dados da conta", icon: WalletCards },
 ] as const;
 
 const menuItems = [
@@ -55,75 +55,60 @@ function PerfilScreen() {
   const handleSignOut = () => { signOut(); void navigate({ to: "/", replace: true }); };
 
   return (
-    <>
+    <div className="min-h-full bg-[#f4f4f2]">
       <BrandHeader>
-        <div className="px-4 pb-14">
-          <div className="flex items-center gap-3">
+        <div className="px-5 pb-16 pt-2">
+          <div className="flex items-center gap-4 border-b border-white/25 pb-6">
             <button type="button" onClick={() => fileInputRef.current?.click()} className="relative shrink-0" aria-label="Alterar foto do perfil">
-              {profilePhoto ? <img src={profilePhoto} alt="Foto do perfil" className="size-16 rounded-full border-2 border-white/70 object-cover" /> : <span className="grid size-16 place-items-center rounded-full bg-primary-foreground/20 text-lg font-bold">CO</span>}
-              <span className="absolute -right-1 -bottom-1 grid size-7 place-items-center rounded-full bg-card text-brand-red shadow"><Camera className="size-4" aria-hidden /></span>
+              {profilePhoto ? <img src={profilePhoto} alt="Foto do perfil" className="size-14 rounded-xl border border-white/30 object-cover" /> : <span className="grid size-14 place-items-center rounded-xl border border-white/25 bg-white/10"><UserRound className="size-7 text-white/80" /></span>}
+              <span className="absolute -bottom-1 -right-1 grid size-6 place-items-center rounded-full bg-white text-[#293d91] shadow"><Camera className="size-3.5" aria-hidden /></span>
               <input ref={fileInputRef} type="file" accept="image/*" onChange={handlePhoto} className="hidden" />
             </button>
-            <div className="min-w-0"><h1 className="text-base font-bold break-words">{account.holder}</h1><p className="text-sm break-words opacity-90">{account.company}</p><p className="text-sm opacity-90">CNPJ: {account.cnpj}</p></div>
+            <div className="min-w-0 text-white">
+              <h1 className="truncate text-[17px] font-bold uppercase tracking-wide">{account.holder}</h1>
+              <p className="mt-1 truncate text-[13px] font-medium text-white/85">{account.company}</p>
+              <p className="mt-1 text-[12px] text-white/75">CNPJ: {account.cnpj}</p>
+            </div>
           </div>
         </div>
       </BrandHeader>
-      <main className="mx-auto w-full max-w-[430px] px-4 pb-6 pt-2">
-        <ul className="grid grid-cols-3 gap-2">
-          {dataCards.map((c) => (
-            <li key={c.slug}>
-              <Link
-                to="/app/conta/$slug"
-                params={{ slug: c.slug }}
-                className="flex min-h-[92px] w-full items-center justify-center rounded-xl bg-card px-1.5 py-3 text-center text-[12px] font-medium leading-snug text-balance hyphens-none shadow-card"
-              >
-                {c.label}
+
+      <main className="mx-auto w-full max-w-[430px] px-4 pb-8">
+        <ul className="-mt-11 grid grid-cols-3 gap-2.5">
+          {dataCards.map((c) => {
+            const Icon = c.icon;
+            return <li key={c.slug}>
+              <Link to="/app/conta/$slug" params={{ slug: c.slug }} className="flex min-h-[142px] w-full flex-col items-start justify-center rounded-[14px] bg-white px-4 py-4 text-left shadow-[0_7px_18px_rgba(20,30,60,.16)]">
+                <Icon className="mb-4 size-7 text-[#6c7182]" strokeWidth={1.35} />
+                <span className="text-[16px] leading-tight text-[#33343a]">{c.label}</span>
               </Link>
-            </li>
-          ))}
+            </li>;
+          })}
         </ul>
-        <nav className="mt-5 overflow-hidden rounded-xl bg-card shadow-card">
-          <ul className="divide-y divide-border">
+
+        <nav className="mt-10 overflow-hidden rounded-[18px] bg-white px-5 shadow-[0_7px_22px_rgba(30,35,55,.12)]">
+          <ul className="divide-y divide-[#e5e5e5]">
             {menuItems.map((item) => (
               <li key={item.slug}>
-                {
-                  "dedicated" in item ? (
-                    <Link
-                      to={item.dedicated}
-                      className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 text-[15px] leading-snug"
-                    >
-                      <span className="min-w-0 break-words">{item.label}</span>
-                      <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
-                    </Link>
-                  ) : (
-                    <Link
-                      to="/app/conta/$slug"
-                      params={{ slug: item.slug }}
-                      className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 text-[15px] leading-snug"
-                    >
-                      <span className="min-w-0 break-words">{item.label}</span>
-                      <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
-                    </Link>
-                  )
-                }
+                {"dedicated" in item ? (
+                  <Link to={item.dedicated} className="grid min-h-[84px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-[17px] text-[#292a2f]">
+                    <span className="min-w-0">{item.label}</span><ChevronRight className="size-6 shrink-0 text-[#365ac8]" strokeWidth={1.7} />
+                  </Link>
+                ) : (
+                  <Link to="/app/conta/$slug" params={{ slug: item.slug }} className="grid min-h-[84px] grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-[17px] text-[#292a2f]">
+                    <span className="min-w-0">{item.label}</span><ChevronRight className="size-6 shrink-0 text-[#365ac8]" strokeWidth={1.7} />
+                  </Link>
+                )}
               </li>
             ))}
             <li>
-              <button
-                type="button"
-                onClick={handleSignOut}
-                className="grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-3 px-4 py-4 text-left text-[15px] leading-snug"
-              >
-                <span className="flex min-w-0 items-center gap-2 font-medium text-brand-red">
-                  <LogOut className="size-5 shrink-0" aria-hidden />
-                  Sair
-                </span>
-                <ChevronRight className="size-5 shrink-0 text-brand-red" aria-hidden />
+              <button type="button" onClick={handleSignOut} className="grid min-h-[84px] w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-3 text-left text-[17px] text-[#292a2f]">
+                <span>Sair</span><ChevronRight className="size-6 shrink-0 text-[#365ac8]" strokeWidth={1.7} />
               </button>
             </li>
           </ul>
         </nav>
       </main>
-    </>
+    </div>
   );
 }
