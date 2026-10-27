@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Eye, Search, Share2, ShieldCheck, SlidersHorizontal } from "lucide-react";
+import { Eye, EyeOff, Search, Share2, ShieldCheck, SlidersHorizontal } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { formatBRL } from "@/lib/mock-data";
@@ -16,7 +16,7 @@ const pixEmitido: Tx = { id: "pix-emitido-outra-if-mesma-tit-20261002", category
 type Tab = "todos" | "entradas" | "saidas" | "futuros";
 
 function ExtratoScreen() {
-  const { balanceHidden } = useSession();
+  const { balanceHidden, toggleBalance } = useSession();
   const { transactions } = useBank();
   const balance = useBalance() - PIX_VALUE;
   const [period, setPeriod] = useState<number | null>(null);
@@ -42,7 +42,7 @@ function ExtratoScreen() {
 
   return <div className="min-h-full bg-[#151f70]">
     <div className="bg-[radial-gradient(circle_at_82%_15%,rgba(69,75,176,.48),transparent_35%),linear-gradient(145deg,#101a61_0%,#17247d_52%,#111958_100%)]">
-      <SubHeader title="Extrato" variant="deep" compactActions><div className="px-5 pb-10 pt-4"><div className="rounded-[16px] border border-white/[.04] bg-[#29327f]/80 px-5 py-5 shadow-[0_10px_26px_rgba(5,10,55,.24)]"><div className="flex items-center justify-between gap-4"><div className="min-w-0"><p className="text-[16px] font-medium text-white/95">Saldo disponível</p><div className="mt-2 flex items-center gap-3"><p className="text-[18px] font-bold text-white">{balanceHidden ? "R$ ••••••••" : formatBRL(balance)}</p><Eye className="size-5 text-white/85" /></div></div><button type="button" className="shrink-0 text-[15px] font-semibold text-white underline underline-offset-2">Ver detalhes</button></div></div><div className="mt-4 rounded-[16px] border border-white/[.04] bg-[#263078]/75 px-5 py-5 shadow-[0_10px_26px_rgba(5,10,55,.20)]"><p className="text-[17px] font-bold leading-snug text-white">O que achou dessa experiência?</p><p className="mt-1 text-[16px] font-semibold text-white/95">Sua opinião é importante.</p><button type="button" className="mt-4 text-[17px] font-bold text-white underline underline-offset-4">Avaliar ›</button></div></div></SubHeader>
+      <SubHeader title="Extrato" variant="deep" compactActions><div className="px-5 pb-10 pt-4"><div className="rounded-[16px] border border-white/[.04] bg-[#29327f]/80 px-5 py-5 shadow-[0_10px_26px_rgba(5,10,55,.24)]"><div className="flex items-center justify-between gap-4"><div className="min-w-0"><p className="text-[16px] font-medium text-white/95">Saldo disponível</p><div className="mt-2 flex items-center gap-3"><p className="text-[18px] font-bold text-white">{balanceHidden ? "R$ ••••••••" : formatBRL(balance)}</p><button type="button" onClick={toggleBalance} aria-label={balanceHidden ? "Mostrar saldo" : "Ocultar saldo"} aria-pressed={balanceHidden} className="rounded-full p-1 text-white/85 transition hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70">{balanceHidden ? <EyeOff className="size-5" aria-hidden/> : <Eye className="size-5" aria-hidden/>}</button></div></div><button type="button" onClick={toggleBalance} className="shrink-0 text-[15px] font-semibold text-white underline underline-offset-2">{balanceHidden ? "Mostrar saldo" : "Ocultar saldo"}</button></div></div><div className="mt-4 rounded-[16px] border border-white/[.04] bg-[#263078]/75 px-5 py-5 shadow-[0_10px_26px_rgba(5,10,55,.20)]"><p className="text-[17px] font-bold leading-snug text-white">O que achou dessa experiência?</p><p className="mt-1 text-[16px] font-semibold text-white/95">Sua opinião é importante.</p><button type="button" className="mt-4 text-[17px] font-bold text-white underline underline-offset-4">Avaliar ›</button></div></div></SubHeader>
     </div>
     <main className="-mt-1 min-h-[70vh] rounded-t-[28px] bg-white px-4 pb-28 pt-4 shadow-[0_-7px_22px_rgba(15,20,70,.16)]">
       <div className="mx-auto mb-5 h-1 w-12 rounded-full bg-[#d7d7da]" />
