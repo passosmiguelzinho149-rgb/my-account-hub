@@ -12,7 +12,7 @@ import {
   Wifi,
 } from "lucide-react";
 import { SubHeader } from "@/components/app/SubHeader";
-import { ConfirmPanel, ErrorNote, Field, PrimaryButton } from "@/components/app/OpKit";
+import { ErrorNote, Field, PrimaryButton } from "@/components/app/OpKit";
 import {
   setCardLimit,
   toggleCardBlock,
@@ -213,7 +213,7 @@ function CartoesScreen() {
           </button>
         </section>
 
-        {error ? <ErrorNote message={error} /> : null}
+        {error ? <ErrorNote>{error}</ErrorNote> : null}
 
         {panel.name === "limite" ? (
           <section className="mt-4 rounded-2xl bg-card p-5 shadow-card">
