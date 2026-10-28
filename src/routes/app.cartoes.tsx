@@ -48,6 +48,11 @@ const tones = [
   "from-[#2537a6] via-[#3d348b] to-[#b01954]",
 ] as const;
 
+// No plástico cabe menos texto: primeiro + último nome.
+const nameParts = account.holder.split(" ").filter(Boolean);
+const cardHolder =
+  nameParts.length > 2 ? `${nameParts[0]} ${nameParts[nameParts.length - 1]}` : account.holder;
+
 type Panel = { name: "none" } | { name: "limite" } | { name: "bloqueio" };
 
 function CartoesScreen() {
@@ -113,7 +118,7 @@ function CartoesScreen() {
                 </div>
                 <div className="absolute inset-x-5 bottom-5 flex items-end justify-between">
                   <div>
-                    <p className="text-lg font-bold">{account.holder}</p>
+                    <p className="text-lg font-bold">{cardHolder}</p>
                     <p className="text-sm">
                       {c.label} · {c.brand}
                     </p>
