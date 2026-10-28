@@ -230,20 +230,31 @@ function CartoesScreen() {
         ) : null}
 
         {panel.name === "bloqueio" ? (
-          <ConfirmPanel
-            title={card.blocked ? "Desbloquear cartão" : "Bloquear cartão"}
-            description={
-              card.blocked
+          <section className="mt-4 rounded-2xl bg-card p-5 shadow-card">
+            <h3 className="text-[16px] font-bold">
+              {card.blocked ? "Desbloquear cartão" : "Bloquear cartão"}
+            </h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              {card.blocked
                 ? `O ${card.label} final ${card.last4} voltará a poder ser usado nesta demonstração.`
-                : `O ${card.label} final ${card.last4} ficará impedido de novas compras nesta demonstração. Você pode desbloquear quando quiser.`
-            }
-            confirmLabel={card.blocked ? "Sim, desbloquear" : "Sim, bloquear"}
-            onConfirm={() => {
-              toggleCardBlock(card.id);
-              setPanel({ name: "none" });
-            }}
-            onCancel={() => setPanel({ name: "none" })}
-          />
+                : `O ${card.label} final ${card.last4} ficará impedido de novas compras nesta demonstração. Você pode desbloquear quando quiser.`}
+            </p>
+            <PrimaryButton
+              onClick={() => {
+                toggleCardBlock(card.id);
+                setPanel({ name: "none" });
+              }}
+            >
+              {card.blocked ? "Sim, desbloquear" : "Sim, bloquear"}
+            </PrimaryButton>
+            <button
+              type="button"
+              onClick={() => setPanel({ name: "none" })}
+              className="mt-3 w-full rounded-full border border-border py-3.5 font-medium"
+            >
+              Cancelar
+            </button>
+          </section>
         ) : null}
 
         {showData ? (
