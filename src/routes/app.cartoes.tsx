@@ -223,7 +223,7 @@ function CartoesScreen() {
               inputMode="decimal"
               placeholder="Ex.: 50000,00"
               value={limitInput}
-              onChange={setLimitInput}
+              onChange={(e) => setLimitInput(e.target.value)}
             />
             <PrimaryButton onClick={submitLimit}>Salvar novo limite</PrimaryButton>
           </section>
