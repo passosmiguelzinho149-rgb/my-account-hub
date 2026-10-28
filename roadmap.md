@@ -6,4 +6,6 @@
 - [x] Transferências, Pagamentos, Recargas, Saques (fluxos demonstrativos)
 - [x] Modo privacidade opt-in (bloqueia ao sair do app) + Perfil arrumado no celular
 - [x] Acesso rápido arrastável para a esquerda (dedo e mouse) com setas e barra de progresso
-- [ ] Cartões completos, demais seções (Investimentos, Open Finance, Shop, etc.)
+- [x] Cartões completos (limite, bloqueio, fatura, dados do cartão)
+- [x] Open Finance com conexões e consentimentos simulados
+- [ ] Demais seções (Investimentos completo, Shop completo, etc.)
