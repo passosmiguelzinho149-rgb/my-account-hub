@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Bell, Fingerprint, Grid2X2, Lock, LockOpen, Menu, MessageCircle, X } from "lucide-react";
+import { Fingerprint, Lock, LockOpen, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSession } from "@/lib/session";
 import {
@@ -16,11 +16,7 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Acessar conta — Bradesco Empresas e Negócios (demo)" },
-      {
-        name: "description",
-        content:
-          "App Bradesco Empresas e Negócios: tela de acesso.",
-      },
+      { name: "description", content: "App Bradesco Empresas e Negócios: tela de acesso." },
     ],
   }),
   component: LoginScreen,
@@ -32,14 +28,6 @@ type Step =
   | { name: "bio" }
   | { name: "code"; code: string; method: AccessEntry["method"]; purpose: "login" | "unlock" };
 
-function maskedBranch(value: string) {
-  return value.length > 2 ? `**${value.slice(-2)}` : value;
-}
-
-function maskedAccount(value: string) {
-  return value.length > 3 ? `***${value.slice(-3)}` : value;
-}
-
 function LoginScreen() {
   const { signedIn, hydrated, signIn } = useSession();
   const security = useSecurity();
@@ -49,9 +37,11 @@ function LoginScreen() {
   const [typed, setTyped] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [faceRegistered, setFaceRegistered] = useState(false);
+  const [biometricAvailable, setBiometricAvailable] = useState(false);
 
   useEffect(() => {
     setFaceRegistered(window.localStorage.getItem("bradesco-demo-face-credential") === "1");
+    setBiometricAvailable(Boolean(window.PublicKeyCredential && navigator.credentials && window.isSecureContext));
   }, []);
 
   useEffect(() => {
@@ -79,9 +69,10 @@ function LoginScreen() {
 
   const biometric = async () => {
     if (security.locked) return setError("Conta bloqueada. Desbloqueie para entrar.");
-    if (!window.PublicKeyCredential || !navigator.credentials) {
-      return setError("A biometria facial não está disponível neste navegador ou aparelho.");
+    if (!window.PublicKeyCredential || !navigator.credentials || !window.isSecureContext) {
+      return setError("A biometria do aparelho não está disponível neste acesso. Use sua senha.");
     }
+
     try {
       setError(null);
       setStep({ name: "bio" });
@@ -115,6 +106,7 @@ function LoginScreen() {
               attestation: "none",
             },
           });
+
       if (!credential) throw new Error("Biometria não concluída.");
       if (!faceRegistered) {
         window.localStorage.setItem("bradesco-demo-face-credential", "1");
@@ -123,7 +115,7 @@ function LoginScreen() {
       finish("Biometria");
     } catch {
       setStep({ name: "home" });
-      setError("Não foi possível concluir a biometria. Tente novamente ou use sua senha.");
+      setError("Não foi possível confirmar a biometria do aparelho. Tente novamente ou use sua senha.");
     }
   };
 
@@ -143,10 +135,7 @@ function LoginScreen() {
 
   const startPin = () => {
     setError(null);
-    if (security.locked) {
-      setError("Desbloqueie a conta para entrar.");
-      return;
-    }
+    if (security.locked) return setError("Desbloqueie a conta para entrar.");
     setStep({ name: "pin" });
   };
 
@@ -161,8 +150,7 @@ function LoginScreen() {
     });
   };
 
-  const input =
-    "mt-2 w-full rounded-xl border border-border bg-card px-3 py-3 text-center text-2xl tracking-[0.5em] text-card-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary";
+  const input = "mt-2 w-full rounded-xl border border-border bg-card px-3 py-3 text-center text-2xl tracking-[0.5em] text-card-foreground outline-none focus-visible:ring-2 focus-visible:ring-primary";
 
   return (
     <div className="fixed inset-0 h-[100dvh] overflow-hidden bg-[#f4f4f4] text-foreground">
@@ -171,80 +159,60 @@ function LoginScreen() {
           <div className="absolute left-[10%] top-[30%] size-72 rounded-full border-[42px] border-white/10" />
           <div className="absolute -bottom-24 -right-16 size-80 rounded-full border-[50px] border-[#e81f4f]/40" />
         </div>
-
         <header className="relative flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img src="/bradesco-symbol.svg" alt="" className="size-10 object-contain" />
-            <div className="leading-tight">
-              <p className="text-xl font-bold">bradesco</p>
-              <p className="text-sm">empresas e negócios</p>
-            </div>
+            <div className="leading-tight"><p className="text-xl font-bold">bradesco</p><p className="text-sm">empresas e negócios</p></div>
           </div>
           <div className="flex items-center gap-3">
-            <button type="button" aria-label="Ajuda" className="grid size-10 place-items-center rounded-full hover:bg-white/10">
-              <span className="grid size-7 place-items-center rounded border border-white text-lg">?</span>
-            </button>
-            <button type="button" aria-label="Menu" className="grid size-10 place-items-center rounded-full hover:bg-white/10">
-              <Menu className="size-7" />
-            </button>
+            <button type="button" aria-label="Ajuda" className="grid size-10 place-items-center rounded-full hover:bg-white/10"><span className="grid size-7 place-items-center rounded border border-white text-lg">?</span></button>
+            <button type="button" aria-label="Menu" className="grid size-10 place-items-center rounded-full hover:bg-white/10"><Menu className="size-7" /></button>
           </div>
         </header>
-
-        <h1 className="relative mt-[clamp(7rem,23dvh,11rem)] max-w-[280px] text-[30px] font-extrabold leading-[1.08]">
-          Uma nova experiência para o seu negócio
-        </h1>
+        <h1 className="relative mt-[clamp(7rem,23dvh,11rem)] max-w-[280px] text-[30px] font-extrabold leading-[1.08]">Uma nova experiência para o seu negócio</h1>
       </section>
 
       <main className="absolute inset-x-0 top-[62dvh] z-10 mx-auto -translate-y-16 w-full max-w-md px-5 pb-[calc(1rem+env(safe-area-inset-bottom))]">
         {step.name === "home" && (
           <section className="rounded-sm bg-white p-5 shadow-[0_5px_18px_rgba(0,0,0,0.18)]">
             <div className="flex flex-wrap items-center gap-2 text-[20px]">
-              <span className="font-medium">CPF</span>
-              <strong>••• 151 •••</strong>
-              <button type="button" onClick={() => setError("Conta mantida neste acesso.")} className="ml-auto text-base text-muted-foreground">
-                Remover ↻
-              </button>
+              <span className="font-medium">CPF</span><strong>••• 151 •••</strong>
+              <button type="button" onClick={() => setError("Conta mantida neste acesso.")} className="ml-auto text-base text-muted-foreground">Remover ↻</button>
             </div>
-            <button type="button" onClick={startPin} className="mt-5 w-full rounded-md bg-[#3f3ba5] py-3.5 text-lg font-bold text-white shadow">
-              Acessar conta
+            <button type="button" onClick={startPin} className="mt-5 w-full rounded-md bg-[#3f3ba5] py-3.5 text-lg font-bold text-white shadow">Acessar com senha</button>
+            <button type="button" onClick={() => void biometric()} disabled={!biometricAvailable} className="mt-3 flex w-full items-center justify-center gap-2 rounded-md border border-[#3f3ba5] bg-white py-3.5 text-base font-bold text-[#3f3ba5] disabled:cursor-not-allowed disabled:opacity-45">
+              <Fingerprint className="size-6" />
+              {faceRegistered ? "Entrar com biometria" : "Ativar biometria do celular"}
             </button>
           </section>
         )}
 
         {step.name === "pin" && (
           <form className="rounded-xl bg-white p-5 shadow-xl" onSubmit={(e) => { e.preventDefault(); submitPin(); }}>
-            <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold">Digite sua senha</h2>
-              <button type="button" onClick={() => setStep({ name: "home" })}><X className="size-5" /></button>
-            </div>
-            <input type="password" inputMode="numeric" autoFocus maxLength={6} value={pin} onChange={(e) => setPin(e.target.value.replace(/\\D/g, ""))} className={input} />
+            <div className="flex items-center justify-between"><h2 className="text-lg font-bold">Digite sua senha</h2><button type="button" onClick={() => setStep({ name: "home" })}><X className="size-5" /></button></div>
+            <input type="password" inputMode="numeric" autoFocus maxLength={6} value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} className={input} />
             <button type="submit" className="mt-4 w-full rounded-md bg-[#3f3ba5] py-3.5 font-bold text-white">Continuar</button>
           </form>
         )}
 
         {step.name === "bio" && (
-          <div className="rounded-xl bg-white p-7 text-center shadow-xl">
-            <Fingerprint className="mx-auto size-14 animate-pulse text-primary" />
-            <p className="mt-3 font-semibold">Lendo biometria…</p>
-          </div>
+          <div className="rounded-xl bg-white p-7 text-center shadow-xl"><Fingerprint className="mx-auto size-14 animate-pulse text-primary" /><p className="mt-3 font-semibold">Confirme usando a biometria do celular…</p></div>
         )}
 
         {step.name === "code" && (
           <form className="rounded-xl bg-white p-5 shadow-xl" onSubmit={(e) => { e.preventDefault(); submitCode(); }}>
             <h2 className="text-lg font-bold">{step.purpose === "unlock" ? "Desbloquear conta" : "Chave de segurança"}</h2>
             <p className="mt-2 rounded-lg bg-secondary p-3 text-sm">Código de verificação: <strong>{step.code}</strong></p>
-            <input inputMode="numeric" autoFocus maxLength={6} value={typed} onChange={(e) => setTyped(e.target.value.replace(/\\D/g, ""))} className={input} />
+            <input inputMode="numeric" autoFocus maxLength={6} value={typed} onChange={(e) => setTyped(e.target.value.replace(/\D/g, ""))} className={input} />
             <button type="submit" className="mt-4 w-full rounded-md bg-[#3f3ba5] py-3.5 font-bold text-white">Confirmar</button>
           </form>
         )}
 
         {error && <p role="alert" className="mt-4 text-center text-sm font-medium text-destructive">{error}</p>}
-
         <button type="button" onClick={securityAction} className="mt-[clamp(2rem,8dvh,5rem)] flex w-full items-center justify-center gap-3 rounded-lg border border-[#3f3ba5] bg-white py-4 font-semibold text-[#3f3ba5]">
-          {security.locked ? <LockOpen className="size-6" /> : <Lock className="size-6" />}
-          Chave de segurança
+          {security.locked ? <LockOpen className="size-6" /> : <Lock className="size-6" />} Chave de segurança
         </button>
-
       </main>
     </div>
-  );}
+  );
+}
