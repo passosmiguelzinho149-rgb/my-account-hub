@@ -10,10 +10,9 @@ import {
 
 /**
  * Estado global do aplicativo.
- * - `signedIn`: sessão atual; não é persistida após fechar o app.
+ * - `signedIn`: persiste somente durante a aba/sessão atual para que um refresh
+ *   mantenha o usuário na mesma rota. Ao fechar a aba/app, o acesso é solicitado novamente.
  * - `balanceHidden`: estado do "olho" do saldo, compartilhado por TODAS as telas.
- * Persistido em localStorage e lido apenas após a hidratação para evitar
- * divergência entre o HTML do servidor e o do cliente.
  */
 interface SessionState {
   hydrated: boolean;
@@ -25,6 +24,7 @@ interface SessionState {
 }
 
 const STORAGE_KEY = "conta-empresas-preferences";
+const AUTH_SESSION_KEY = "conta-empresas-authenticated";
 
 const SessionContext = createContext<SessionState | null>(null);
 
@@ -45,6 +45,14 @@ function readStored(): StoredSession | null {
   }
 }
 
+function readAuthenticatedSession(): boolean {
+  try {
+    return window.sessionStorage.getItem(AUTH_SESSION_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
 export function SessionProvider({ children }: { children: ReactNode }) {
   const [hydrated, setHydrated] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
@@ -55,6 +63,7 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     if (stored) {
       setBalanceHidden(stored.balanceHidden);
     }
+    setSignedIn(readAuthenticatedSession());
     setHydrated(true);
   }, []);
 
@@ -67,8 +76,24 @@ export function SessionProvider({ children }: { children: ReactNode }) {
     }
   }, [hydrated, balanceHidden]);
 
-  const signIn = useCallback(() => setSignedIn(true), []);
-  const signOut = useCallback(() => setSignedIn(false), []);
+  const signIn = useCallback(() => {
+    setSignedIn(true);
+    try {
+      window.sessionStorage.setItem(AUTH_SESSION_KEY, "1");
+    } catch {
+      /* sem sessionStorage, mantém somente em memória */
+    }
+  }, []);
+
+  const signOut = useCallback(() => {
+    setSignedIn(false);
+    try {
+      window.sessionStorage.removeItem(AUTH_SESSION_KEY);
+    } catch {
+      /* sem sessionStorage, mantém somente em memória */
+    }
+  }, []);
+
   const toggleBalance = useCallback(() => setBalanceHidden((v) => !v), []);
 
   const value = useMemo<SessionState>(
