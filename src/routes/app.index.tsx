@@ -105,7 +105,15 @@ function HomeScreen() {
           <section className="mt-6">
             <h2 className="text-[19px] font-bold">Soluções para sua empresa</h2>
             <Link to="/app/pix" className="mt-3 block w-full overflow-hidden rounded-[24px] bg-card shadow-card">
-              <img src={pixMulher} alt="Pix: pague, receba e transfira a qualquer hora do dia" className="block h-auto w-full" loading="eager" decoding="sync" />
+              <div className="relative h-[152px] w-full overflow-hidden bg-[#f4f4f4] sm:h-[160px]">
+                <img
+                  src={pixMulher}
+                  alt="Pix: pague, receba e transfira a qualquer hora do dia"
+                  className="absolute inset-0 h-full w-full object-cover object-left-center"
+                  loading="eager"
+                  decoding="sync"
+                />
+              </div>
             </Link>
             <div className="mt-3 flex justify-center"><span className="h-1.5 w-[48px] rounded-full bg-[#2745bd]" /></div>
           </section>
