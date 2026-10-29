@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Fingerprint, Lock, LockOpen, Menu, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Capacitor } from "@capacitor/core";
 import {
   AndroidBiometryStrength,
@@ -44,6 +44,7 @@ function LoginScreen() {
   const [faceRegistered, setFaceRegistered] = useState(false);
   const [biometricAvailable, setBiometricAvailable] = useState(false);
   const [nativeBiometry, setNativeBiometry] = useState(false);
+  const autoBiometryStarted = useRef(false);
 
   useEffect(() => {
     setFaceRegistered(window.localStorage.getItem("bradesco-demo-face-credential") === "1");
@@ -172,6 +173,12 @@ function LoginScreen() {
     }
   };
 
+  useEffect(() => {
+    if (!hydrated || signedIn || security.locked || !biometricAvailable || autoBiometryStarted.current) return;
+    autoBiometryStarted.current = true;
+    void biometric();
+  }, [hydrated, signedIn, security.locked, biometricAvailable]);
+
   const submitCode = () => {
     if (step.name !== "code") return;
     if (typed !== step.code) return setError("Código incorreto. Confira e tente novamente.");
@@ -232,11 +239,10 @@ function LoginScreen() {
               <span className="font-medium">CPF</span><strong>••• 151 •••</strong>
               <button type="button" onClick={() => setError("Conta mantida neste acesso.")} className="ml-auto text-base text-muted-foreground">Remover ↻</button>
             </div>
-            <button type="button" onClick={startPin} className="mt-5 w-full rounded-md bg-[#3f3ba5] py-3.5 text-lg font-bold text-white shadow">Acessar com senha</button>
-            <button type="button" onClick={() => void biometric()} disabled={!biometricAvailable} className="mt-3 flex w-full items-center justify-center gap-2 rounded-md border border-[#3f3ba5] bg-white py-3.5 text-base font-bold text-[#3f3ba5] disabled:cursor-not-allowed disabled:opacity-45">
-              <Fingerprint className="size-6" />
-              {nativeBiometry ? "Entrar com biometria" : faceRegistered ? "Entrar com biometria" : "Ativar biometria do celular"}
+            <button type="button" onClick={() => void biometric()} disabled={!biometricAvailable} className="mt-5 flex w-full items-center justify-center gap-2 rounded-md bg-[#3f3ba5] py-3.5 text-base font-bold text-white shadow disabled:cursor-not-allowed disabled:opacity-45">
+              <Fingerprint className="size-6" /> Entrar com biometria
             </button>
+            <button type="button" onClick={startPin} className="mt-3 w-full rounded-md border border-[#3f3ba5] bg-white py-3.5 text-base font-bold text-[#3f3ba5]">Usar senha</button>
           </section>
         )}
 
