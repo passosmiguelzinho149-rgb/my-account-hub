@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Protótipo de demonstração do app Bradesco Empresas e Negócios: tela de acesso inspirada no aplicativo móvel.",
+          "App Bradesco Empresas e Negócios: tela de acesso.",
       },
     ],
   }),
@@ -96,7 +96,7 @@ function LoginScreen() {
         : await navigator.credentials.create({
             publicKey: {
               challenge: crypto.getRandomValues(new Uint8Array(32)),
-              rp: { name: "Conta Empresas — Demonstração" },
+              rp: { name: "Conta Empresas" },
               user: {
                 id: crypto.getRandomValues(new Uint8Array(16)),
                 name: account.holder.toLowerCase().replace(/\s+/g, "."),
@@ -232,7 +232,7 @@ function LoginScreen() {
         {step.name === "code" && (
           <form className="rounded-xl bg-white p-5 shadow-xl" onSubmit={(e) => { e.preventDefault(); submitCode(); }}>
             <h2 className="text-lg font-bold">{step.purpose === "unlock" ? "Desbloquear conta" : "Chave de segurança"}</h2>
-            <p className="mt-2 rounded-lg bg-secondary p-3 text-sm">Código simulado: <strong>{step.code}</strong></p>
+            <p className="mt-2 rounded-lg bg-secondary p-3 text-sm">Código de verificação: <strong>{step.code}</strong></p>
             <input inputMode="numeric" autoFocus maxLength={6} value={typed} onChange={(e) => setTyped(e.target.value.replace(/\\D/g, ""))} className={input} />
             <button type="submit" className="mt-4 w-full rounded-md bg-[#3f3ba5] py-3.5 font-bold text-white">Confirmar</button>
           </form>

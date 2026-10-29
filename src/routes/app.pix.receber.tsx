@@ -12,7 +12,7 @@ export const Route = createFileRoute("/app/pix/receber")({
       { title: "Receber Pix — Conta Empresas (demo)" },
       {
         name: "description",
-        content: "Gere um QR Code e o código copia e cola para receber Pix nesta demonstração.",
+        content: "Gere um QR Code e o código copia e cola para receber Pix.",
       },
       { property: "og:title", content: "Receber Pix — Conta Empresas (demo)" },
       {
@@ -49,7 +49,7 @@ function ReceberPix() {
   const simulatePayment = () => {
     const payer = {
       ...ownParty,
-      name: "PAGADOR DA DEMONSTRAÇÃO",
+      name: "PAGADOR EXTERNO",
       doc: "123.456.789-00",
       bank: "260 — Nu Pagamentos S.A.",
       branch: "0001",
@@ -108,7 +108,7 @@ function ReceberPix() {
           <div
             className="mx-auto mt-3 grid size-44 grid-cols-11 gap-0.5 rounded-lg bg-background p-2"
             role="img"
-            aria-label="QR Code de demonstração"
+            aria-label="QR Code de recebimento"
           >
             {Array.from({ length: 121 }, (_, i) => (
               <span
@@ -145,7 +145,7 @@ function ReceberPix() {
         </button>
 
         <p className="mt-6 text-xs text-muted-foreground">
-          QR Code ilustrativo desta demonstração: não pode ser lido por outros aplicativos.
+          Apresente o QR Code ou envie o código copia e cola para quem vai pagar.
         </p>
       </main>
     </>

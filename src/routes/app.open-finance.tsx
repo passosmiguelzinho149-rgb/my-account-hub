@@ -15,12 +15,12 @@ export const Route = createFileRoute("/app/open-finance")({
       {
         name: "description",
         content:
-          "Demonstração de Open Finance: conexões e consentimentos simulados, sem compartilhamento real de dados.",
+          "Conexões e consentimentos de Open Finance em um só lugar.",
       },
       { property: "og:title", content: "Open Finance — Bradesco Empresas e Negócios (demo)" },
       {
         property: "og:description",
-        content: "Conexões e consentimentos simulados de Open Finance, sem dados reais.",
+        content: "Conexões e consentimentos de Open Finance.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -107,8 +107,7 @@ function OpenFinance() {
           </span>
           <h2 className="mt-4 text-xl font-bold">Suas finanças em um só lugar</h2>
           <p className="mt-2 text-sm text-muted-foreground">
-            Visualize uma demonstração de contas conectadas e consentimentos, sem conexão com
-            instituições reais.
+            Visualize suas contas conectadas e consentimentos em um só lugar.
           </p>
           {connections.length > 0 ? (
             <p className="mt-4 text-sm text-muted-foreground">
@@ -124,7 +123,7 @@ function OpenFinance() {
               <Building2 className="size-6 text-icon-ink" strokeWidth={1.6} />
               <div>
                 <p className="font-bold">Instituições conectadas</p>
-                <p className="text-xs text-muted-foreground">Nenhuma conexão real</p>
+                <p className="text-xs text-muted-foreground">Gerencie seus consentimentos</p>
               </div>
             </div>
             <span className="rounded-full bg-secondary px-3 py-1 text-xs font-bold text-primary">
@@ -165,14 +164,14 @@ function OpenFinance() {
               className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-3 font-bold text-primary-foreground"
             >
               <Plus className="size-5" />
-              Simular nova conexão
+              Conectar instituição
             </button>
           ) : null}
         </section>
 
         {picking && !consentFor ? (
           <section className="mt-3 rounded-2xl bg-card p-4 shadow-sm">
-            <h3 className="text-[16px] font-bold">Escolha uma instituição fictícia</h3>
+            <h3 className="text-[16px] font-bold">Escolha uma instituição</h3>
             <div className="mt-3 space-y-2">
               {remaining.map((a) => (
                 <button
@@ -194,17 +193,14 @@ function OpenFinance() {
 
         {consentFor ? (
           <section className="mt-3 rounded-2xl bg-card p-5 shadow-sm">
-            <h3 className="text-[16px] font-bold">Consentimento simulado</h3>
+            <h3 className="text-[16px] font-bold">Consentimento</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              Você autorizaria <strong>{consentFor.name}</strong> a compartilhar, por 12 meses:
+              Você autoriza <strong>{consentFor.name}</strong> a compartilhar, por 12 meses:
             </p>
             <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
               <li>Saldo e movimentações da conta</li>
               <li>Dados cadastrais da empresa</li>
             </ul>
-            <p className="mt-3 rounded-lg bg-secondary p-3 text-xs text-muted-foreground">
-              Demonstração: nenhum dado sai do aparelho e nenhuma instituição real é contatada.
-            </p>
             <PrimaryButton onClick={confirmConsent}>Autorizar compartilhamento</PrimaryButton>
             <button
               type="button"
@@ -216,10 +212,6 @@ function OpenFinance() {
           </section>
         ) : null}
 
-        <div className="mt-3 flex gap-3 rounded-xl border border-border bg-card p-4 text-sm">
-          <ShieldCheck className="size-6 shrink-0 text-icon-ink" strokeWidth={1.6} />
-          <p>Área demonstrativa. Nenhum consentimento ou dado financeiro é compartilhado com terceiros.</p>
-        </div>
       </main>
     </>
   );

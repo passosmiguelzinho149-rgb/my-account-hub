@@ -64,7 +64,7 @@ function Seguranca() {
         <section className="flex items-center gap-3 rounded-xl border border-border bg-card p-4 shadow-card">
           <div className="min-w-0 flex-1">
             <h2 className="font-semibold">Verificação em duas etapas</h2>
-            <p className="text-sm text-muted-foreground">Pede um código por SMS simulado a cada acesso.</p>
+            <p className="text-sm text-muted-foreground">Pede um código por SMS a cada acesso.</p>
           </div>
           <Switch checked={s.twoFactor} onCheckedChange={setTwoFactor} aria-label="Verificação em duas etapas" />
         </section>

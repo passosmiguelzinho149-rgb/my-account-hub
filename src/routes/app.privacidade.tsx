@@ -24,12 +24,12 @@ export const Route = createFileRoute("/app/privacidade")({
       {
         name: "description",
         content:
-          "Controles de consentimento de uso de dados e opção de apagar os dados da demonstração.",
+          "Controles de consentimento de uso de dados e opção de apagar os dados da conta.",
       },
       { property: "og:title", content: "Gerenciar dados e privacidade — Conta Empresas (demo)" },
       {
         property: "og:description",
-        content: "Controles de consentimento de uso de dados e exclusão de dados da demonstração.",
+        content: "Controles de consentimento de uso de dados e exclusão de dados da conta.",
       },
     ],
   }),
@@ -135,7 +135,7 @@ function PrivacidadeScreen() {
       <SubHeader title="Gerenciar dados e privacidade" fallbackTo="/app/perfil" />
       <main className="px-4 py-5">
         <p className="text-sm text-muted-foreground">
-          Controle como seus dados são usados nesta demonstração. As alterações são salvas
+          Controle como seus dados são usados nesta conta. As alterações são salvas
           automaticamente neste dispositivo.
         </p>
 
@@ -187,7 +187,7 @@ function PrivacidadeScreen() {
           </h2>
           <div className="rounded-xl bg-card p-4 shadow-card">
             <p className="text-sm text-muted-foreground">
-              Apaga todos os dados desta demonstração salvos no seu dispositivo, incluindo
+              Apaga todos os dados desta conta salvos no seu dispositivo, incluindo
               consentimentos e sessão. Esta ação não pode ser desfeita.
             </p>
             <AlertDialog>
@@ -204,7 +204,7 @@ function PrivacidadeScreen() {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Apagar todos os dados?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    Todos os dados desta demonstração serão removidos deste dispositivo e você
+                    Todos os dados desta conta serão removidos deste dispositivo e você
                     voltará para a tela de login. Esta ação não pode ser desfeita.
                   </AlertDialogDescription>
                 </AlertDialogHeader>

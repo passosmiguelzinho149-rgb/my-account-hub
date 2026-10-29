@@ -12,7 +12,7 @@ export const Route = createFileRoute("/app/comprovantes")({
       { title: "Comprovantes — Conta Empresas (demo)" },
       {
         name: "description",
-        content: "Todos os comprovantes de Pix, pagamentos, transferências e compras da demonstração.",
+        content: "Todos os comprovantes de Pix, pagamentos, transferências e compras.",
       },
       { property: "og:title", content: "Comprovantes — Conta Empresas (demo)" },
       { property: "og:description", content: "Comprovantes de Pix, pagamentos e transferências." },

@@ -9,9 +9,9 @@ export const Route = createFileRoute("/app/investimentos")({
   head: () => ({
     meta: [
       { title: "Investimentos · Bradesco Empresas (simulação)" },
-      { name: "description", content: "Visão consolidada da carteira de investimentos empresariais em ambiente simulado." },
+      { name: "description", content: "Visão consolidada da carteira de investimentos empresariais." },
       { property: "og:title", content: "Investimentos · Bradesco Empresas (simulação)" },
-      { property: "og:description", content: "Visão consolidada da carteira de investimentos empresariais em ambiente simulado." },
+      { property: "og:description", content: "Visão consolidada da carteira de investimentos empresariais." },
     ],
   }),
 });
@@ -37,7 +37,7 @@ function Investimentos() {
             height={1024}
           />
           <div className="p-5">
-            <p className="text-sm text-muted-foreground">Patrimônio simulado</p>
+            <p className="text-sm text-muted-foreground">Patrimônio investido</p>
             <p className="mt-1 text-3xl font-extrabold">{formatBRL(total)}</p>
             <div className="mt-3 flex items-center gap-2 text-sm text-icon-ink">
               <ServiceGlyph slug="investimentos" className="size-5" />

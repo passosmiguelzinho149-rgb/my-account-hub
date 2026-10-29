@@ -45,7 +45,7 @@ function NotasFiscais() {
         </div>
         <button type="button" onClick={() => abrir("Detalhes da nota")} className="mt-3 flex w-full items-start gap-3 rounded-xl border border-[#ececf0] bg-white p-4 text-left shadow-[0_4px_13px_rgba(35,42,85,.08)]">
           <PackageOpen className="mt-1 size-6 shrink-0 text-[#4a4b91]" />
-          <span className="min-w-0 flex-1"><span className="block font-medium text-[#292b3f]">Nota fiscal de demonstração</span><span className="mt-1 block text-sm text-[#77798a]">Documento fictício · sem valor fiscal</span></span>
+          <span className="min-w-0 flex-1"><span className="block font-medium text-[#292b3f]">Nota fiscal</span><span className="mt-1 block text-sm text-[#77798a]">Documento digital</span></span>
           <ChevronRight className="size-5 text-[#5369bd]" />
         </button>
 
@@ -57,15 +57,15 @@ function NotasFiscais() {
 
         <div className="mt-6 flex items-start gap-3 rounded-xl border border-[#e5e5eb] bg-white p-4 text-sm text-[#737586]">
           <ScrollText className="size-5 shrink-0 text-[#4a4b91]" />
-          <p>Portal fiscal em modo demonstração. Os botões funcionam dentro do protótipo, mas não enviam documentos para órgãos fiscais.</p>
+          <p>Portal fiscal da empresa. Emita e consulte seus documentos fiscais.</p>
         </div>
       </main>
 
       {painel && <div className="fixed inset-0 z-[80] flex items-end justify-center bg-[#17172b]/45 p-3" onClick={() => setPainel(null)}>
         <section onClick={(e) => e.stopPropagation()} className="w-full max-w-[430px] rounded-[24px] bg-white p-5 shadow-2xl">
-          <div className="flex items-center justify-between"><div><p className="text-xs font-semibold uppercase tracking-wide text-[#55569b]">Demonstração</p><h2 className="mt-1 text-xl font-bold text-[#292b3f]">{painel}</h2></div><button type="button" aria-label="Fechar" onClick={() => setPainel(null)} className="rounded-full bg-[#f0f0f4] p-2"><X className="size-5 text-[#41435c]"/></button></div>
+          <div className="flex items-center justify-between"><div><p className="text-xs font-semibold uppercase tracking-wide text-[#55569b]">Painel</p><h2 className="mt-1 text-xl font-bold text-[#292b3f]">{painel}</h2></div><button type="button" aria-label="Fechar" onClick={() => setPainel(null)} className="rounded-full bg-[#f0f0f4] p-2"><X className="size-5 text-[#41435c]"/></button></div>
           <div className="mt-5 rounded-xl bg-[#f1f2f8] p-4"><div className="flex gap-3"><CheckCircle2 className="size-6 shrink-0 text-[#4a55a7]"/><p className="text-sm leading-relaxed text-[#55586b]">Esta função está ativa para navegação e testes do projeto. Nenhuma nota fiscal real será emitida, transmitida ou cancelada.</p></div></div>
-          <label className="mt-5 flex items-start gap-3 text-sm text-[#3b3d50]"><input type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} className="mt-1 size-4 accent-[#343f9b]"/><span>Entendi que este ambiente é apenas uma demonstração.</span></label>
+          <label className="mt-5 flex items-start gap-3 text-sm text-[#3b3d50]"><input type="checkbox" checked={aceite} onChange={(e) => setAceite(e.target.checked)} className="mt-1 size-4 accent-[#343f9b]"/><span>Confirmo os dados para emissão.</span></label>
           <button type="button" disabled={!aceite} onClick={() => setPainel(null)} className="mt-5 w-full rounded-xl bg-[#303b94] px-4 py-3.5 font-semibold text-white disabled:cursor-not-allowed disabled:bg-[#d7d8df] disabled:text-[#8a8b96]">Continuar</button>
         </section>
       </div>}
