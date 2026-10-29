@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 300" role="img" aria-label="Mulher usando celular">
+  <defs><linearGradient id="bg" x1="0" x2="1"><stop stop-color="#eef5f7"/><stop offset="1" stop-color="#dce8ec"/></linearGradient></defs>
+  <rect width="420" height="300" fill="url(#bg)"/>
+  <rect x="22" y="25" width="54" height="190" rx="4" fill="#d1e0e5"/><rect x="88" y="25" width="54" height="190" rx="4" fill="#f7fafb"/><rect x="154" y="25" width="54" height="190" rx="4" fill="#d1e0e5"/>
+  <ellipse cx="244" cy="286" rx="145" ry="18" fill="#cbd8dc"/>
+  <path d="M154 282c8-73 29-111 75-126 48 9 78 46 87 126z" fill="#151c2a"/>
+  <ellipse cx="226" cy="105" rx="52" ry="61" fill="#e9b695"/>
+  <path d="M171 111c-3-52 17-86 59-87 45 0 66 38 55 95-8-21-17-44-42-56-21 25-45 34-72 48z" fill="#242027"/>
+  <path d="M180 91c3-50 27-70 54-69 37 2 58 31 54 81-15-28-34-46-57-51-12 18-28 31-51 39z" fill="#18171d"/>
+  <circle cx="207" cy="110" r="3.5" fill="#3c2b28"/><circle cx="246" cy="110" r="3.5" fill="#3c2b28"/>
+  <path d="M213 133c9 8 19 8 29 0" fill="none" stroke="#a95f59" stroke-width="3" stroke-linecap="round"/>
+  <path d="M191 180c18 16 47 17 67 0l20 102H170z" fill="#f1c7b1"/>
+  <path d="M153 282c7-61 25-98 55-116l18 116zM316 282c-6-61-24-98-54-116l-19 116z" fill="#171e2c"/>
+  <g transform="rotate(-8 252 219)"><rect x="229" y="174" width="48" height="82" rx="7" fill="#202a35"/><rect x="234" y="181" width="38" height="63" rx="3" fill="#8fb2c1"/><circle cx="253" cy="249" r="3" fill="#9ba6ad"/></g>
+  <path d="M205 220c15-13 27-17 39-12" fill="none" stroke="#e9b695" stroke-width="14" stroke-linecap="round"/><path d="M291 226c-16-10-27-13-38-7" fill="none" stroke="#e9b695" stroke-width="14" stroke-linecap="round"/>
+</svg>
