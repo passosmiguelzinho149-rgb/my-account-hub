@@ -22,19 +22,21 @@ function ServicosScreen() {
 
   return (
     <>
-      <BrandHeader />
-      <main className="mx-auto w-full max-w-[1180px] bg-white px-3 pb-7 pt-4 sm:px-5">
-        <div className="flex items-center justify-between gap-3 px-1">
+      <div className="bg-[#2638a8] text-white">
+        <BrandHeader />
+        <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between gap-3 px-4 pb-5 pt-2 sm:px-5">
           <div className="min-w-0">
-            <h1 className="text-[24px] font-bold tracking-[-0.02em] text-[#30343b] sm:text-[30px]">Serviços</h1>
+            <h1 className="text-[22px] font-bold tracking-[-0.02em] text-white sm:text-[28px]">Serviços</h1>
           </div>
-          <button type="button" onClick={() => setCustomizing((value) => !value)} className="inline-flex h-8 shrink-0 items-center gap-1 rounded-full border border-[#d7e0eb] bg-white px-2.5 text-[11px] font-semibold text-[#315c91] shadow-sm sm:h-9 sm:px-3 sm:text-xs">
+          <button type="button" onClick={() => setCustomizing((value) => !value)} className="inline-flex h-8 shrink-0 items-center gap-1 rounded-full border border-white/30 bg-white/15 px-2.5 text-[11px] font-semibold text-white shadow-sm backdrop-blur-sm sm:h-9 sm:px-3 sm:text-xs">
             {customizing ? <Check className="size-3.5" /> : <Settings2 className="size-3.5" />}
             {customizing ? "Concluir" : "Personalizar"}
           </button>
         </div>
+      </div>
 
-        {customizing && <section className="mt-3 rounded-xl border border-[#dce6f2] bg-[#f8fbff] p-2.5"><p className="text-xs text-[#5d6c7e]">Toque nos serviços para marcar ou desmarcar favoritos.</p></section>}
+      <main className="mx-auto w-full max-w-[1180px] bg-white px-3 pb-7 pt-4 sm:px-5">
+        {customizing && <section className="mt-1 rounded-xl border border-[#dce6f2] bg-[#f8fbff] p-2.5"><p className="text-xs text-[#5d6c7e]">Toque nos serviços para marcar ou desmarcar favoritos.</p></section>}
 
         <ul className="mt-4 grid grid-cols-4 gap-2 sm:gap-3">
           {services.map((s) => {
