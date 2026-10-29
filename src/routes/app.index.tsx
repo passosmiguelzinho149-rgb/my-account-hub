@@ -112,9 +112,9 @@ function HomeScreen() {
 
           <QuickAccessRail title="Acesso rápido" className="-mx-4 px-5">
             {quick.map((item) => (
-              <Link key={item.slug} to={item.to} className="flex min-h-[94px] w-[108px] shrink-0 snap-start flex-col items-start justify-center overflow-hidden rounded-[16px] bg-card px-3.5 shadow-card">
-                <ServiceGlyph slug={item.slug} className="size-7 shrink-0" />
-                <span className={`mt-2.5 block w-full font-medium leading-tight ${item.slug === "transferencias" ? "whitespace-nowrap text-[11px]" : "text-[12px]"}`}>{item.label}</span>
+              <Link key={item.slug} to={item.to} className="flex min-h-[88px] w-[102px] shrink-0 snap-start flex-col items-start justify-center overflow-hidden rounded-[15px] bg-card px-3 shadow-card">
+                <ServiceGlyph slug={item.slug} className="size-6 shrink-0" />
+                <span className={`mt-2 block w-full font-medium leading-tight ${item.slug === "transferencias" ? "whitespace-nowrap text-[10.5px]" : "text-[11.5px]"}`}>{item.label}</span>
               </Link>
             ))}
           </QuickAccessRail>
