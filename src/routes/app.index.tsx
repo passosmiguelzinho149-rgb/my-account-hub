@@ -111,38 +111,38 @@ function HomeScreen() {
         </BrandHeader>
 
         <main className="mx-auto w-full max-w-[430px] bg-background px-4 pb-8 pt-0">
-          <section className="relative -mt-4 z-10">
-            <div className="rounded-[20px] border border-black/[.04] bg-card px-4 py-4 shadow-[0_10px_24px_rgba(25,25,45,.1)]">
+          <section className="relative z-10 -mt-3 px-1">
+            <div className="rounded-[18px] border border-black/[.04] bg-card px-3.5 py-3.5 shadow-[0_8px_20px_rgba(25,25,45,.09)]">
               <div className="flex items-center justify-between gap-3">
-                <h2 className="text-[17px] font-medium tracking-[-0.02em]">Resumo diário</h2>
-                <span className="text-[11px] text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span>
+                <h2 className="text-[15px] font-medium tracking-[-0.02em]">Resumo diário</h2>
+                <span className="text-[10px] text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span>
               </div>
-              <dl className="mt-4 grid grid-cols-2">
-                <div className="pr-3">
-                  <dt className="flex items-center gap-2 text-[14px] text-muted-foreground">
-                    <ArrowUp className="size-5 text-income" strokeWidth={1.7} />
+              <dl className="mt-3 grid grid-cols-2">
+                <div className="pr-2.5">
+                  <dt className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
+                    <ArrowUp className="size-4 text-income" strokeWidth={1.7} />
                     Entradas
                   </dt>
-                  <dd className="ml-7 mt-1 text-[15px] font-medium tabular-nums">
+                  <dd className="ml-[22px] mt-1 text-[13px] font-medium tabular-nums">
                     {balanceHidden ? hiddenValue : formatBRL(inflow)}
                   </dd>
                 </div>
-                <div className="pl-3">
-                  <dt className="flex items-center gap-2 text-[14px] text-muted-foreground">
-                    <ArrowDown className="size-5 text-brand-red" strokeWidth={1.7} />
+                <div className="pl-2.5">
+                  <dt className="flex items-center gap-1.5 text-[12px] text-muted-foreground">
+                    <ArrowDown className="size-4 text-brand-red" strokeWidth={1.7} />
                     Saídas
                   </dt>
-                  <dd className="ml-7 mt-1 text-[15px] font-medium tabular-nums">
+                  <dd className="ml-[22px] mt-1 text-[13px] font-medium tabular-nums">
                     {balanceHidden ? hiddenValue : formatBRL(outflow)}
                   </dd>
                 </div>
               </dl>
               <Link
                 to="/app/extrato"
-                className="mt-5 inline-flex items-center text-[15px] font-medium text-[#3565d5] underline underline-offset-4"
+                className="mt-4 inline-flex items-center text-[13px] font-medium text-[#3565d5] underline underline-offset-4"
               >
                 Consultar extrato
-                <ChevronRight className="ml-1 size-5" />
+                <ChevronRight className="ml-1 size-4" />
               </Link>
             </div>
           </section>
