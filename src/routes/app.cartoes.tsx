@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/app/cartoes")({ head: () => ({ meta: [{ title: "Cartões — Conta Empresas Demo" }] }), component: CartoesScreen });
 
 const tones = ["from-[#e3133f] via-[#c91848] to-[#3d246e]", "from-[#2537a6] via-[#3d348b] to-[#b01954]"] as const;
-const cardHolder = "MARIA AUXILIADORA DE OLIVEIRA";
+const cardHolder = "CLEITON PASSOS";
 const demoNumbers = ["5321 6600 1234 5678", "5488 2100 9876 4321"] as const;
 type Panel = { name: "none" } | { name: "limite" } | { name: "bloqueio" };
 
