@@ -1,6 +1,11 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { Fingerprint, Lock, LockOpen, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Capacitor } from "@capacitor/core";
+import {
+  AndroidBiometryStrength,
+  BiometricAuth,
+} from "@aparajita/capacitor-biometric-auth";
 import { useSession } from "@/lib/session";
 import {
   checkPin,
@@ -38,10 +43,37 @@ function LoginScreen() {
   const [error, setError] = useState<string | null>(null);
   const [faceRegistered, setFaceRegistered] = useState(false);
   const [biometricAvailable, setBiometricAvailable] = useState(false);
+  const [nativeBiometry, setNativeBiometry] = useState(false);
 
   useEffect(() => {
     setFaceRegistered(window.localStorage.getItem("bradesco-demo-face-credential") === "1");
-    setBiometricAvailable(Boolean(window.PublicKeyCredential && navigator.credentials && window.isSecureContext));
+
+    let active = true;
+    const checkAvailability = async () => {
+      if (Capacitor.isNativePlatform()) {
+        try {
+          const info = await BiometricAuth.checkBiometry();
+          if (!active) return;
+          setNativeBiometry(true);
+          setBiometricAvailable(info.isAvailable);
+          return;
+        } catch {
+          if (!active) return;
+          setNativeBiometry(true);
+          setBiometricAvailable(false);
+          return;
+        }
+      }
+
+      if (!active) return;
+      setNativeBiometry(false);
+      setBiometricAvailable(Boolean(window.PublicKeyCredential && navigator.credentials && window.isSecureContext));
+    };
+
+    void checkAvailability();
+    return () => {
+      active = false;
+    };
   }, []);
 
   useEffect(() => {
@@ -67,55 +99,76 @@ function LoginScreen() {
     finish("Senha");
   };
 
+  const webBiometric = async () => {
+    if (!window.PublicKeyCredential || !navigator.credentials || !window.isSecureContext) {
+      throw new Error("Biometria web indisponível.");
+    }
+
+    const credential = faceRegistered
+      ? await navigator.credentials.get({
+          publicKey: {
+            challenge: crypto.getRandomValues(new Uint8Array(32)),
+            userVerification: "required",
+            timeout: 60000,
+          },
+        })
+      : await navigator.credentials.create({
+          publicKey: {
+            challenge: crypto.getRandomValues(new Uint8Array(32)),
+            rp: { name: "Conta Empresas" },
+            user: {
+              id: crypto.getRandomValues(new Uint8Array(16)),
+              name: account.holder.toLowerCase().replace(/\s+/g, "."),
+              displayName: account.holder,
+            },
+            pubKeyCredParams: [
+              { type: "public-key", alg: -7 },
+              { type: "public-key", alg: -257 },
+            ],
+            authenticatorSelection: {
+              authenticatorAttachment: "platform",
+              residentKey: "required",
+              userVerification: "required",
+            },
+            timeout: 60000,
+            attestation: "none",
+          },
+        });
+
+    if (!credential) throw new Error("Biometria não concluída.");
+    if (!faceRegistered) {
+      window.localStorage.setItem("bradesco-demo-face-credential", "1");
+      setFaceRegistered(true);
+    }
+  };
+
   const biometric = async () => {
     if (security.locked) return setError("Conta bloqueada. Desbloqueie para entrar.");
-    if (!window.PublicKeyCredential || !navigator.credentials || !window.isSecureContext) {
-      return setError("A biometria do aparelho não está disponível neste acesso. Use sua senha.");
-    }
+    if (!biometricAvailable) return setError("Nenhuma biometria disponível. Cadastre a biometria nas configurações do celular ou use sua senha.");
 
     try {
       setError(null);
       setStep({ name: "bio" });
-      const credential = faceRegistered
-        ? await navigator.credentials.get({
-            publicKey: {
-              challenge: crypto.getRandomValues(new Uint8Array(32)),
-              userVerification: "required",
-              timeout: 60000,
-            },
-          })
-        : await navigator.credentials.create({
-            publicKey: {
-              challenge: crypto.getRandomValues(new Uint8Array(32)),
-              rp: { name: "Conta Empresas" },
-              user: {
-                id: crypto.getRandomValues(new Uint8Array(16)),
-                name: account.holder.toLowerCase().replace(/\s+/g, "."),
-                displayName: account.holder,
-              },
-              pubKeyCredParams: [
-                { type: "public-key", alg: -7 },
-                { type: "public-key", alg: -257 },
-              ],
-              authenticatorSelection: {
-                authenticatorAttachment: "platform",
-                residentKey: "required",
-                userVerification: "required",
-              },
-              timeout: 60000,
-              attestation: "none",
-            },
-          });
 
-      if (!credential) throw new Error("Biometria não concluída.");
-      if (!faceRegistered) {
-        window.localStorage.setItem("bradesco-demo-face-credential", "1");
-        setFaceRegistered(true);
+      if (Capacitor.isNativePlatform()) {
+        await BiometricAuth.authenticate({
+          reason: "Confirme sua identidade para acessar o aplicativo",
+          cancelTitle: "Cancelar",
+          allowDeviceCredential: true,
+          iosFallbackTitle: "Usar código do aparelho",
+          androidTitle: "Acessar com biometria",
+          androidSubtitle: "Confirme sua identidade",
+          androidConfirmationRequired: false,
+          androidBiometryStrength: AndroidBiometryStrength.weak,
+        });
+      } else {
+        await webBiometric();
       }
+
       finish("Biometria");
     } catch {
       setStep({ name: "home" });
-      setError("Não foi possível confirmar a biometria do aparelho. Tente novamente ou use sua senha.");
+      setError("Não foi possível confirmar a biometria. Tente novamente ou use sua senha.");
     }
   };
 
@@ -182,7 +235,7 @@ function LoginScreen() {
             <button type="button" onClick={startPin} className="mt-5 w-full rounded-md bg-[#3f3ba5] py-3.5 text-lg font-bold text-white shadow">Acessar com senha</button>
             <button type="button" onClick={() => void biometric()} disabled={!biometricAvailable} className="mt-3 flex w-full items-center justify-center gap-2 rounded-md border border-[#3f3ba5] bg-white py-3.5 text-base font-bold text-[#3f3ba5] disabled:cursor-not-allowed disabled:opacity-45">
               <Fingerprint className="size-6" />
-              {faceRegistered ? "Entrar com biometria" : "Ativar biometria do celular"}
+              {nativeBiometry ? "Entrar com biometria" : faceRegistered ? "Entrar com biometria" : "Ativar biometria do celular"}
             </button>
           </section>
         )}
