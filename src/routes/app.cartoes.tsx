@@ -123,7 +123,7 @@ function CartoesScreen() {
                       {c.label} · {c.brand}
                     </p>
                   </div>
-                  {c.blocked ? (
+                  {c.blocked && (
                     <span className="rounded bg-black/40 px-2 py-1 text-xs font-bold">BLOQUEADO</span>
                   )}
                 </div>
