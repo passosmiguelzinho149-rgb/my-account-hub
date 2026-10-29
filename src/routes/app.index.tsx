@@ -181,15 +181,15 @@ function HomeScreen() {
             </div>
           </section>
 
-          <QuickAccessRail title="Acesso rápido" className="-mx-4 px-4">
+          <QuickAccessRail title="Acesso rápido" className="-mx-4 px-5">
             {quick.map((item) => (
               <Link
                 key={item.slug}
                 to={item.to}
-                className="flex min-h-[112px] w-[112px] shrink-0 snap-start flex-col items-start justify-center rounded-[18px] bg-card px-4 shadow-card"
+                className="flex min-h-[94px] w-[94px] shrink-0 snap-start flex-col items-start justify-center rounded-[16px] bg-card px-3.5 shadow-card"
               >
-                <ServiceGlyph slug={item.slug} className="size-8" />
-                <span className="mt-3 text-[15px] leading-tight">{item.label}</span>
+                <ServiceGlyph slug={item.slug} className="size-7" />
+                <span className="mt-2.5 text-[13px] leading-tight">{item.label}</span>
               </Link>
             ))}
           </QuickAccessRail>
