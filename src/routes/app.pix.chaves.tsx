@@ -11,7 +11,7 @@ export const Route = createFileRoute("/app/pix/chaves")({
       { title: "Minhas chaves Pix — Conta Empresas (demo)" },
       {
         name: "description",
-        content: "Cadastre, consulte e exclua chaves Pix da conta empresarial nesta demonstração.",
+        content: "Cadastre, consulte e exclua chaves Pix da conta empresarial.",
       },
       { property: "og:title", content: "Minhas chaves Pix — Conta Empresas (demo)" },
       { property: "og:description", content: "Cadastre, consulte e exclua chaves Pix." },

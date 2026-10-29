@@ -10,7 +10,7 @@ export const Route = createFileRoute("/app/recargas")({
   head: () => ({
     meta: [
       { title: "Recarga de celular — Conta Empresas (demo)" },
-      { name: "description", content: "Recarregue celulares de operadoras fictícias com confirmação e comprovante." },
+      { name: "description", content: "Recarregue celulares com confirmação e comprovante." },
       { property: "og:title", content: "Recarga de celular — Conta Empresas (demo)" },
       { property: "og:description", content: "Recarga de celular com confirmação e comprovante." },
     ],
@@ -94,7 +94,7 @@ function Recargas() {
         </div>
         {error && <ErrorNote>{error}</ErrorNote>}
         <PrimaryButton onClick={check}>Continuar</PrimaryButton>
-        <p className="mt-6 text-xs text-muted-foreground">Operadoras fictícias: nenhuma recarga real é feita.</p>
+        
       </main>
     </>
   );

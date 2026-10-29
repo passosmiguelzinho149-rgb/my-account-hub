@@ -19,7 +19,7 @@ export const Route = createFileRoute("/app/pix/enviar")({
       { title: "Pagar ou enviar Pix — Conta Empresas (demo)" },
       {
         name: "description",
-        content: "Envie Pix por chave ou copia e cola, com confirmação e agendamento nesta demonstração.",
+        content: "Envie Pix por chave ou copia e cola, com confirmação e agendamento.",
       },
       { property: "og:title", content: "Pagar ou enviar Pix — Conta Empresas (demo)" },
       {

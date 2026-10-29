@@ -25,16 +25,16 @@ import { cn } from "@/lib/utils";
 export const Route = createFileRoute("/app/cartoes")({
   head: () => ({
     meta: [
-      { title: "Cartões — Bradesco Empresas e Negócios (demo)" },
+      { title: "Cartões — Bradesco Empresas e Negócios" },
       {
         name: "description",
         content:
-          "Gestão demonstrativa de cartões empresariais: limite, bloqueio, fatura e dados do cartão, sem movimentar dinheiro real.",
+          "Gestão de cartões empresariais: limite, bloqueio, fatura e dados do cartão.",
       },
-      { property: "og:title", content: "Cartões — Bradesco Empresas e Negócios (demo)" },
+      { property: "og:title", content: "Cartões — Bradesco Empresas e Negócios" },
       {
         property: "og:description",
-        content: "Gestão demonstrativa de cartões empresariais: limite, bloqueio e fatura.",
+        content: "Gestão de cartões empresariais: limite, bloqueio e fatura.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -75,7 +75,7 @@ function CartoesScreen() {
       return setError("Informe um limite válido maior que zero.");
     }
     if (value > 1_000_000) {
-      return setError("Nesta demonstração o limite máximo é R$ 1.000.000,00.");
+      return setError("O limite máximo é R$ 1.000.000,00.");
     }
     setError(null);
     setCardLimit(card.id, value);
@@ -107,7 +107,7 @@ function CartoesScreen() {
               >
                 <div className="flex items-center justify-between">
                   <span className="text-xl font-bold">Conta Empresas</span>
-                  <span className="text-xs font-semibold">DEMONSTRAÇÃO</span>
+                  
                 </div>
                 <div className="mt-6 flex items-center gap-3">
                   <span className="h-10 w-14 rounded-md bg-white/25" />
@@ -125,8 +125,6 @@ function CartoesScreen() {
                   </div>
                   {c.blocked ? (
                     <span className="rounded bg-black/40 px-2 py-1 text-xs font-bold">BLOQUEADO</span>
-                  ) : (
-                    <span className="rounded bg-white/15 px-2 py-1 text-xs font-bold">FICTÍCIO</span>
                   )}
                 </div>
               </button>
@@ -168,7 +166,7 @@ function CartoesScreen() {
             <Receipt className="size-6 shrink-0 text-icon-ink" strokeWidth={1.6} />
             <div className="min-w-0 flex-1">
               <p className="text-sm font-bold">Fatura atual</p>
-              <p className="text-xs text-muted-foreground">Fechamento em 05 do mês (simulado)</p>
+              <p className="text-xs text-muted-foreground">Fechamento em 05 do mês</p>
             </div>
             <p className="text-sm font-bold tabular-nums">{formatBRL(card.used)}</p>
           </div>
@@ -241,8 +239,8 @@ function CartoesScreen() {
             </h3>
             <p className="mt-2 text-sm text-muted-foreground">
               {card.blocked
-                ? `O ${card.label} final ${card.last4} voltará a poder ser usado nesta demonstração.`
-                : `O ${card.label} final ${card.last4} ficará impedido de novas compras nesta demonstração. Você pode desbloquear quando quiser.`}
+                ? `O ${card.label} final ${card.last4} voltará a poder ser usado.`
+                : `O ${card.label} final ${card.last4} ficará impedido de novas compras. Você pode desbloquear quando quiser.`}
             </p>
             <PrimaryButton
               onClick={() => {
@@ -264,7 +262,7 @@ function CartoesScreen() {
 
         {showData ? (
           <section className="mt-4 rounded-2xl bg-card p-5 shadow-card">
-            <h3 className="text-[16px] font-bold">Dados do cartão (fictícios)</h3>
+            <h3 className="text-[16px] font-bold">Dados do cartão</h3>
             <dl className="mt-3 space-y-2 text-sm">
               <div className="flex justify-between gap-3">
                 <dt className="text-muted-foreground">Número</dt>
@@ -283,10 +281,6 @@ function CartoesScreen() {
                 <dd className="font-semibold">{card.brand}</dd>
               </div>
             </dl>
-            <p className="mt-3 rounded-lg bg-secondary p-3 text-xs text-muted-foreground">
-              Números gerados apenas para a interface. Nenhum dado real de cartão é exibido ou
-              armazenado.
-            </p>
           </section>
         ) : null}
       </main>

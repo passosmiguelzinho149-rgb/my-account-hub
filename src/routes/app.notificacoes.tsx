@@ -49,7 +49,7 @@ function NotificationsScreen() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <p className="font-semibold">Pix recebido</p>
-                  <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-muted-foreground">Simulado</span>
+                  
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">Você recebeu {formatBRL(7_018_585)} de PATRICIA RODRIGUES.</p>
                 <p className="mt-2 text-xs text-muted-foreground">19/09/2026 às 11:35:00</p>

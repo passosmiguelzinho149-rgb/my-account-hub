@@ -10,9 +10,9 @@ export const Route = createFileRoute("/app/saques")({
   head: () => ({
     meta: [
       { title: "Saque — Conta Empresas (demo)" },
-      { name: "description", content: "Gere um código de saque simulado, consulte o histórico e os comprovantes." },
+      { name: "description", content: "Gere um código de saque, consulte o histórico e os comprovantes." },
       { property: "og:title", content: "Saque — Conta Empresas (demo)" },
-      { property: "og:description", content: "Saque simulado com código, histórico e comprovante." },
+      { property: "og:description", content: "Saque com código, histórico e comprovante." },
     ],
   }),
   component: Saques,

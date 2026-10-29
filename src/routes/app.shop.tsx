@@ -7,18 +7,18 @@ export const Route = createFileRoute("/app/shop")({
   component: Shop,
   head: () => ({
     meta: [
-      { title: "SHOP · Bradesco Empresas (simulação)" },
-      { name: "description", content: "Vitrine demonstrativa de ofertas e benefícios para empresas." },
-      { property: "og:title", content: "SHOP · Bradesco Empresas (simulação)" },
-      { property: "og:description", content: "Vitrine demonstrativa de ofertas e benefícios para empresas." },
+      { title: "SHOP · Bradesco Empresas" },
+      { name: "description", content: "Vitrine de ofertas e benefícios para empresas." },
+      { property: "og:title", content: "SHOP · Bradesco Empresas" },
+      { property: "og:description", content: "Vitrine de ofertas e benefícios para empresas." },
     ],
   }),
 });
 
 const offers = [
-  { title: "Ofertas para sua empresa", text: "Benefícios demonstrativos para compras empresariais.", slug: "ofertas" },
-  { title: "Cashback", text: "Veja exemplos de campanhas e vantagens.", slug: "cashback" },
-  { title: "Parceiros", text: "Conheça uma vitrine simulada de parceiros.", slug: "parceiros" },
+  { title: "Ofertas para sua empresa", text: "Benefícios para compras empresariais.", slug: "ofertas" },
+  { title: "Cashback", text: "Veja campanhas e vantagens.", slug: "cashback" },
+  { title: "Parceiros", text: "Conheça a vitrine de parceiros.", slug: "parceiros" },
 ] as const;
 
 function Shop() {
@@ -40,7 +40,7 @@ function Shop() {
               <h2 className="text-2xl font-bold">SHOP Empresas</h2>
             </div>
             <p className="mt-2 text-sm text-muted-foreground">
-              Ofertas e benefícios em uma vitrine demonstrativa.
+              Ofertas e benefícios para a sua empresa.
             </p>
           </div>
         </section>
@@ -57,9 +57,6 @@ function Shop() {
           ))}
         </div>
 
-        <p className="mt-5 rounded-lg border border-dashed bg-card p-3 text-center text-[11px] font-medium text-muted-foreground">
-          SHOP SIMULADO · SEM COMPRAS OU OFERTAS REAIS
-        </p>
       </main>
     </>
   );

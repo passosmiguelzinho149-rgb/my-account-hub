@@ -9,10 +9,10 @@ export const Route = createFileRoute("/app/chat")({
       { title: "Chat — Conta Empresas (demo)" },
       {
         name: "description",
-        content: "Atendimento simulado da Agência Digital Empresas, das 8h às 20h em dias úteis.",
+        content: "Atendimento da Agência Digital Empresas, das 8h às 20h em dias úteis.",
       },
       { property: "og:title", content: "Chat — Conta Empresas (demo)" },
-      { property: "og:description", content: "Atendimento simulado da Agência Digital Empresas." },
+      { property: "og:description", content: "Atendimento da Agência Digital Empresas." },
     ],
   }),
   component: ChatScreen,
@@ -33,7 +33,7 @@ const initialMessages: Message[] = [
   {
     id: 2,
     from: "bot",
-    text: "Este é um chat de demonstração — nenhuma mensagem é enviada de verdade.",
+    text: "Olá! Sou a BIA, sua assistente virtual. Como posso ajudar?",
   },
 ];
 

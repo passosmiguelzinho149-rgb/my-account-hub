@@ -7,9 +7,9 @@ export const Route = createFileRoute("/recuperar-acesso")({
   head: () => ({
     meta: [
       { title: "Recuperar acesso — Bradesco Empresas (demo)" },
-      { name: "description", content: "Redefina a senha da conta de demonstração com um código simulado." },
+      { name: "description", content: "Redefina a senha da sua conta com um código de verificação." },
       { property: "og:title", content: "Recuperar acesso — Bradesco Empresas (demo)" },
-      { property: "og:description", content: "Redefina a senha da conta de demonstração." },
+      { property: "og:description", content: "Redefina a senha da sua conta." },
     ],
   }),
   component: Recuperar,
@@ -49,7 +49,7 @@ function Recuperar() {
             <button
               type="button"
               className={btn}
-              onClick={() => (doc.includes("151") ? (setError(null), setStep("code")) : setError("CPF não confere com a conta de demonstração."))}
+              onClick={() => (doc.includes("151") ? (setError(null), setStep("code")) : setError("CPF não confere com a conta."))}
             >
               Enviar código
             </button>
@@ -58,7 +58,7 @@ function Recuperar() {
         {step === "code" && (
           <>
             <p className="rounded-lg bg-secondary px-3 py-2 text-sm text-secondary-foreground">
-              SMS simulado: seu código de recuperação é <strong>{code}</strong>
+              SMS: seu código de recuperação é <strong>{code}</strong>
             </p>
             <label className="mt-4 block text-sm font-medium">
               Código recebido
