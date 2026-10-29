@@ -10,11 +10,13 @@ import { QuickAccessRail } from "@/components/app/QuickAccessRail";
 import { ServiceGlyph } from "@/components/app/ServiceGlyph";
 import { account, formatBRL } from "@/lib/mock-data";
 import { useBank } from "@/lib/bank";
+import { useSession } from "@/lib/session";
 
 export const Route = createFileRoute("/app/")({ component: HomeScreen });
 
 function HomeScreen() {
   const { transactions } = useBank();
+  const { balanceHidden } = useSession();
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -28,6 +30,7 @@ function HomeScreen() {
   );
   const inflow = dayTx.filter((t) => t.kind === "in").reduce((s, t) => s + t.amount, 0);
   const outflow = dayTx.filter((t) => t.kind === "out").reduce((s, t) => s + t.amount, 0);
+  const hiddenValue = "R$ ••••••••";
 
   const quick = [
     { to: "/app/pix", slug: "pix", label: "Pix" },
@@ -69,14 +72,18 @@ function HomeScreen() {
                   <ArrowUp className="size-5 text-income" strokeWidth={1.7} />
                   Entradas
                 </dt>
-                <dd className="ml-7 mt-1 text-[15px] font-medium tabular-nums">{formatBRL(inflow)}</dd>
+                <dd className="ml-7 mt-1 text-[15px] font-medium tabular-nums">
+                  {balanceHidden ? hiddenValue : formatBRL(inflow)}
+                </dd>
               </div>
               <div className="pl-3">
                 <dt className="flex items-center gap-2 text-[14px] text-muted-foreground">
                   <ArrowDown className="size-5 text-brand-red" strokeWidth={1.7} />
                   Saídas
                 </dt>
-                <dd className="ml-7 mt-1 text-[15px] font-medium tabular-nums">{formatBRL(outflow)}</dd>
+                <dd className="ml-7 mt-1 text-[15px] font-medium tabular-nums">
+                  {balanceHidden ? hiddenValue : formatBRL(outflow)}
+                </dd>
               </div>
             </dl>
             <Link
