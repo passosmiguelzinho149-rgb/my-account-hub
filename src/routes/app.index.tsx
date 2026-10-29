@@ -3,7 +3,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowDown, ArrowUp, ChevronRight, LoaderCircle, ShoppingBag } from "lucide-react";
-import pixMulher from "@/assets/pix-mulher.svg";
+import pixMulher from "@/assets/pix-mulher.jpg.jpg";
 import { BalanceCard } from "@/components/app/BalanceCard";
 import { BrandHeader } from "@/components/app/BrandHeader";
 import { QuickAccessRail } from "@/components/app/QuickAccessRail";
@@ -55,9 +55,7 @@ function HomeScreen() {
   };
 
   const today = now.toDateString();
-  const dayTx = transactions.filter(
-    (t) => t.status === "Concluído" && new Date(t.createdAt).toDateString() === today,
-  );
+  const dayTx = transactions.filter((t) => t.status === "Concluído" && new Date(t.createdAt).toDateString() === today);
   const inflow = dayTx.filter((t) => t.kind === "in").reduce((s, t) => s + t.amount, 0);
   const outflow = dayTx.filter((t) => t.kind === "out").reduce((s, t) => s + t.amount, 0);
   const hiddenValue = "R$ ••••••••";
@@ -106,14 +104,8 @@ function HomeScreen() {
 
           <section className="mt-6">
             <h2 className="text-[19px] font-bold">Soluções para sua empresa</h2>
-            <Link to="/app/pix" className="mt-3 flex min-h-[132px] overflow-hidden rounded-[24px] bg-card shadow-card">
-              <div className="relative h-[132px] w-[38%] shrink-0 overflow-hidden bg-[#eef5f7]">
-                <img src={pixMulher} alt="Mulher usando o celular" width="420" height="300" className="h-full w-full object-cover object-center" loading="eager" decoding="sync" />
-                <div className="absolute right-2 top-3 rounded-xl bg-white/90 p-1.5 shadow-sm"><ServiceGlyph slug="pix" className="size-8 text-[#18bfa4]" /></div>
-              </div>
-              <div className="flex min-w-0 flex-1 items-center px-4 py-4">
-                <div className="min-w-0"><h3 className="text-[18px] font-bold leading-tight">Pix</h3><p className="mt-2 text-[14px] leading-[1.4] text-muted-foreground">Pague, receba e transfira a qualquer hora do dia.</p></div>
-              </div>
+            <Link to="/app/pix" className="mt-3 block overflow-hidden rounded-[24px] bg-card shadow-card">
+              <img src={pixMulher} alt="Pix: pague, receba e transfira a qualquer hora do dia" className="block h-auto w-full object-cover" loading="eager" decoding="sync" />
             </Link>
             <div className="mt-3 flex justify-center"><span className="h-1.5 w-[48px] rounded-full bg-[#2745bd]" /></div>
           </section>
