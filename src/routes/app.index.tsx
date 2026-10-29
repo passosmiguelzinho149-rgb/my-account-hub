@@ -90,7 +90,7 @@ function HomeScreen() {
           </div>
         </BrandHeader>
 
-        <main className="mx-auto w-full max-w-[430px] bg-background px-4 pb-8 pt-0">
+        <main className="mx-auto w-full max-w-[430px] overflow-x-hidden bg-background px-4 pb-8 pt-0">
           <section className="relative z-10 -mt-3 px-1">
             <div className="rounded-[18px] border border-black/[.04] bg-card px-3.5 py-3.5 shadow-[0_8px_20px_rgba(25,25,45,.09)]">
               <div className="flex items-center justify-between gap-3"><h2 className="text-[15px] font-medium tracking-[-0.02em]">Resumo diário</h2><span className="text-[10px] text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span></div>
@@ -104,14 +104,18 @@ function HomeScreen() {
 
           <section className="mt-6">
             <h2 className="text-[19px] font-bold">Soluções para sua empresa</h2>
-            <Link to="/app/pix" className="mt-3 block overflow-hidden rounded-[24px] bg-card shadow-card">
-              <img src={pixMulher} alt="Pix: pague, receba e transfira a qualquer hora do dia" className="block h-auto w-full object-cover" loading="eager" decoding="sync" />
+            <Link to="/app/pix" className="mt-3 block w-full overflow-hidden rounded-[18px] bg-card shadow-card">
+              <img src={pixMulher} alt="Pix: pague, receba e transfira a qualquer hora do dia" className="block aspect-[1048/314] w-full object-cover object-center" loading="eager" decoding="sync" />
             </Link>
-            <div className="mt-3 flex justify-center"><span className="h-1.5 w-[48px] rounded-full bg-[#2745bd]" /></div>
           </section>
 
-          <QuickAccessRail title="Acesso rápido" className="-mx-4 px-5">
-            {quick.map((item) => <Link key={item.slug} to={item.to} className="flex min-h-[94px] w-[94px] shrink-0 snap-start flex-col items-start justify-center rounded-[16px] bg-card px-3.5 shadow-card"><ServiceGlyph slug={item.slug} className="size-7" /><span className="mt-2.5 text-[13px] leading-tight">{item.label}</span></Link>)}
+          <QuickAccessRail title="Acesso rápido" className="-mx-4 mt-5 px-5">
+            {quick.map((item) => (
+              <Link key={item.slug} to={item.to} className="flex h-[100px] w-[88px] shrink-0 snap-start flex-col items-start justify-start overflow-hidden rounded-[16px] bg-card px-3 py-3 shadow-card sm:w-[94px]">
+                <ServiceGlyph slug={item.slug} className="size-7 shrink-0" />
+                <span className="mt-2 block w-full overflow-hidden text-[11px] font-medium leading-[1.12] [overflow-wrap:anywhere] sm:text-[12px]">{item.label}</span>
+              </Link>
+            ))}
           </QuickAccessRail>
 
           <section className="mt-6">
