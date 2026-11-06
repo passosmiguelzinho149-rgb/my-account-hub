@@ -12,7 +12,17 @@ import { account, formatBRL } from "@/lib/mock-data";
 import { useBank } from "@/lib/bank";
 import { useSession } from "@/lib/session";
 
-export const Route = createFileRoute("/app/")({ component: HomeScreen });
+export const Route = createFileRoute("/app/")({
+  head: () => ({ meta: [
+    { title: "Início — Bradesco Empresas e Negócios" },
+    { name: "description", content: "Saldo, resumo diário e serviços da sua conta empresarial." },
+    { property: "og:title", content: "Início — Bradesco Empresas e Negócios" },
+    { property: "og:description", content: "Saldo, resumo diário e serviços da sua conta empresarial." },
+    { property: "og:type", content: "website" },
+    { name: "twitter:card", content: "summary" },
+  ] }),
+  component: HomeScreen,
+});
 
 function HomeScreen() {
   const { transactions } = useBank();
@@ -83,20 +93,20 @@ function HomeScreen() {
       <div className="transition-transform duration-150" style={{ transform: `translateY(${refreshing ? 54 : pullDistance}px)` }}>
         <BrandHeader>
           <div className="px-5 pb-6 pt-0">
-            <h1 className="text-[16px] font-extrabold uppercase leading-tight tracking-[-0.02em]">Olá, {account.holder}</h1>
-            <p className="mt-1 text-[11px] font-semibold leading-tight opacity-95">{account.company}</p>
-            <p className="mt-1 text-[11px] font-semibold leading-tight opacity-95">CNPJ: {account.cnpj}</p>
-            <BalanceCard showAccount className="mt-4 rounded-[16px] border border-white/10 bg-white/[.17] px-4 py-3.5 shadow-[0_10px_24px_rgba(25,18,90,.2)] [&_p]:text-[13px] [&_strong]:text-[13px]" />
+            <h1 className="text-base font-bold uppercase leading-snug">Olá, {account.holder}</h1>
+            <p className="mt-1 text-xs font-normal leading-snug opacity-95">{account.company}</p>
+            <p className="mt-1 text-xs font-normal leading-snug opacity-95">CNPJ: {account.cnpj}</p>
+            <BalanceCard showAccount className="mt-4 rounded-[16px] border border-border/10 bg-primary-foreground/15 px-4 py-3.5" />
           </div>
         </BrandHeader>
 
         <main className="mx-auto w-full max-w-[430px] overflow-x-hidden bg-background px-4 pb-8 pt-0">
           <section className="relative z-10 -mt-3 px-1">
             <div className="rounded-[18px] border border-black/[.04] bg-card px-3.5 py-3.5 shadow-[0_8px_20px_rgba(25,25,45,.09)]">
-              <div className="flex items-center justify-between gap-3"><h2 className="text-[15px] font-medium tracking-[-0.02em]">Resumo diário</h2><span className="text-[10px] text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span></div>
+              <div className="flex items-center justify-between gap-3"><h2 className="text-base font-semibold">Resumo diário</h2><span className="text-xs tabular-nums text-muted-foreground">{now.toLocaleDateString("pt-BR")}</span></div>
               <dl className="mt-3 grid grid-cols-2">
-                <div className="pr-2.5"><dt className="flex items-center gap-1.5 text-[12px] text-muted-foreground"><ArrowUp className="size-4 text-income" strokeWidth={1.7} />Entradas</dt><dd className="ml-[22px] mt-1 text-[13px] font-medium tabular-nums">{balanceHidden ? hiddenValue : formatBRL(inflow)}</dd></div>
-                <div className="pl-2.5"><dt className="flex items-center gap-1.5 text-[12px] text-muted-foreground"><ArrowDown className="size-4 text-brand-red" strokeWidth={1.7} />Saídas</dt><dd className="ml-[22px] mt-1 text-[13px] font-medium tabular-nums">{balanceHidden ? hiddenValue : formatBRL(outflow)}</dd></div>
+                <div className="min-w-0 pr-2.5"><dt className="flex items-center gap-1.5 text-bank-label text-muted-foreground"><ArrowUp className="size-4 text-income" strokeWidth={1.7} />Entradas</dt><dd className="ml-[22px] mt-1 break-words text-bank-label font-semibold tabular-nums">{balanceHidden ? hiddenValue : formatBRL(inflow)}</dd></div>
+                <div className="min-w-0 pl-2.5"><dt className="flex items-center gap-1.5 text-bank-label text-muted-foreground"><ArrowDown className="size-4 text-brand-red" strokeWidth={1.7} />Saídas</dt><dd className="ml-[22px] mt-1 break-words text-bank-label font-semibold tabular-nums">{balanceHidden ? hiddenValue : formatBRL(outflow)}</dd></div>
               </dl>
               <Link to="/app/extrato" className="mt-4 inline-flex items-center text-[13px] font-medium text-[#3565d5] underline underline-offset-4">Consultar extrato<ChevronRight className="ml-1 size-4" /></Link>
             </div>

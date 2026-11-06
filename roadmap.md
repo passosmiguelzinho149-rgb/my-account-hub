@@ -1,4 +1,5 @@
 # Roadmap
+- [x] Ajustar tipografia e hierarquia dos valores e nomes sem alterar valores financeiros
 - [x] Ícones de Serviços e Acesso rápido no estilo linear azul da referência
 - [x] Pix completo (enviar chave/copia e cola, receber, chaves, limites, histórico, agendar) + comprovantes
 - [x] Extrato ligado às operações
