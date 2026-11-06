@@ -1,11 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Fingerprint, Lock, LockOpen, Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Capacitor } from "@capacitor/core";
-import {
-  AndroidBiometryStrength,
-  BiometricAuth,
-} from "@aparajita/capacitor-biometric-auth";
+import { Lock, LockOpen, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useSession } from "@/lib/session";
 import {
   checkPin,
@@ -15,13 +10,17 @@ import {
   useSecurity,
   type AccessEntry,
 } from "@/lib/security";
-import { account } from "@/lib/mock-data";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Acessar conta — Bradesco Empresas e Negócios (demo)" },
-      { name: "description", content: "App Bradesco Empresas e Negócios: tela de acesso." },
+      { name: "description", content: "Acesse sua conta Empresas e Negócios com senha." },
+      { property: "og:title", content: "Acessar conta — Bradesco Empresas e Negócios" },
+      { property: "og:description", content: "Acesse sua conta Empresas e Negócios com senha." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: LoginScreen,
@@ -30,7 +29,6 @@ export const Route = createFileRoute("/")({
 type Step =
   | { name: "home" }
   | { name: "pin" }
-  | { name: "bio" }
   | { name: "code"; code: string; method: AccessEntry["method"]; purpose: "login" | "unlock" };
 
 function LoginScreen() {
@@ -41,42 +39,6 @@ function LoginScreen() {
   const [pin, setPin] = useState("");
   const [typed, setTyped] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [faceRegistered, setFaceRegistered] = useState(false);
-  const [biometricAvailable, setBiometricAvailable] = useState(false);
-  const [nativeBiometry, setNativeBiometry] = useState(false);
-  const autoBiometryStarted = useRef(false);
-
-  useEffect(() => {
-    setFaceRegistered(window.localStorage.getItem("bradesco-demo-face-credential") === "1");
-
-    let active = true;
-    const checkAvailability = async () => {
-      if (Capacitor.isNativePlatform()) {
-        try {
-          const info = await BiometricAuth.checkBiometry();
-          if (!active) return;
-          setNativeBiometry(true);
-          setBiometricAvailable(info.isAvailable);
-          return;
-        } catch {
-          if (!active) return;
-          setNativeBiometry(true);
-          setBiometricAvailable(false);
-          return;
-        }
-      }
-
-      if (!active) return;
-      setNativeBiometry(false);
-      setBiometricAvailable(Boolean(window.PublicKeyCredential && navigator.credentials && window.isSecureContext));
-    };
-
-    void checkAvailability();
-    return () => {
-      active = false;
-    };
-  }, []);
-
   useEffect(() => {
     if (hydrated && signedIn) void navigate({ to: "/app", replace: true });
   }, [hydrated, signedIn, navigate]);
@@ -99,85 +61,6 @@ function LoginScreen() {
     setError(null);
     finish("Senha");
   };
-
-  const webBiometric = async () => {
-    if (!window.PublicKeyCredential || !navigator.credentials || !window.isSecureContext) {
-      throw new Error("Biometria web indisponível.");
-    }
-
-    const credential = faceRegistered
-      ? await navigator.credentials.get({
-          publicKey: {
-            challenge: crypto.getRandomValues(new Uint8Array(32)),
-            userVerification: "required",
-            timeout: 60000,
-          },
-        })
-      : await navigator.credentials.create({
-          publicKey: {
-            challenge: crypto.getRandomValues(new Uint8Array(32)),
-            rp: { name: "Conta Empresas" },
-            user: {
-              id: crypto.getRandomValues(new Uint8Array(16)),
-              name: account.holder.toLowerCase().replace(/\s+/g, "."),
-              displayName: account.holder,
-            },
-            pubKeyCredParams: [
-              { type: "public-key", alg: -7 },
-              { type: "public-key", alg: -257 },
-            ],
-            authenticatorSelection: {
-              authenticatorAttachment: "platform",
-              residentKey: "required",
-              userVerification: "required",
-            },
-            timeout: 60000,
-            attestation: "none",
-          },
-        });
-
-    if (!credential) throw new Error("Biometria não concluída.");
-    if (!faceRegistered) {
-      window.localStorage.setItem("bradesco-demo-face-credential", "1");
-      setFaceRegistered(true);
-    }
-  };
-
-  const biometric = async () => {
-    if (security.locked) return setError("Conta bloqueada. Desbloqueie para entrar.");
-    if (!biometricAvailable) return setError("Nenhuma biometria disponível. Cadastre a biometria nas configurações do celular ou use sua senha.");
-
-    try {
-      setError(null);
-      setStep({ name: "bio" });
-
-      if (Capacitor.isNativePlatform()) {
-        await BiometricAuth.authenticate({
-          reason: "Confirme sua identidade para acessar o aplicativo",
-          cancelTitle: "Cancelar",
-          allowDeviceCredential: true,
-          iosFallbackTitle: "Usar código do aparelho",
-          androidTitle: "Acessar com biometria",
-          androidSubtitle: "Confirme sua identidade",
-          androidConfirmationRequired: false,
-          androidBiometryStrength: AndroidBiometryStrength.weak,
-        });
-      } else {
-        await webBiometric();
-      }
-
-      finish("Biometria");
-    } catch {
-      setStep({ name: "home" });
-      setError("Não foi possível confirmar a biometria. Tente novamente ou use sua senha.");
-    }
-  };
-
-  useEffect(() => {
-    if (!hydrated || signedIn || security.locked || !biometricAvailable || autoBiometryStarted.current) return;
-    autoBiometryStarted.current = true;
-    void biometric();
-  }, [hydrated, signedIn, security.locked, biometricAvailable]);
 
   const submitCode = () => {
     if (step.name !== "code") return;
@@ -239,23 +122,16 @@ function LoginScreen() {
               <span className="font-medium">CPF</span><strong>••• 151 •••</strong>
               <button type="button" onClick={() => setError("Conta mantida neste acesso.")} className="ml-auto text-base text-muted-foreground">Remover ↻</button>
             </div>
-            <button type="button" onClick={() => void biometric()} disabled={!biometricAvailable} className="mt-5 flex w-full items-center justify-center gap-2 rounded-md bg-[#3f3ba5] py-3.5 text-base font-bold text-white shadow disabled:cursor-not-allowed disabled:opacity-45">
-              <Fingerprint className="size-6" /> Entrar com biometria
-            </button>
-            <button type="button" onClick={startPin} className="mt-3 w-full rounded-md border border-[#3f3ba5] bg-white py-3.5 text-base font-bold text-[#3f3ba5]">Usar senha</button>
+            <Button type="button" onClick={startPin} className="mt-5 h-auto w-full py-3.5 text-base font-bold">Entrar com senha</Button>
           </section>
         )}
 
         {step.name === "pin" && (
           <form className="rounded-xl bg-white p-5 shadow-xl" onSubmit={(e) => { e.preventDefault(); submitPin(); }}>
             <div className="flex items-center justify-between"><h2 className="text-lg font-bold">Digite sua senha</h2><button type="button" onClick={() => setStep({ name: "home" })}><X className="size-5" /></button></div>
-            <input type="password" inputMode="numeric" autoFocus maxLength={6} value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} className={input} />
+            <input type="password" aria-label="Senha" inputMode="numeric" autoFocus maxLength={6} value={pin} onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))} className={input} />
             <button type="submit" className="mt-4 w-full rounded-md bg-[#3f3ba5] py-3.5 font-bold text-white">Continuar</button>
           </form>
-        )}
-
-        {step.name === "bio" && (
-          <div className="rounded-xl bg-white p-7 text-center shadow-xl"><Fingerprint className="mx-auto size-14 animate-pulse text-primary" /><p className="mt-3 font-semibold">Confirme usando a biometria do celular…</p></div>
         )}
 
         {step.name === "code" && (
@@ -268,9 +144,9 @@ function LoginScreen() {
         )}
 
         {error && <p role="alert" className="mt-4 text-center text-sm font-medium text-destructive">{error}</p>}
-        <button type="button" onClick={securityAction} className="mt-[clamp(2rem,8dvh,5rem)] flex w-full items-center justify-center gap-3 rounded-lg border border-[#3f3ba5] bg-white py-4 font-semibold text-[#3f3ba5]">
-          {security.locked ? <LockOpen className="size-6" /> : <Lock className="size-6" />} Chave de segurança
-        </button>
+        {security.locked && <button type="button" onClick={securityAction} className="mt-[clamp(2rem,8dvh,5rem)] flex w-full items-center justify-center gap-3 rounded-lg border border-[#3f3ba5] bg-white py-4 font-semibold text-[#3f3ba5]">
+          {security.locked ? <LockOpen className="size-6" /> : <Lock className="size-6" />} Desbloquear conta
+        </button>}
       </main>
     </div>
   );
