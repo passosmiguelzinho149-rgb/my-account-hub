@@ -6,6 +6,8 @@ import { formatBRL } from "@/lib/mock-data";
 import { useBank, useBalance, type Tx } from "@/lib/bank";
 import { useSession } from "@/lib/session";
 
+const PIX_VALUE = 132_500;
+
 export const Route = createFileRoute("/app/extrato")({
   head: () => ({ meta: [{ title: "Extrato — Conta Empresas" }, { name: "description", content: "Extrato da conta empresarial." }] }),
   component: ExtratoScreen,
