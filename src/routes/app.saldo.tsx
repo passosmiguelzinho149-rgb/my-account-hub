@@ -6,11 +6,10 @@ import { useBalance } from "@/lib/bank";
 import { useSession } from "@/lib/session";
 
 export const Route = createFileRoute("/app/saldo")({ component: SaldoScreen });
-const PIX_VALUE = 132_500;
 
 function SaldoScreen() {
   const { balanceHidden } = useSession();
-  const balance = useBalance() - PIX_VALUE;
+  const balance = useBalance();
   const value = balanceHidden ? "R$ ••••••••" : formatBRL(balance);
   return <div className="min-h-full bg-[#f5f5f6]">
     <SubHeader title="Detalhes do saldo" compactActions />
