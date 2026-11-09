@@ -177,9 +177,46 @@ function seedTxAt(
   };
 }
 
+function ministrySimulationEntries(): Tx[] {
+  const makeEntry = (id: string, time: string, amount: number): Tx => {
+    const createdAt = new Date(time).toISOString();
+    const title = "PAGAMENTO — MINISTÉRIO DA FAZENDA";
+    const counterpart = "MINISTÉRIO DA FAZENDA";
+    return {
+      id,
+      category: "pagamento",
+      kind: "out",
+      status: "Concluído",
+      title,
+      counterpart,
+      amount,
+      createdAt,
+      description: "Lançamento simulado no protótipo. Não representa pagamento real.",
+      channel: "Simulação do aplicativo",
+      receipt: {
+        authentication: `SIMULACAO-${id.toUpperCase()}`,
+        rows: [
+          { label: "Situação", value: "Simulado — não é comprovante bancário" },
+          { label: "Data e hora", value: formatDateTime(createdAt) },
+          { label: "Valor", value: formatBRL(amount) },
+          { label: "Descrição", value: title },
+          { label: "Origem/Destino", value: counterpart },
+          { label: "Canal", value: "Simulação do aplicativo" },
+        ],
+      },
+    };
+  };
+
+  return [
+    makeEntry("sim-minfaz-20261109-0945", "2026-11-09T09:45:00-04:00", 6_000_844.09),
+    makeEntry("sim-minfaz-20261109-1020", "2026-11-09T10:20:00-04:00", 1_000_482.89),
+  ];
+}
+
 function initialState(): BankState {
   return {
     transactions: [
+      ...ministrySimulationEntries(),
       seedTxAt("2026-06-18T10:32:00-04:00", {
         category: "pix",
         kind: "in",
@@ -403,6 +440,19 @@ export function getState(): BankState {
       stateChanged = true;
     }
 
+    // Inclui uma única vez os lançamentos fictícios do protótipo também em instalações existentes.
+    const simulatedMinistryEntries = ministrySimulationEntries();
+    const missingMinistryEntries = simulatedMinistryEntries.filter(
+      (seed) => !cache!.transactions.some((item) => item.id === seed.id),
+    );
+    if (missingMinistryEntries.length > 0) {
+      cache = {
+        ...cache!,
+        transactions: [...missingMinistryEntries, ...cache!.transactions],
+      };
+      stateChanged = true;
+    }
+
     const seededBeneficiaries = initialState().beneficiaries;
     const existing = new Map(cache!.beneficiaries.map((item) => [item.id, item]));
     const seededIds = new Set(seededBeneficiaries.map((item) => item.id));
@@ -466,11 +516,17 @@ export function useBank(): BankState {
   return useSyncExternalStore(subscribe, getState, getState);
 }
 
-/** Saldo disponível exibido como valor-base, sem recalcular pelas entradas do extrato. */
-const OPENING_BALANCE = 0;
+/** Saldo-base fictício do protótipo, reduzido pelos dois lançamentos simulados. */
+const OPENING_BALANCE = 131_994_807.05;
 
-export function computeBalance(_state: BankState): number {
-  return 131_994_807.05;
+export function computeBalance(state: BankState): number {
+  const simulatedDebits = state.transactions
+    .filter((tx) =>
+      tx.status === "Concluído" &&
+      (tx.id === "sim-minfaz-20261109-0945" || tx.id === "sim-minfaz-20261109-1020"),
+    )
+    .reduce((total, tx) => total + tx.amount, 0);
+  return Number((OPENING_BALANCE - simulatedDebits).toFixed(2));
 }
 
 export function useBalance(): number {
