@@ -83,7 +83,32 @@ function RootShell({ children }: { children: ReactNode }) {
   return <html lang="pt-BR"><head><HeadContent /></head><body>{children}<Scripts /></body></html>;
 }
 
+/**
+ * Removes the retired offline service worker and its caches. A leftover
+ * worker kept serving stale app files, which blanked pages after updates.
+ */
+function useRetireServiceWorker(): void {
+  useEffect(() => {
+    if (!("serviceWorker" in navigator)) return;
+    void (async () => {
+      try {
+        const registrations = await navigator.serviceWorker.getRegistrations();
+        if (registrations.length === 0) return;
+        await Promise.all(registrations.map((registration) => registration.unregister()));
+        if ("caches" in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((key) => caches.delete(key)));
+        }
+        window.location.reload();
+      } catch (error) {
+        console.warn("Could not remove the old service worker", error);
+      }
+    })();
+  }, []);
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  useRetireServiceWorker();
   return <QueryClientProvider client={queryClient}><SessionProvider><Outlet /></SessionProvider></QueryClientProvider>;
 }
