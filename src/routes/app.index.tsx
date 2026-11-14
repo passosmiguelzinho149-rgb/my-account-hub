@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowDownLeft, ArrowLeftRight, ArrowUpRight, Barcode, Bell, ChevronRight, CircleHelp, Diamond, Eye, EyeOff, QrCode } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import pixMulher from "@/assets/pix-mulher.jpg.jpg";
 import { account, formatBRL } from "@/lib/mock-data";
 import { useBank, useBalance } from "@/lib/bank";
@@ -19,6 +19,9 @@ function HomeScreen() {
   const balance = useBalance();
   const { balanceHidden, toggleBalance } = useSession();
   const [now, setNow] = useState(() => new Date());
+  const [pullDistance, setPullDistance] = useState(0);
+  const [refreshing, setRefreshing] = useState(false);
+  const touchStartY = useRef<number | null>(null);
 
   useEffect(() => {
     const timer = window.setInterval(() => setNow(new Date()), 60000);
@@ -31,6 +34,30 @@ function HomeScreen() {
   const outflow = dayTx.filter((t) => t.kind === "out").reduce((sum, t) => sum + t.amount, 0);
   const hiddenValue = "R$ ••••••••";
 
+  const refreshHome = async () => {
+    if (refreshing) return;
+    setRefreshing(true);
+    setPullDistance(54);
+    await new Promise((resolve) => window.setTimeout(resolve, 650));
+    setNow(new Date());
+    setRefreshing(false);
+    setPullDistance(0);
+  };
+  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (window.scrollY <= 0 && !refreshing) touchStartY.current = event.touches[0]?.clientY ?? null;
+  };
+  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
+    if (touchStartY.current === null || window.scrollY > 0 || refreshing) return;
+    const distance = (event.touches[0]?.clientY ?? touchStartY.current) - touchStartY.current;
+    if (distance > 0) setPullDistance(Math.min(82, distance * 0.48));
+  };
+  const handleTouchEnd = () => {
+    const shouldRefresh = pullDistance >= 52;
+    touchStartY.current = null;
+    if (shouldRefresh) void refreshHome();
+    else setPullDistance(0);
+  };
+
   const shortcuts = [
     { label: "Pix", to: "/app/pix", Icon: Diamond },
     { label: "Transferir", to: "/app/transferencias", Icon: ArrowLeftRight },
@@ -39,7 +66,9 @@ function HomeScreen() {
   ];
 
   return (
-    <div className="min-h-full bg-[#f2f2f5] text-[#111111]">
+    <div className="relative min-h-full bg-[#f2f2f5] text-[#111111]" onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} onTouchCancel={handleTouchEnd}>
+      <div aria-live="polite" className="pointer-events-none absolute inset-x-0 top-0 z-50 flex justify-center overflow-hidden transition-[height] duration-150" style={{ height: `${pullDistance}px` }}><div className="mt-2 flex h-9 items-center gap-2 rounded-full bg-white px-3 text-[12px] font-semibold text-[#2a2a7a] shadow-md"><span className={refreshing ? "animate-spin" : ""}>↻</span>{refreshing ? "Atualizando..." : pullDistance >= 52 ? "Solte para atualizar" : "Puxe para atualizar"}</div></div>
+      <div className="transition-transform duration-150" style={{ transform: `translateY(${refreshing ? 54 : pullDistance}px)` }}>
       <header className="bg-[linear-gradient(115deg,#2a2a7a_0%,#3b2e8f_100%)] text-white">
         <div className="mobile-safe-top flex items-center justify-between gap-3 px-5 pb-3 pt-3">
           <div className="flex min-w-0 items-center gap-2">
@@ -135,6 +164,7 @@ function HomeScreen() {
           </div>
         </section>
       </main>
+      </div>
     </div>
   );
 }
