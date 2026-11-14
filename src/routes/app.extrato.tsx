@@ -26,20 +26,23 @@ function ExtratoScreen() {
   const [filterOpen, setFilterOpen] = useState(false);
   const allTransactions = transactions.some((t) => t.id === pixEmitido.id) ? transactions : [pixEmitido, ...transactions];
   const newestTime = Math.max(...allTransactions.map(t => new Date(t.createdAt).getTime()), Date.now());
-  const items = useMemo(() => allTransactions.filter((t) => {
-    const scheduled = t.status === "Agendado";
-    if (tab === "futuros" && !scheduled) return false;
-    if (tab !== "futuros" && scheduled) return false;
+  const dayEntries = [
+    { id: "day-1", title: "Pix enviado", detail: "Transferência via Pix", kind: "out" as const, amount: 1250.00 },
+    { id: "day-2", title: "Pix recebido", detail: "Recebimento via Pix", kind: "in" as const, amount: 2480.00 },
+    { id: "day-3", title: "Débito de tarifa", detail: "Tarifa de serviço", kind: "out" as const, amount: 12.90 },
+    { id: "day-4", title: "Pagamento de boleto", detail: "Pagamento realizado", kind: "out" as const, amount: 845.60 },
+    { id: "day-5", title: "Transferência enviada", detail: "Transferência bancária", kind: "out" as const, amount: 3200.00 },
+    { id: "day-6", title: "Estorno de Pix", detail: "Devolução recebida", kind: "in" as const, amount: 450.00 },
+    { id: "day-7", title: "Pix enviado", detail: "Transferência via Pix", kind: "out" as const, amount: 780.00 },
+    { id: "day-8", title: "Pix recebido", detail: "Recebimento via Pix", kind: "in" as const, amount: 1150.00 },
+  ];
+  const items = dayEntries.filter((t) => {
+    if (tab === "futuros") return false;
     if (tab === "entradas" && t.kind !== "in") return false;
     if (tab === "saidas" && t.kind !== "out") return false;
-    if (period) {
-      const age = newestTime - new Date(t.createdAt).getTime();
-      if (age > period * 24 * 60 * 60 * 1000) return false;
-    }
     const q = query.trim().toLocaleLowerCase("pt-BR");
-    if (q && !`${t.title} ${t.counterpart} ${t.amount}`.toLocaleLowerCase("pt-BR").includes(q)) return false;
-    return true;
-  }).sort((a,b)=>new Date(b.createdAt).getTime()-new Date(a.createdAt).getTime()), [allTransactions, newestTime, period, tab, query]);
+    return !q || `${t.title} ${t.detail} ${t.amount}`.toLocaleLowerCase("pt-BR").includes(q);
+  });
 
   return <div className="min-h-full bg-[#151f70]">
     <div className="bg-[radial-gradient(circle_at_82%_15%,rgba(69,75,176,.48),transparent_35%),linear-gradient(145deg,#101a61_0%,#17247d_52%,#111958_100%)]">
@@ -53,7 +56,19 @@ function ExtratoScreen() {
         {filterOpen && <div className="mt-3 rounded-xl border border-[#e0e2e8] bg-[#f7f8fb] p-3 text-sm text-[#555b68]"><p className="font-semibold text-[#273896]">Filtrar período</p><p className="mt-1">Escolha 7, 15, 30 ou 60 dias. Toque novamente no período selecionado para mostrar todos.</p></div>}
         <div className="mt-5 grid grid-cols-4 border-b border-[#dedfe3] text-center text-[16px]">{([['todos','Todos'],['entradas','Entradas'],['saidas','Saídas'],['futuros','Futuros']] as [Tab,string][]).map(([key,label])=><button key={key} onClick={()=>setTab(key)} className={`${tab===key?"border-b-[3px] border-[#273896] font-semibold text-[#273896]":""} pb-3`}>{label}</button>)}</div>
       </section>
-      <section className="mx-auto mt-5 max-w-[410px] divide-y divide-[#dedfe3]">{items.length===0?<div className="rounded-xl bg-[#fff8dc] px-4 py-5 text-[15px] text-[#655b38]">Não há lançamentos para este filtro.</div>:items.map((t)=><div key={t.id}>{t.id===pixEmitido.id ? <TransactionRow t={t} hidden={balanceHidden}/> : <Link to="/app/comprovante/$id" params={{id:t.id}} className="block active:bg-[#f5f5f6]"><TransactionRow t={t} hidden={balanceHidden}/></Link>}</div>)}</section>
+      <section className="mx-auto mt-5 max-w-[410px] overflow-hidden rounded-[18px] border border-[#e3e5eb] bg-white shadow-[0_4px_16px_rgba(20,28,70,.07)]">
+        <div className="sticky top-0 z-10 border-b border-[#e1e3e8] bg-white px-5 py-4">
+          <p className="text-[15px] font-extrabold tracking-[.06em] text-[#252a35]">13 NOV 2026</p>
+          <p className="mt-1 text-[12px] text-[#858995]">Lançamentos do dia · valores ilustrativos</p>
+        </div>
+        {items.length===0 ? <div className="px-5 py-6 text-[15px] text-[#655b38]">Não há lançamentos para este filtro.</div> : items.map((t)=><div key={t.id} className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 border-b border-[#eceef2] px-5 py-[17px] last:border-b-0">
+          <div className="flex min-w-0 items-start gap-3">
+            <span className={`mt-1.5 size-2.5 shrink-0 rounded-full ${t.kind==="in"?"bg-[#438a58]":"bg-[#d64a4a]"}`}/>
+            <div className="min-w-0"><p className="text-[15px] font-bold leading-tight text-[#25272c]">{t.title}</p><p className="mt-1 text-[13px] text-[#777b85]">{t.detail}</p></div>
+          </div>
+          <p className={`whitespace-nowrap text-right text-[15px] font-semibold tabular-nums ${t.kind==="in"?"text-[#31834b]":"text-[#c83d42]"}`}>{balanceHidden ? "R$ ••••••" : `R$ ${t.kind==="in"?"+":"−"}${t.amount.toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2})}`}</p>
+        </div>)}
+      </section>
       <section className="mx-auto mt-7 max-w-[390px]"><div className="relative overflow-hidden rounded-[22px] bg-[linear-gradient(120deg,#050817_0%,#11166d_48%,#651147_100%)] px-6 py-7 text-white shadow-[0_12px_30px_rgba(21,25,93,.22)]"><div className="absolute -right-8 -top-10 size-36 rounded-full bg-[#d51c70]/25 blur-2xl"/><div className="relative flex items-start gap-3"><ShieldCheck className="mt-1 size-7 shrink-0 text-white/90"/><div><h2 className="text-[22px] font-extrabold leading-tight">Atenção às transferências!</h2><p className="mt-3 text-[17px] font-semibold leading-snug text-white/95">Antes de transferir, confira os dados e valide o destinatário.</p></div></div></div></section>
       <button type="button" onClick={()=>window.print()} className="fixed bottom-[86px] left-1/2 z-20 flex -translate-x-1/2 items-center justify-center gap-2 rounded-[14px] bg-[#273896] px-8 py-3.5 text-[15px] font-bold text-white shadow-lg print:hidden"><Share2 className="size-4"/> Compartilhar extrato</button>
     </main>
