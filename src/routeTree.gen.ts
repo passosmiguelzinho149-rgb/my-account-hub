@@ -15,6 +15,7 @@ import { Route as RecuperarAcessoRouteImport } from './routes/recuperar-acesso'
 import { Route as AppIndexRouteImport } from './routes/app.index'
 import { Route as AppAgendamentosRouteImport } from './routes/app.agendamentos'
 import { Route as AppCartoesRouteImport } from './routes/app.cartoes'
+import { Route as AppFaturaRouteImport } from './routes/app.fatura'
 import { Route as AppChatRouteImport } from './routes/app.chat'
 import { Route as AppComprovantesRouteImport } from './routes/app.comprovantes'
 import { Route as AppCreditoRouteImport } from './routes/app.credito'
@@ -73,6 +74,11 @@ const AppAgendamentosRoute = AppAgendamentosRouteImport.update({
 const AppCartoesRoute = AppCartoesRouteImport.update({
   id: '/cartoes',
   path: '/cartoes',
+  getParentRoute: () => AppRoute,
+} as any)
+const AppFaturaRoute = AppFaturaRouteImport.update({
+  id: '/fatura',
+  path: '/fatura',
   getParentRoute: () => AppRoute,
 } as any)
 const AppChatRoute = AppChatRouteImport.update({
@@ -227,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/recuperar-acesso': typeof RecuperarAcessoRoute
   '/app/agendamentos': typeof AppAgendamentosRoute
   '/app/cartoes': typeof AppCartoesRoute
+  '/app/fatura': typeof AppFaturaRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
@@ -263,6 +270,7 @@ export interface FileRoutesByTo {
   '/recuperar-acesso': typeof RecuperarAcessoRoute
   '/app/agendamentos': typeof AppAgendamentosRoute
   '/app/cartoes': typeof AppCartoesRoute
+  '/app/fatura': typeof AppFaturaRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
@@ -300,6 +308,7 @@ export interface FileRoutesById {
   '/recuperar-acesso': typeof RecuperarAcessoRoute
   '/app/agendamentos': typeof AppAgendamentosRoute
   '/app/cartoes': typeof AppCartoesRoute
+  '/app/fatura': typeof AppFaturaRoute
   '/app/chat': typeof AppChatRoute
   '/app/comprovantes': typeof AppComprovantesRoute
   '/app/credito': typeof AppCreditoRoute
@@ -491,6 +500,13 @@ declare module '@tanstack/react-router' {
       path: '/cartoes'
       fullPath: '/app/cartoes'
       preLoaderRoute: typeof AppCartoesRouteImport
+      parentRoute: typeof AppRoute
+    }
+    '/app/fatura': {
+      id: '/app/fatura'
+      path: '/fatura'
+      fullPath: '/app/fatura'
+      preLoaderRoute: typeof AppFaturaRouteImport
       parentRoute: typeof AppRoute
     }
     '/app/chat': {
@@ -723,6 +739,7 @@ const AppPixRouteWithChildren =
 interface AppRouteChildren {
   AppAgendamentosRoute: typeof AppAgendamentosRoute
   AppCartoesRoute: typeof AppCartoesRoute
+  AppFaturaRoute: typeof AppFaturaRoute
   AppChatRoute: typeof AppChatRoute
   AppComprovantesRoute: typeof AppComprovantesRoute
   AppCreditoRoute: typeof AppCreditoRoute
@@ -752,6 +769,7 @@ interface AppRouteChildren {
 const AppRouteChildren: AppRouteChildren = {
   AppAgendamentosRoute: AppAgendamentosRoute,
   AppCartoesRoute: AppCartoesRoute,
+  AppFaturaRoute: AppFaturaRoute,
   AppChatRoute: AppChatRoute,
   AppComprovantesRoute: AppComprovantesRoute,
   AppCreditoRoute: AppCreditoRoute,
