@@ -7,6 +7,21 @@
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
 export default defineConfig({
+  vite: {
+    resolve: {
+      dedupe: ["@tanstack/react-router", "@tanstack/router-core", "@tanstack/history"],
+    },
+    // Route HMR calls development-only RouterCore methods. Keep them in the
+    // preview runtime even when the hosting process has NODE_ENV=production.
+    plugins: [{
+      name: "router-development-runtime",
+      config(_config, { command }) {
+        if (command === "serve") {
+          return { define: { "process.env.NODE_ENV": JSON.stringify("development") } };
+        }
+      },
+    }],
+  },
   tanstackStart: {
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this

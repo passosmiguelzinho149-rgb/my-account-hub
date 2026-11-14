@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Use shared bank typography tokens for balance amounts and labels, without parent selectors overriding their sizes, to preserve consistent financial hierarchy.
+- Deduplicate TanStack Router runtime packages and define development NODE_ENV only during Vite serve so route HMR retains its runtime methods without changing production behavior.
 
 - Centralize os pictogramas lineares de Serviços e Acesso rápido em `ServiceGlyph` e use `--icon-ink`, para manter traço e cor consistentes com a referência visual.
 - Nenhum bloqueio, ocultação ou captura de tela acontece por padrão: o app só bloqueia quando o usuário liga o modo privacidade, porque o comportamento automático atrapalhava o uso comum.
