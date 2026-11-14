@@ -113,7 +113,7 @@ function EnviarPix() {
           <div className="mt-4 rounded-2xl border-2 border-primary bg-card p-4 shadow-card">
             <div className="flex items-start gap-3">
               <span className="mt-1 flex size-6 shrink-0 items-center justify-center rounded-full border-2 border-primary">
-                <span className="size-3 rounded-full bg-primary" />
+                <span className="size-3 rounded-full bg-[#CC092F]" />
               </span>
               <div>
                 <p className="font-semibold">Bradesco</p>
@@ -147,7 +147,7 @@ function EnviarPix() {
           <button
             type="button"
             onClick={() => setSourceConfirmed(true)}
-            className="mt-10 w-full rounded-full bg-primary py-3.5 text-base font-semibold text-primary-foreground transition-transform active:scale-95"
+            className="mt-10 w-full rounded-full bg-[#CC092F] py-3.5 text-base font-semibold text-white transition-transform active:scale-95"
           >
             Continuar
           </button>
@@ -190,7 +190,7 @@ function EnviarPix() {
             <button
               type="button"
               onClick={confirm}
-              className="w-full rounded-full bg-primary py-3.5 text-base font-semibold text-primary-foreground transition-transform active:scale-95"
+              className="w-full rounded-full bg-[#CC092F] py-3.5 text-base font-semibold text-white transition-transform active:scale-95"
             >
               Confirmar e enviar
             </button>
@@ -220,7 +220,7 @@ function EnviarPix() {
               className={cn(
                 "flex-1 rounded-full px-4 py-2 text-sm font-medium transition-colors",
                 mode === m
-                  ? "bg-primary text-primary-foreground"
+                  ? "bg-[#CC092F] text-white"
                   : "bg-secondary text-secondary-foreground",
               )}
             >
@@ -241,7 +241,7 @@ function EnviarPix() {
                 value={key}
                 onChange={(e) => setKey(e.target.value)}
                 placeholder="CPF, CNPJ, e-mail, celular ou aleatória"
-                className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
               />
             </label>
 
@@ -269,7 +269,7 @@ function EnviarPix() {
               onChange={(e) => setCode(e.target.value)}
               rows={4}
               placeholder="Cole aqui o código Pix recebido"
-              className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
             />
           </label>
         )}
@@ -281,7 +281,7 @@ function EnviarPix() {
             onChange={(e) => setAmount(e.target.value)}
             inputMode="decimal"
             placeholder="0,00"
-            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
           />
         </label>
 
@@ -291,7 +291,7 @@ function EnviarPix() {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Ex.: pagamento de nota 1234"
-            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
           />
         </label>
 
@@ -301,7 +301,7 @@ function EnviarPix() {
             type="date"
             value={scheduledFor}
             onChange={(e) => setScheduledFor(e.target.value)}
-            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
           />
         </label>
 
@@ -314,7 +314,7 @@ function EnviarPix() {
         <button
           type="button"
           onClick={review}
-          className="mt-6 w-full rounded-full bg-primary py-3.5 text-base font-semibold text-primary-foreground transition-transform active:scale-95"
+          className="mt-6 w-full rounded-full bg-[#CC092F] py-3.5 text-base font-semibold text-white transition-transform active:scale-95"
         >
           Continuar
         </button>
