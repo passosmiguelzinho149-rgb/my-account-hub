@@ -85,7 +85,7 @@ function ChavesPix() {
           <select
             value={type}
             onChange={(e) => setType(e.target.value as PixKeyType)}
-            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
           >
             {types.map((t) => (
               <option key={t} value={t}>
@@ -102,7 +102,7 @@ function ChavesPix() {
               value={value}
               onChange={(e) => setValue(e.target.value)}
               placeholder={type === "E-mail" ? "nome@empresa.com.br" : "Somente números"}
-              className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
             />
           </label>
         )}
@@ -116,7 +116,7 @@ function ChavesPix() {
         <button
           type="button"
           onClick={create}
-          className="mt-6 w-full rounded-full bg-primary py-3.5 text-base font-semibold text-primary-foreground transition-transform active:scale-95"
+          className="mt-6 w-full rounded-full bg-[#CC092F] py-3.5 text-base font-semibold text-white transition-transform active:scale-95"
         >
           {type === "Aleatória" ? "Gerar chave aleatória" : "Cadastrar chave"}
         </button>
