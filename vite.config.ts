@@ -19,6 +19,7 @@ export default defineConfig({
         if (command === "serve") {
           return { define: { "process.env.NODE_ENV": JSON.stringify("development") } };
         }
+        return {};
       },
     }],
   },
