@@ -82,7 +82,7 @@ function ReceberPix() {
           <select
             value={keyValue}
             onChange={(e) => setKeyValue(e.target.value)}
-            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
           >
             {pixKeys.map((k) => (
               <option key={k.id} value={k.value}>
@@ -99,7 +99,7 @@ function ReceberPix() {
             onChange={(e) => setAmount(e.target.value)}
             inputMode="decimal"
             placeholder="0,00"
-            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="mt-1.5 w-full rounded-lg border border-border bg-card px-3 py-3 text-base tabular-nums outline-none focus-visible:ring-2 focus-visible:ring-[#CC092F]"
           />
         </label>
 
@@ -131,7 +131,7 @@ function ReceberPix() {
         <button
           type="button"
           onClick={() => void copy()}
-          className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-primary py-3.5 text-base font-semibold text-primary-foreground transition-transform active:scale-95"
+          className="mt-3 flex w-full items-center justify-center gap-2 rounded-full bg-[#CC092F] py-3.5 text-base font-semibold text-white transition-transform active:scale-95"
         >
           {copied ? <Check className="size-5" aria-hidden /> : <Copy className="size-5" aria-hidden />}
           {copied ? "Código copiado" : "Copiar código"}
