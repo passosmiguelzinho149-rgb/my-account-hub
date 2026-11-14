@@ -1,28 +1,92 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ChevronRight, CreditCard, Eye, EyeOff, FileText, Lock, LockOpen, Receipt, Settings, SlidersHorizontal } from "lucide-react";
-import cartaoEloEmpresas from "@/assets/cartao-elo-empresas.jpg.jpg";
+import { ArrowUpRight, Check, Copy, Eye, EyeOff, FileText, Lock, LockOpen, Settings2, SlidersHorizontal, WalletCards } from "lucide-react";
 import { SubHeader } from "@/components/app/SubHeader";
 import { ErrorNote, Field, PrimaryButton } from "@/components/app/OpKit";
 import { setCardLimit, toggleCardBlock, useBank, type Card } from "@/lib/bank";
 import { formatBRL } from "@/lib/mock-data";
-import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/app/cartoes")({ head: () => ({ meta: [{ title: "Cartões — Conta Empresas Demo" }] }), component: CartoesScreen });
+export const Route = createFileRoute("/app/cartoes")({ head: () => ({ meta: [{ title: "Cartões — Bradesco Empresas" }] }), component: CartoesScreen });
 
 const demoNumbers = ["5321 6600 1234 5678", "5488 2100 9876 4321"] as const;
-type Panel = { name: "none" } | { name: "limite" } | { name: "bloqueio" };
-
 function CartoesScreen() {
- const { cards } = useBank(); const [selectedId,setSelectedId]=useState(cards[0]?.id??""); const [showData,setShowData]=useState(false); const [panel,setPanel]=useState<Panel>({name:"none"}); const [limitInput,setLimitInput]=useState(""); const [error,setError]=useState<string|null>(null);
- const card: Card|undefined=cards.find(c=>c.id===selectedId)??cards[0]; if(!card)return null;
- const cardIndex=Math.max(0,cards.findIndex(c=>c.id===card.id)); const demoNumber=demoNumbers[cardIndex%demoNumbers.length]??demoNumbers[0]; const demoLast4=demoNumber.slice(-4);
- const submitLimit=()=>{const value=Number(limitInput.replace(/\./g,"").replace(",","."));if(!Number.isFinite(value)||value<=0)return setError("Informe um limite válido maior que zero.");if(value>1_000_000)return setError("O limite máximo é R$ 1.000.000,00.");setError(null);setCardLimit(card.id,value);setLimitInput("");setPanel({name:"none"});};
- return <><SubHeader title="Cartões" variant="deep" compactActions><div className="h-24"/></SubHeader><main className="mx-auto w-full max-w-[430px] px-4 pb-12">
- <section className="-mt-20"><div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-1 pb-5 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">{cards.map((c)=><button key={c.id} type="button" onClick={()=>setSelectedId(c.id)} className={cn("relative min-w-[96%] snap-center bg-transparent p-0 text-left",c.id===card.id?"opacity-100":"opacity-90")}><div className="relative overflow-hidden rounded-[20px] shadow-[0_18px_34px_rgba(15,18,35,.30)] ring-1 ring-black/10"><img src={cartaoEloEmpresas} alt="Cartão empresarial Elo" className="block h-auto w-full select-none" draggable={false}/><div className="pointer-events-none absolute inset-0 rounded-[20px] ring-1 ring-inset ring-white/10"/>{c.blocked&&<span className="absolute right-4 top-4 rounded-full bg-black/75 px-3 py-1.5 text-[10px] font-bold text-white shadow">BLOQUEADO</span>}</div></button>)}</div><div className="flex justify-center gap-2">{cards.map(c=><span key={c.id} className={cn("h-1.5 rounded-full",c.id===card.id?"w-7 bg-primary":"w-2 bg-muted-foreground/25")}/>)}</div></section>
- <section className="mt-6 rounded-[24px] bg-card p-5 shadow-card"><div className="flex items-center justify-between"><h2 className="text-[20px] font-bold">Limite do cartão</h2><span className="rounded-full bg-muted px-3 py-1 text-[11px] font-semibold">{card.type}</span></div><p className="mt-4 text-[32px] font-extrabold tracking-[-.03em] tabular-nums">{formatBRL(card.limit)}</p><p className="mt-1 text-[13px] text-muted-foreground">Limite total disponível</p><div className="mt-5 h-2 rounded-full bg-muted"/><div className="mt-3 flex justify-between text-[13px] text-muted-foreground"><span>Usado: {formatBRL(0)}</span><span>0%</span></div><button type="button" className="mt-6 flex w-full items-center gap-3 rounded-2xl border border-border p-4 text-left"><Receipt className="size-7 text-icon-ink"/><div className="flex-1"><p className="text-[15px] font-bold">Fatura atual</p><p className="text-[12px] text-muted-foreground">Fechamento em 05 do mês</p></div><strong>{formatBRL(0)}</strong><ChevronRight className="size-5"/></button></section>
- <section className="mt-4 grid grid-cols-4 gap-2"><button onClick={()=>{setError(null);setPanel(panel.name==="limite"?{name:"none"}:{name:"limite"})}} className="flex min-h-[112px] flex-col items-center justify-center gap-3 rounded-[20px] bg-card px-1 shadow-card"><SlidersHorizontal className="size-7 text-icon-ink"/><span className="text-center text-[11px] font-semibold">Ajustar<br/>limite</span></button><button onClick={()=>setPanel(panel.name==="bloqueio"?{name:"none"}:{name:"bloqueio"})} className="flex min-h-[112px] flex-col items-center justify-center gap-3 rounded-[20px] bg-card px-1 shadow-card">{card.blocked?<LockOpen className="size-7 text-icon-ink"/>:<Lock className="size-7 text-icon-ink"/>}<span className="text-center text-[11px] font-semibold">{card.blocked?"Desbloquear":"Bloquear"}<br/>cartão</span></button><button onClick={()=>setShowData(v=>!v)} className="flex min-h-[112px] flex-col items-center justify-center gap-3 rounded-[20px] bg-card px-1 shadow-card">{showData?<EyeOff className="size-7 text-icon-ink"/>:<Eye className="size-7 text-icon-ink"/>}<span className="text-center text-[11px] font-semibold">Dados do<br/>cartão</span></button><button className="flex min-h-[112px] flex-col items-center justify-center gap-3 rounded-[20px] bg-card px-1 shadow-card"><Settings className="size-7 text-icon-ink"/><span className="text-center text-[11px] font-semibold">Configurar<br/>cartão</span></button></section>
- <section className="mt-4 overflow-hidden rounded-[22px] bg-card px-5 shadow-card"><button className="flex w-full items-center gap-4 border-b border-border py-4 text-left"><FileText className="size-7 text-icon-ink"/><div className="flex-1"><p className="text-[14px] font-bold">Movimentações do cartão</p><p className="text-[12px] text-muted-foreground">Compras e lançamentos</p></div><ChevronRight className="size-5"/></button><button className="flex w-full items-center gap-4 py-4 text-left"><CreditCard className="size-7 text-brand-red"/><div className="flex-1"><p className="text-[14px] font-bold">Cartão virtual</p><p className="text-[12px] text-muted-foreground">Compras online com mais segurança</p></div><ChevronRight className="size-5"/></button></section>
- {error?<ErrorNote>{error}</ErrorNote>:null}{panel.name==="limite"?<section className="mt-4 rounded-2xl bg-card p-5 shadow-card"><h3 className="font-bold">Novo limite</h3><Field label="Valor do limite (R$)" inputMode="decimal" value={limitInput} onChange={e=>setLimitInput(e.target.value)}/><PrimaryButton onClick={submitLimit}>Salvar novo limite</PrimaryButton></section>:null}{panel.name==="bloqueio"?<section className="mt-4 rounded-2xl bg-card p-5 shadow-card"><h3 className="font-bold">{card.blocked?"Desbloquear cartão":"Bloquear cartão"}</h3><PrimaryButton onClick={()=>{toggleCardBlock(card.id);setPanel({name:"none"})}}>{card.blocked?"Sim, desbloquear":"Sim, bloquear"}</PrimaryButton></section>:null}{showData?<section className="mt-4 rounded-2xl bg-card p-5 shadow-card"><h3 className="font-bold">Dados do cartão</h3><dl className="mt-3 space-y-3 text-sm"><div className="flex justify-between"><dt className="text-muted-foreground">Número fictício</dt><dd className="font-semibold">{demoNumber}</dd></div><div className="flex justify-between"><dt className="text-muted-foreground">Final</dt><dd className="font-semibold">{demoLast4}</dd></div><div className="flex justify-between"><dt className="text-muted-foreground">Validade</dt><dd className="font-semibold">12/30</dd></div><div className="flex justify-between"><dt className="text-muted-foreground">CVV fictício</dt><dd className="font-semibold">123</dd></div><div className="flex justify-between"><dt className="text-muted-foreground">Bandeira</dt><dd className="font-semibold">{card.brand}</dd></div></dl></section>:null}
- </main></>;
+  const { cards } = useBank();
+  const physical = cards.find((c) => c.type === "Físico") ?? cards[0];
+  const virtual = cards.find((c) => c.type === "Virtual");
+  const [showPhysical, setShowPhysical] = useState(false);
+  const [showVirtual, setShowVirtual] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [panel, setPanel] = useState<"none" | "limit">("none");
+  const [limitInput, setLimitInput] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  if (!physical) return <><SubHeader title="Cartões" compactActions /><main className="p-5 text-sm text-muted-foreground">Nenhum cartão cadastrado.</main></>;
+  const numberFor = (c: Card) => demoNumbers[Math.max(0, cards.findIndex((item) => item.id === c.id)) % demoNumbers.length];
+  const saveLimit = () => {
+    const value = Number(limitInput.replace(/\\./g, "").replace(",", "."));
+    if (!Number.isFinite(value) || value <= 0) { setError("Informe um limite válido."); return; }
+    if (value > 1_000_000) { setError("O limite máximo é R$ 1.000.000,00."); return; }
+    setCardLimit(physical.id, value); setLimitInput(""); setPanel("none"); setError(null);
+  };
+  const copyVirtual = async () => {
+    if (!virtual) return;
+    try { await navigator.clipboard.writeText(numberFor(virtual)); setCopied(true); window.setTimeout(() => setCopied(false), 1800); } catch { setCopied(false); }
+  };
+  const CardFace = ({ card, isVirtual = false }: { card: Card; isVirtual?: boolean }) => (
+    <div className={`relative overflow-hidden rounded-[22px] p-5 text-white shadow-sm ${isVirtual ? "bg-[#303238]" : "bg-[#CC092F]"}`}>
+      <div className="absolute -right-10 -top-14 size-44 rounded-full border border-white/10" />
+      <div className="absolute -right-2 -top-7 size-32 rounded-full border border-white/10" />
+      <div className="relative flex items-start justify-between">
+        <div><p className="text-[11px] font-semibold tracking-[.18em] text-white/80">BRADESCO</p><p className="mt-1 text-xs text-white/75">{isVirtual ? "CARTÃO VIRTUAL" : "EMPRESARIAL"}</p></div>
+        <span className="rounded-md border border-white/50 px-2 py-1 text-sm font-black italic">elo</span>
+      </div>
+      <p className="relative mt-8 font-mono text-[19px] tracking-[.12em]">•••• •••• •••• {card.last4}</p>
+      <div className="relative mt-5 flex items-end justify-between gap-3">
+        <div className="min-w-0"><p className="text-[9px] uppercase tracking-wider text-white/70">Titular</p><p className="truncate text-[12px] font-semibold">CLEITON OLIVEIRA DOS PASSOS</p></div>
+        <div className="shrink-0"><p className="text-[9px] uppercase text-white/70">Validade</p><p className="text-sm font-semibold">{card.expiry}</p></div>
+      </div>
+      {card.blocked && <span className="absolute right-4 top-[4.6rem] rounded-full bg-black/35 px-3 py-1 text-[10px] font-bold tracking-wider">BLOQUEADO</span>}
+    </div>
+  );
+  const CardActions = ({ card }: { card: Card }) => (
+    <div className="mt-4 grid grid-cols-2 gap-3">
+      <button type="button" onClick={() => { setError(null); setPanel("limit"); }} className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#E6E6E9] bg-white px-3 text-sm font-semibold text-[#33343A]"><SlidersHorizontal className="size-4 text-[#CC092F]"/>Ajustar limite</button>
+      <button type="button" onClick={() => toggleCardBlock(card.id)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#E6E6E9] bg-white px-3 text-sm font-semibold text-[#33343A]">{card.blocked ? <LockOpen className="size-4 text-[#CC092F]"/> : <Lock className="size-4 text-[#CC092F]"/>}{card.blocked ? "Desbloquear" : "Bloquear"}</button>
+      <Link to="/app/fatura" className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#E6E6E9] bg-white px-3 text-sm font-semibold text-[#33343A]"><FileText className="size-4 text-[#CC092F]"/>Ver fatura</Link>
+      <button type="button" onClick={() => setShowPhysical((v) => !v)} className="flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#E6E6E9] bg-white px-3 text-sm font-semibold text-[#33343A]">{showPhysical ? <EyeOff className="size-4"/> : <Eye className="size-4"/>}{showPhysical ? "Ocultar dados" : "Dados do cartão"}</button>
+    </div>
+  );
+  return <>
+    <SubHeader title="Cartões" variant="deep" compactActions />
+    <main className="mx-auto w-full max-w-[430px] space-y-5 bg-white px-4 pb-10 pt-5 text-[#292A30]">
+      <section>
+        <div className="mb-3 flex items-center justify-between"><h2 className="text-lg font-bold">Cartão físico</h2><span className="text-xs font-medium text-[#777982]">Elo Empresas</span></div>
+        <CardFace card={physical}/>
+        <div className="mt-4 flex items-center justify-between rounded-xl border border-[#ECECEF] px-4 py-3">
+          <div><p className="text-sm font-semibold">Bloquear cartão</p><p className="text-xs text-[#777982]">Bloqueio temporário para compras</p></div>
+          <button type="button" role="switch" aria-checked={physical.blocked} onClick={() => toggleCardBlock(physical.id)} className={`relative h-7 w-12 rounded-full transition ${physical.blocked ? "bg-[#CC092F]" : "bg-[#D7D8DC]"}`}><span className={`absolute top-1 size-5 rounded-full bg-white shadow transition-all ${physical.blocked ? "left-6" : "left-1"}`}/></button>
+        </div>
+        <CardActions card={physical}/>
+        {showPhysical && <div className="mt-3 rounded-xl bg-[#F6F6F8] p-4 text-sm"><p className="font-semibold">Dados fictícios do cartão</p><p className="mt-2 font-mono">{numberFor(physical)}</p><p className="mt-1 text-[#777982]">CVV ••• · Validade {physical.expiry}</p></div>}
+      </section>
+      <section className="rounded-2xl border border-[#ECECEF] p-4">
+        <div className="mb-3 flex items-center justify-between"><div><h2 className="font-bold">Limite do cartão</h2><p className="mt-1 text-xs text-[#777982]">Valores atuais cadastrados</p></div><WalletCards className="size-5 text-[#CC092F]"/></div>
+        <div className="flex items-baseline justify-between gap-2"><span className="text-2xl font-bold tabular-nums">{formatBRL(physical.limit)}</span><span className="text-xs text-[#777982]">Limite total</span></div>
+        <div className="mt-4 h-2 overflow-hidden rounded-full bg-[#ECECEF]"><div className="h-full rounded-full bg-[#CC092F]" style={{width:`${Math.min(100, physical.limit > 0 ? physical.used / physical.limit * 100 : 0)}%`}}/></div>
+        <div className="mt-2 flex justify-between text-xs text-[#777982]"><span>Usado: {formatBRL(physical.used)}</span><span>Disponível: {formatBRL(Math.max(0, physical.limit - physical.used))}</span></div>
+      </section>
+      {panel === "limit" && <section className="rounded-xl border border-[#ECECEF] p-4"><h3 className="font-bold">Ajustar limite do cartão físico</h3><Field label="Novo limite (R$)" inputMode="decimal" value={limitInput} onChange={(e) => setLimitInput(e.target.value)}/>{error && <ErrorNote>{error}</ErrorNote>}<PrimaryButton onClick={saveLimit}>Salvar limite</PrimaryButton></section>}
+      <section>
+        <div className="mb-3"><h2 className="text-lg font-bold">Cartão virtual</h2><p className="text-xs text-[#777982]">Para compras pela internet com mais segurança</p></div>
+        {virtual ? <>
+          <CardFace card={virtual} isVirtual/>
+          <div className="mt-3 flex items-center justify-between rounded-xl border border-[#ECECEF] px-4 py-3"><div><p className="text-sm font-semibold">Bloquear cartão virtual</p><p className="text-xs text-[#777982]">Controle independente do cartão físico</p></div><button type="button" role="switch" aria-checked={virtual.blocked} onClick={() => toggleCardBlock(virtual.id)} className={`relative h-7 w-12 rounded-full ${virtual.blocked ? "bg-[#CC092F]" : "bg-[#D7D8DC]"}`}><span className={`absolute top-1 size-5 rounded-full bg-white shadow ${virtual.blocked ? "left-6" : "left-1"}`}/></button></div>
+          <button type="button" onClick={() => setShowVirtual((v) => !v)} className="mt-3 w-full rounded-xl border border-[#E6E6E9] py-3 text-sm font-semibold">{showVirtual ? "Ocultar dados" : "Exibir dados fictícios"}</button>
+          {showVirtual && <div className="mt-2 rounded-xl bg-[#F6F6F8] p-3 font-mono text-sm">{numberFor(virtual)}<p className="mt-1 font-sans text-xs text-[#777982]">Validade {virtual.expiry} · CVV •••</p></div>}
+          <button type="button" onClick={() => void copyVirtual()} className="mt-3 flex w-full items-center justify-center gap-2 rounded-xl bg-[#CC092F] py-3 text-sm font-semibold text-white">{copied ? <Check className="size-4"/> : <Copy className="size-4"/>}{copied ? "Dados copiados" : "Copiar dados fictícios"}</button>
+        </> : <p className="rounded-xl bg-[#F6F6F8] p-4 text-sm text-[#777982]">Nenhum cartão virtual cadastrado.</p>}
+      </section>
+      <Link to="/app/fatura" className="flex items-center justify-between rounded-xl border border-[#ECECEF] p-4 text-sm font-semibold"><span className="flex items-center gap-2"><FileText className="size-5 text-[#CC092F]"/>Segunda via da fatura</span><ArrowUpRight className="size-4"/></Link>
+      <div className="flex items-center gap-2 text-xs text-[#85868D]"><Settings2 className="size-4"/>Cartões e dados demonstrativos do aplicativo.</div>
+    </main>
+  </>;
 }
