@@ -32,19 +32,39 @@ function CartoesScreen() {
     try { await navigator.clipboard.writeText(numberFor(virtual)); setCopied(true); window.setTimeout(() => setCopied(false), 1800); } catch { setCopied(false); }
   };
   const CardFace = ({ card, isVirtual = false }: { card: Card; isVirtual?: boolean }) => (
-    <div className={`relative overflow-hidden rounded-[22px] p-5 text-white shadow-sm ${isVirtual ? "bg-[#303238]" : "bg-[#CC092F]"}`}>
-      <div className="absolute -right-10 -top-14 size-44 rounded-full border border-white/10" />
-      <div className="absolute -right-2 -top-7 size-32 rounded-full border border-white/10" />
+    <div className={`relative isolate aspect-[1.586/1] w-full overflow-hidden rounded-[20px] p-5 text-white shadow-[0_12px_26px_rgba(18,22,45,.20)] ${isVirtual ? "bg-gradient-to-br from-[#343943] via-[#202630] to-[#111820]" : "bg-gradient-to-br from-[#e51b3e] via-[#c8102e] to-[#8f0926]"}`}>
+      <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-16 -z-10 size-56 rounded-full border border-white/[.12]"/>
+      <div aria-hidden="true" className="pointer-events-none absolute -right-5 -top-9 -z-10 size-40 rounded-full border border-white/[.10]"/>
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-24 left-12 -z-10 size-52 rounded-full border border-white/[.09]"/>
       <div className="relative flex items-start justify-between">
-        <div><p className="text-[11px] font-semibold tracking-[.18em] text-white/80">BRADESCO</p><p className="mt-1 text-xs text-white/75">{isVirtual ? "CARTÃO VIRTUAL" : "EMPRESARIAL"}</p></div>
-        <span className="rounded-md border border-white/50 px-2 py-1 text-sm font-black italic">elo</span>
+        <div className="leading-none">
+          <p className="text-[13px] font-bold tracking-[.13em]">bradesco</p>
+          <p className="mt-1.5 text-[9px] font-medium tracking-[.12em] text-white/75">{isVirtual ? "CARTÃO VIRTUAL" : "EMPRESAS E NEGÓCIOS"}</p>
+        </div>
+        <span className="rounded-md border border-white/70 px-2.5 py-1 text-[17px] font-black italic leading-none tracking-[-.08em]">elo</span>
       </div>
-      <p className="relative mt-8 font-mono text-[19px] tracking-[.12em]">•••• •••• •••• {card.last4}</p>
-      <div className="relative mt-5 flex items-end justify-between gap-3">
-        <div className="min-w-0"><p className="text-[9px] uppercase tracking-wider text-white/70">Titular</p><p className="truncate text-[12px] font-semibold">CLEITON OLIVEIRA DOS PASSOS</p></div>
-        <div className="shrink-0"><p className="text-[9px] uppercase text-white/70">Validade</p><p className="text-sm font-semibold">{card.expiry}</p></div>
+      <div className="relative mt-5 flex items-center gap-3">
+        <div className="relative h-[31px] w-[42px] overflow-hidden rounded-[6px] border border-[#f4df9a]/80 bg-gradient-to-br from-[#f8e7b2] via-[#c9a75c] to-[#8d7139] shadow-inner">
+          <span className="absolute left-1/3 top-0 h-full w-px bg-[#8e7546]/70"/>
+          <span className="absolute left-2/3 top-0 h-full w-px bg-[#8e7546]/70"/>
+          <span className="absolute left-0 top-1/3 h-px w-full bg-[#8e7546]/70"/>
+          <span className="absolute left-0 top-2/3 h-px w-full bg-[#8e7546]/70"/>
+          <span className="absolute inset-[8px] rounded-[2px] border border-[#8e7546]/65"/>
+        </div>
+        <span className="text-[10px] tracking-[.08em] text-white/80">••</span>
       </div>
-      {card.blocked && <span className="absolute right-4 top-[4.6rem] rounded-full bg-black/35 px-3 py-1 text-[10px] font-bold tracking-wider">BLOQUEADO</span>}
+      <p className="relative mt-4 whitespace-nowrap font-mono text-[clamp(14px,4.1vw,18px)] tracking-[.13em] tabular-nums">••••  ••••  ••••  {card.last4}</p>
+      <div className="relative mt-4 flex items-end justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <p className="text-[8px] font-medium uppercase tracking-[.16em] text-white/65">Titular do cartão</p>
+          <p className="mt-1 whitespace-nowrap text-[11px] font-semibold tracking-[.09em]">CLEITON PASSOS</p>
+        </div>
+        <div className="shrink-0 text-right">
+          <p className="text-[8px] font-medium uppercase tracking-[.14em] text-white/65">Validade</p>
+          <p className="mt-1 text-[11px] font-semibold tracking-[.08em]">{card.expiry}</p>
+        </div>
+      </div>
+      {card.blocked && <span className="absolute right-4 top-[4.6rem] rounded-full bg-black/40 px-3 py-1 text-[9px] font-bold tracking-wider">BLOQUEADO</span>}
     </div>
   );
   const CardActions = ({ card }: { card: Card }) => (
