@@ -46,7 +46,7 @@ function EnviarPix() {
   const [scheduledFor, setScheduledFor] = useState("");
   const [error, setError] = useState<string | null>(null);
   /** Quando preenchido, a tela mostra a confirmação antes de concluir. */
-  const [pending, setPending] = useState<{ payee: PixParty; value: number } | null>(null);
+  const [pending, setPending] = useState<{ payee: PixParty; value: number } | null>(null);\n  const [sending, setSending] = useState(false);\n  const [confirmError, setConfirmError] = useState<string | null>(null);
 
   const review = () => {
     setError(null);
@@ -78,28 +78,48 @@ function EnviarPix() {
     setPending({ payee: resolvePayee(targetKey), value });
   };
 
-  const confirm = () => {
-    if (!pending) return;
-    const scheduled = Boolean(scheduledFor);
-    const tx = postTx({
-      category: "pix",
-      kind: "out",
-      title: scheduled ? "PIX AGENDADO" : "PIX ENVIADO",
-      counterpart: `PARA: ${pending.payee.name}`,
-      amount: pending.value,
-      channel: mode === "copia" ? "Pix copia e cola" : "Pix chave",
-      status: scheduled ? "Agendado" : "Concluído",
-      pix: true,
-      ...(scheduledFor ? { scheduledFor: new Date(scheduledFor).toISOString() } : {}),
-      ...(description.trim() ? { description: description.trim() } : {}),
-      extraRows: pixReceiptRows(pending.payee),
-      notify: {
-        kind: "pix",
-        title: scheduled ? "Pix agendado" : "Pix enviado",
-        body: `${formatBRL(pending.value)} para ${pending.payee.name}.`,
-      },
-    });
-    void navigate({ to: "/app/comprovante/$id", params: { id: tx.id }, replace: true });
+  const confirm = async () => {
+    if (!pending || sending) return;
+    setConfirmError(null);
+    if (!Number.isFinite(pending.value) || pending.value <= 0) {
+      setConfirmError("Confira o valor informado e tente novamente.");
+      return;
+    }
+    if (scheduledFor && Number.isNaN(new Date(`${scheduledFor}T12:00:00`).getTime())) {
+      setConfirmError("A data do agendamento é inválida. Escolha outra data.");
+      return;
+    }
+    if (!scheduledFor && pending.value > balance) {
+      setConfirmError("Saldo insuficiente para este Pix.");
+      return;
+    }
+    setSending(true);
+    try {
+      const scheduled = Boolean(scheduledFor);
+      const tx = postTx({
+        category: "pix",
+        kind: "out",
+        title: scheduled ? "PIX AGENDADO" : "PIX ENVIADO",
+        counterpart: `PARA: ${pending.payee.name}`,
+        amount: pending.value,
+        channel: mode === "copia" ? "Pix copia e cola" : "Pix chave",
+        status: scheduled ? "Agendado" : "Concluído",
+        pix: true,
+        ...(scheduledFor ? { scheduledFor: new Date(`${scheduledFor}T12:00:00`).toISOString() } : {}),
+        ...(description.trim() ? { description: description.trim() } : {}),
+        extraRows: pixReceiptRows(pending.payee),
+        notify: {
+          kind: "pix",
+          title: scheduled ? "Pix agendado" : "Pix enviado",
+          body: `${formatBRL(pending.value)} para ${pending.payee.name}.`,
+        },
+      });
+      await navigate({ to: "/app/comprovante/$id", params: { id: tx.id }, replace: true });
+    } catch (err) {
+      console.error("Falha ao concluir Pix demonstrativo:", err);
+      setConfirmError("Não foi possível concluir esta operação. Confira os dados e tente novamente.");
+      setSending(false);
+    }
   };
 
   if (!sourceConfirmed) {
