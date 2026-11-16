@@ -108,59 +108,71 @@ function HomeScreen() {
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-[430px] space-y-6 px-4 pb-10 pt-4">
-        <section className="rounded-2xl border border-black/[.035] bg-white p-4 shadow-[0_2px_8px_rgba(20,25,50,.04)]">
-          <div className="flex items-center justify-between gap-3">
-            <h2 className="text-[16px] font-semibold">Resumo diário</h2>
-            <span className="shrink-0 text-[12px] tabular-nums text-[#6e6e76]">{now.toLocaleDateString("pt-BR")}</span>
-          </div>
-          <dl className="mt-4 grid grid-cols-2">
-            <div className="min-w-0 border-r border-[#ececf0] pr-3">
-              <dt className="flex items-center gap-2 text-[12px] text-[#6e6e76]">
-                <span className="grid size-8 shrink-0 place-items-center rounded-md bg-[#e8f5ec]"><ArrowUpRight className="size-[18px] text-[#218447]" strokeWidth={1.8}/></span>
-                Entradas
-              </dt>
-              <dd className="mt-2 pl-10 text-[14px] font-semibold tabular-nums text-[#111]">{balanceHidden ? hiddenValue : formatBRL(inflow)}</dd>
-            </div>
-            <div className="min-w-0 pl-3">
-              <dt className="flex items-center gap-2 text-[12px] text-[#6e6e76]">
-                <span className="grid size-8 shrink-0 place-items-center rounded-md bg-[#fbeaec]"><ArrowDownLeft className="size-[18px] text-[#c43d4a]" strokeWidth={1.8}/></span>
-                Saídas
-              </dt>
-              <dd className="mt-2 pl-10 text-[14px] font-semibold tabular-nums text-[#111]">{balanceHidden ? hiddenValue : formatBRL(outflow)}</dd>
-            </div>
-          </dl>
-          <Link to="/app/extrato" className="mt-4 inline-flex items-center gap-1 text-[13px] font-medium text-[#1b4fd8]">Consultar extrato <ChevronRight className="size-4"/></Link>
-        </section>
-
-        <section>
-          <h2 className="mb-3 text-[18px] font-semibold">Acesso rápido</h2>
-          <div className="grid grid-cols-4 gap-2.5">
-            {shortcuts.map(({ label, to, Icon }) => (
-              <Link key={label} to={to} className="flex min-h-[91px] min-w-0 flex-col items-center justify-center gap-2 rounded-xl border border-black/[.035] bg-white px-1.5 py-3 text-center shadow-[0_2px_7px_rgba(20,25,50,.035)] active:bg-[#f7f8fc]">
-                <Icon className="size-6 text-[#1b4fd8]" strokeWidth={1.55}/>
-                <span className="text-[11px] font-medium leading-tight text-[#25252b]">{label}</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-
-        <section className="overflow-hidden">
-          <h2 className="mb-3 text-[18px] font-semibold">Soluções para sua empresa</h2>
-          <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            <Link to="/app/pix" className="relative block h-[154px] w-[86%] shrink-0 snap-start overflow-hidden rounded-2xl bg-white">
-              <img src={pixMulher} alt="Mulher sorrindo segurando cartão" className="absolute inset-0 h-full w-full object-cover object-center" loading="eager"/>
-              <span className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/65 to-transparent px-4 pb-3 pt-9 text-[15px] font-semibold text-white">Pix para facilitar seu dia</span>
+      <main className="mx-auto w-full max-w-[430px] space-y-5 px-4 pb-10 pt-4">
+        <section aria-label="Destaques" className="overflow-hidden">
+          <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <Link to="/app/pix" className="relative block h-[150px] w-[88%] shrink-0 snap-start overflow-hidden rounded-2xl bg-[#171b68]">
+              <img src={pixMulher} alt="Destaque de soluções para sua empresa" className="absolute inset-0 h-full w-full object-cover object-center" loading="eager"/>
+              <span className="absolute inset-0 bg-gradient-to-r from-[#171b68]/95 via-[#202b83]/65 to-transparent"/>
+              <span className="absolute left-4 top-5 max-w-[62%] text-[18px] font-semibold leading-tight text-white">Soluções para impulsionar o seu negócio</span>
+              <span className="absolute bottom-4 left-4 inline-flex items-center gap-1 rounded-full border border-white/75 px-3 py-1.5 text-[11px] font-medium text-white">Conheça nossas soluções <ChevronRight className="size-3.5"/></span>
             </Link>
-            <Link to="/app/pagamentos" className="flex h-[154px] w-[86%] shrink-0 snap-start flex-col justify-between rounded-2xl bg-[#e9edf8] p-4 text-[#24265f]">
-              <span className="text-[11px] font-semibold uppercase tracking-wide text-[#4c5590]">Gestão financeira</span>
-              <span className="max-w-[210px] text-[17px] font-semibold leading-snug">Pagamentos e boletos em um só lugar</span>
-              <span className="inline-flex items-center gap-1 text-[12px] font-semibold text-[#1b4fd8]">Conheça <ChevronRight className="size-4"/></span>
+            <Link to="/app/pagamentos" className="flex h-[150px] w-[88%] shrink-0 snap-start flex-col justify-between rounded-2xl bg-[#302879] p-4 text-white">
+              <span className="text-[10px] font-semibold uppercase tracking-[.12em] text-white/75">Gestão financeira</span>
+              <span className="max-w-[220px] text-[18px] font-semibold leading-snug">Pagamentos e boletos em um só lugar</span>
+              <span className="inline-flex items-center gap-1 text-[12px] font-medium">Saiba mais <ChevronRight className="size-4"/></span>
             </Link>
           </div>
           <div className="mt-2 flex justify-center gap-1.5" aria-hidden="true">
             <span className="size-1.5 rounded-full bg-[#3b2e8f]"/>
             <span className="size-1.5 rounded-full bg-[#c9cad2]"/>
+          </div>
+        </section>
+
+        <section className="rounded-2xl border border-black/[.035] bg-white p-4 shadow-[0_2px_8px_rgba(20,25,50,.045)]">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex min-w-0 items-center gap-2.5">
+              <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-[#f0effb] text-[#3b2e8f]"><ArrowUpRight className="size-5"/></span>
+              <h2 className="text-[17px] font-semibold tracking-[-.02em]">Resumo diário</h2>
+            </div>
+            <span className="shrink-0 text-[11px] tabular-nums text-[#6e6e76]">{now.toLocaleDateString("pt-BR")}</span>
+          </div>
+          <dl className="mt-4 grid grid-cols-2">
+            <div className="min-w-0 border-r border-[#e7e7ed] pr-3">
+              <dt className="flex items-center gap-2 text-[12px] text-[#6e6e76]">
+                <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#e8f5ec]"><ArrowUpRight className="size-4 text-[#218447]" strokeWidth={1.8}/></span>
+                Entradas
+              </dt>
+              <dd className="mt-2 break-words pl-9 text-[14px] font-semibold leading-tight tabular-nums text-[#111]">{balanceHidden ? hiddenValue : formatBRL(inflow)}</dd>
+            </div>
+            <div className="min-w-0 pl-3">
+              <dt className="flex items-center gap-2 text-[12px] text-[#6e6e76]">
+                <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#fbeaec]"><ArrowDownLeft className="size-4 text-[#c43d4a]" strokeWidth={1.8}/></span>
+                Saídas
+              </dt>
+              <dd className="mt-2 break-words pl-9 text-[14px] font-semibold leading-tight tabular-nums text-[#111]">{balanceHidden ? hiddenValue : formatBRL(outflow)}</dd>
+            </div>
+          </dl>
+          <div className="my-4 border-t border-[#e7e7ed]"/>
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-[12px] text-[#6e6e76]">Saldo da conta</span>
+            <span className="min-w-0 break-words text-right text-[15px] font-semibold tabular-nums text-[#111]">{balanceHidden ? hiddenValue : formatBRL(balance)}</span>
+          </div>
+          <Link to="/app/extrato" className="mt-4 inline-flex items-center gap-1 text-[12px] font-medium text-[#1b4fd8]">Consultar extrato <ChevronRight className="size-4"/></Link>
+        </section>
+
+        <section>
+          <div className="mb-3 flex items-center justify-between gap-2">
+            <h2 className="text-[17px] font-semibold tracking-[-.02em]">Acesso rápido</h2>
+            <Link to="/app/servicos" className="inline-flex shrink-0 items-center gap-1 text-[12px] font-medium text-[#1b4fd8]">Ver todos <ChevronRight className="size-4"/></Link>
+          </div>
+          <div className="grid grid-cols-4 gap-2">
+            {shortcuts.map(({ label, to, Icon }) => (
+              <Link key={label} to={to} className="flex min-h-[88px] min-w-0 flex-col items-center justify-center gap-2 rounded-xl border border-black/[.035] bg-white px-1 py-3 text-center active:bg-[#f7f8fc]">
+                <Icon className="size-[22px] text-[#1b4fd8]" strokeWidth={1.6}/>
+                <span className="text-[10px] font-medium leading-tight text-[#25252b]">{label}</span>
+              </Link>
+            ))}
           </div>
         </section>
       </main>
