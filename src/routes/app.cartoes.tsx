@@ -32,39 +32,50 @@ function CartoesScreen() {
     try { await navigator.clipboard.writeText(numberFor(virtual)); setCopied(true); window.setTimeout(() => setCopied(false), 1800); } catch { setCopied(false); }
   };
   const CardFace = ({ card, isVirtual = false }: { card: Card; isVirtual?: boolean }) => (
-    <div className={`relative isolate aspect-[1.586/1] w-full overflow-hidden rounded-[20px] p-5 text-white shadow-[0_12px_26px_rgba(18,22,45,.20)] ${isVirtual ? "bg-gradient-to-br from-[#343943] via-[#202630] to-[#111820]" : "bg-gradient-to-br from-[#e51b3e] via-[#c8102e] to-[#8f0926]"}`}>
-      <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-16 -z-10 size-56 rounded-full border border-white/[.12]"/>
-      <div aria-hidden="true" className="pointer-events-none absolute -right-5 -top-9 -z-10 size-40 rounded-full border border-white/[.10]"/>
-      <div aria-hidden="true" className="pointer-events-none absolute -bottom-24 left-12 -z-10 size-52 rounded-full border border-white/[.09]"/>
+    <div className={`relative isolate aspect-[1.586/1] w-full overflow-hidden rounded-[18px] border border-white/20 p-5 text-white shadow-[0_16px_34px_rgba(12,18,35,.28)] ${isVirtual ? "bg-gradient-to-br from-[#343943] via-[#202630] to-[#111820]" : "bg-gradient-to-br from-[#ed2444] via-[#c8102e] to-[#79091f]"}`}>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(118deg,rgba(255,255,255,.22)_0%,transparent_27%,transparent_62%,rgba(0,0,0,.18)_100%)]"/>
+      <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-24 -z-10 size-72 rounded-full border border-white/[.13]"/>
+      <div aria-hidden="true" className="pointer-events-none absolute -right-8 -top-16 -z-10 size-56 rounded-full border border-white/[.10]"/>
+      <div aria-hidden="true" className="pointer-events-none absolute -bottom-28 left-8 -z-10 size-64 rounded-full border border-white/[.10]"/>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-px bg-white/40"/>
       <div className="relative flex items-start justify-between">
         <div className="leading-none">
-          <p className="text-[13px] font-bold tracking-[.13em]">bradesco</p>
-          <p className="mt-1.5 text-[9px] font-medium tracking-[.12em] text-white/75">{isVirtual ? "CARTÃO VIRTUAL" : "EMPRESAS E NEGÓCIOS"}</p>
+          <p className="text-[15px] font-semibold tracking-[-.04em]">bradesco</p>
+          <p className="mt-1.5 text-[8px] font-semibold tracking-[.19em] text-white/75">{isVirtual ? "CARTÃO VIRTUAL" : "EMPRESAS E NEGÓCIOS"}</p>
         </div>
-        <span className="rounded-md border border-white/70 px-2.5 py-1 text-[17px] font-black italic leading-none tracking-[-.08em]">elo</span>
+        <div className="flex flex-col items-end gap-1">
+          <span className="text-[18px] font-black italic leading-none tracking-[-.09em]">elo</span>
+          <span className="text-[6px] font-semibold tracking-[.18em] text-white/70">CRÉDITO</span>
+        </div>
       </div>
       <div className="relative mt-5 flex items-center gap-3">
-        <div className="relative h-[31px] w-[42px] overflow-hidden rounded-[6px] border border-[#f4df9a]/80 bg-gradient-to-br from-[#f8e7b2] via-[#c9a75c] to-[#8d7139] shadow-inner">
-          <span className="absolute left-1/3 top-0 h-full w-px bg-[#8e7546]/70"/>
-          <span className="absolute left-2/3 top-0 h-full w-px bg-[#8e7546]/70"/>
-          <span className="absolute left-0 top-1/3 h-px w-full bg-[#8e7546]/70"/>
-          <span className="absolute left-0 top-2/3 h-px w-full bg-[#8e7546]/70"/>
-          <span className="absolute inset-[8px] rounded-[2px] border border-[#8e7546]/65"/>
+        <div className="relative h-[34px] w-[46px] overflow-hidden rounded-[6px] border border-[#f8e6ad]/90 bg-gradient-to-br from-[#fff0bd] via-[#c9a75c] to-[#8a6a32] shadow-[inset_0_1px_3px_rgba(255,255,255,.8),0_2px_4px_rgba(0,0,0,.25)]">
+          <span className="absolute left-1/3 top-0 h-full w-px bg-[#8e7546]/80"/>
+          <span className="absolute left-2/3 top-0 h-full w-px bg-[#8e7546]/80"/>
+          <span className="absolute left-0 top-1/3 h-px w-full bg-[#8e7546]/80"/>
+          <span className="absolute left-0 top-2/3 h-px w-full bg-[#8e7546]/80"/>
+          <span className="absolute inset-[8px] rounded-[2px] border border-[#8e7546]/75"/>
+          <span className="absolute left-1/2 top-0 h-full w-px bg-[#fff4cf]/70"/>
+          <span className="absolute left-0 top-1/2 h-px w-full bg-[#fff4cf]/70"/>
         </div>
-        <span className="text-[10px] tracking-[.08em] text-white/80">••</span>
+        <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 text-white/90" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
+          <path d="M8.5 8.5a5 5 0 0 1 0 7M12 5a10 10 0 0 1 0 14M5 12h.01"/>
+        </svg>
       </div>
-      <p className="relative mt-4 whitespace-nowrap font-mono text-[clamp(14px,4.1vw,18px)] tracking-[.13em] tabular-nums">••••  ••••  ••••  {card.last4}</p>
+      <div className="relative mt-4">
+        <p className="whitespace-nowrap font-mono text-[clamp(14px,4.1vw,18px)] font-medium tracking-[.14em] tabular-nums drop-shadow-[0_1px_1px_rgba(0,0,0,.35)]">••••  ••••  ••••  {card.last4}</p>
+      </div>
       <div className="relative mt-4 flex items-end justify-between gap-3">
         <div className="min-w-0 flex-1">
-          <p className="text-[8px] font-medium uppercase tracking-[.16em] text-white/65">Titular do cartão</p>
-          <p className="mt-1 whitespace-nowrap text-[11px] font-semibold tracking-[.09em]">CLEITON PASSOS</p>
+          <p className="text-[7px] font-medium uppercase tracking-[.18em] text-white/65">Titular do cartão</p>
+          <p className="mt-1 whitespace-nowrap text-[10px] font-semibold uppercase tracking-[.12em] drop-shadow-[0_1px_1px_rgba(0,0,0,.3)]">CLEITON PASSOS</p>
         </div>
         <div className="shrink-0 text-right">
-          <p className="text-[8px] font-medium uppercase tracking-[.14em] text-white/65">Validade</p>
-          <p className="mt-1 text-[11px] font-semibold tracking-[.08em]">{card.expiry}</p>
+          <p className="text-[7px] font-medium uppercase tracking-[.16em] text-white/65">Validade</p>
+          <p className="mt-1 text-[10px] font-semibold tracking-[.1em]">{card.expiry}</p>
         </div>
       </div>
-      {card.blocked && <span className="absolute right-4 top-[4.6rem] rounded-full bg-black/40 px-3 py-1 text-[9px] font-bold tracking-wider">BLOQUEADO</span>}
+      {card.blocked && <span className="absolute right-4 top-[4.6rem] rounded-full bg-black/45 px-3 py-1 text-[9px] font-bold tracking-wider">BLOQUEADO</span>}
     </div>
   );
   const CardActions = ({ card }: { card: Card }) => (
